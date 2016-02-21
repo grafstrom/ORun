@@ -3,6 +3,7 @@
 A custom orienteering data-field for Garmin Fenix3.
 
 From left to right, top to bottom these are the displayed fields:
+
 1. Bearing from the last waypoint in degrees
 2. Straight line distance from last waypoint
 3. Heart-rate
