@@ -1,0 +1,13 @@
+<resources>
+    <string id="AppName">ORun</string>
+    <bitmap id="LauncherIcon" filename="images/launcher_icon.png" />
+    
+    <string id="sld_ft">SLD ft</string>
+    <string id="sld_m">SLD m</string>
+    <string id="slb">Deg</string>
+    <string id="timer">Timer</string>
+    <string id="pace">Pace</string>
+    <string id="dist">Dist</string>
+    <string id="hbt">HR</string>
+    <string id="alt">Alt</string>
+</resources>

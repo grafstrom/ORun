@@ -1,0 +1,10 @@
+<resources>
+    <string id="sld_ft">FÅGV. ft</string>
+    <string id="sld_m">FÅGV. m</string>
+    <string id="slb">Grd</string>
+    <string id="timer">Tid</string>
+    <string id="pace">Tempo</string>
+    <string id="dist">Str</string>
+    <string id="hbt">Puls</string>
+    <string id="alt">Höjd</string>
+</resources>
