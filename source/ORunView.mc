@@ -7,10 +7,15 @@ using Toybox.Graphics as Gfx;
 
 class ORunView extends Ui.DataField {
 
+    const fenix3 = 1;
+    const vivoactive = 2;
+    
+
 	var backcol;
 	var forecol;
 	var linecol;
 
+    var device;
 	var distLabel;
 	var paceLabel;
 	var slbLabel;
@@ -37,9 +42,17 @@ class ORunView extends Ui.DataField {
     	backcol = Gfx.COLOR_WHITE;
     	forecol = Gfx.COLOR_BLACK;
     	
+    	var dv = Ui.loadResource(Rez.Strings.device);
+    	if (dv.equals("fenix3")) {
+    	    device = fenix3;
+    	}
+    	else if (dv.equals("vivoactive")) {
+    	    device = vivoactive;
+    	}
+    	
     	// Inverted
-    	//backcol = Gfx.COLOR_BLACK;
-    	//forecol = Gfx.COLOR_WHITE;
+    	backcol = Gfx.COLOR_BLACK;
+    	forecol = Gfx.COLOR_WHITE;
     	
     	linecol = Gfx.COLOR_BLUE;
     	
@@ -144,6 +157,16 @@ class ORunView extends Ui.DataField {
     //! Handle the update event
     function onUpdate(dc)
     {
+        if (device == fenix3) {
+            onUpdateFenix3(dc);
+        }
+        else if (device == vivoactive) {
+            onUpdateVivoactive(dc);
+        }
+    }
+    
+    function onUpdateFenix3(dc)
+    {
         dc.setColor(Gfx.COLOR_WHITE, backcol);
         dc.clear();
         
@@ -216,6 +239,36 @@ class ORunView extends Ui.DataField {
         dc.drawText( botcenter - 7, 189, Gfx.FONT_XTINY, batt, Gfx.TEXT_JUSTIFY_RIGHT);
         dc.drawText( botcenter + 7, 189, Gfx.FONT_XTINY, getTod(), Gfx.TEXT_JUSTIFY_LEFT );
 	}
+	
+    function onUpdateVivoactive(dc)
+    {
+        // Vivoactive apparently does not support a 'full screen' data-field :-(
+        // ... so we just display bearing and Straight-Line-Distance.
+    
+        dc.setColor(Gfx.COLOR_WHITE, backcol);
+        dc.clear();
+        
+        dc.setColor(linecol, Gfx.COLOR_TRANSPARENT);
+        dc.setPenWidth(3);
+        var width = dc.getWidth();
+        var halfWitt = width / 2;
+        var topcenter = halfWitt - 22;
+        
+        dc.drawLine( topcenter, 80, topcenter, 0 );
+        
+        dc.setPenWidth(1);
+        dc.setColor( forecol, Gfx.COLOR_TRANSPARENT );
+        
+        // ----------
+        // TOP fields
+        // ----------
+        dc.drawText( 0, 0, Gfx.FONT_XTINY, slbLabel, Gfx.TEXT_JUSTIFY_LEFT); 
+        dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
+        dc.drawText( topcenter - 10, 5, Gfx.FONT_NUMBER_MEDIUM, getBearing(), Gfx.TEXT_JUSTIFY_RIGHT );
+        dc.setColor( forecol, Gfx.COLOR_TRANSPARENT );
+        dc.drawText( width - 2, 0, Gfx.FONT_XTINY, sldLabel, Gfx.TEXT_JUSTIFY_RIGHT );
+        dc.drawText( topcenter + 10, 5, Gfx.FONT_NUMBER_MEDIUM, getSld(), Gfx.TEXT_JUSTIFY_LEFT );
+    }
 	
 	function degrees(n) {
 	  return n * (180 / Math.PI);

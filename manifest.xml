@@ -2,11 +2,11 @@
     <iq:application entry="ORunApp" id="B39CA152ED9E4F25B43BFA5C98BE4321" launcherIcon="LauncherIcon" name="AppName" type="datafield">
 
         <iq:products>
+            <iq:product id="vivoactive"/>
             <iq:product id="fenix3"/>
         </iq:products>
 
-        <iq:permissions>
-        </iq:permissions>
+        <iq:permissions/>
 
         <iq:languages>
             <iq:language>swe</iq:language>

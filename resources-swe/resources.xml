@@ -1,6 +1,6 @@
 <resources>
-    <string id="sld_ft">FÅGV. ft</string>
-    <string id="sld_m">FÅGV. m</string>
+    <string id="sld_ft">FÅG ft</string>
+    <string id="sld_m">FÅG m</string>
     <string id="slb">Grd</string>
     <string id="timer">Tid</string>
     <string id="pace">Tempo</string>
