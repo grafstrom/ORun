@@ -1,6 +1,7 @@
-# ORun - Data field for Garmin Fenix3
+# ORun - Data field for Garmin Connect IQ
 
-A custom orienteering data-field for Garmin Fenix3.
+A custom orienteering data-field for Garmin Fenix3, Epix, Fr920XT and Vivoactive.
+For Vivoactive only the first two fields are supported.
 
 From left to right, top to bottom these are the displayed fields:
 
