@@ -2,8 +2,10 @@
     <iq:application entry="ORunApp" id="B39CA152ED9E4F25B43BFA5C98BE4321" launcherIcon="LauncherIcon" name="AppName" type="datafield">
 
         <iq:products>
-            <iq:product id="vivoactive"/>
             <iq:product id="fenix3"/>
+            <iq:product id="vivoactive"/>
+            <iq:product id="fr920xt"/>
+            <iq:product id="epix"/>
         </iq:products>
 
         <iq:permissions/>
