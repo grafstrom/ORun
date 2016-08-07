@@ -70,6 +70,10 @@ class ORunView extends Ui.DataField {
 	var sldX2;
 	var sldY1;
 	var sldY2;
+	var topAlign1;
+	var topAlign2;
+	var topAlign3;
+	var topAlign4;
 	
     function onLayout(dc) {
     }
@@ -114,10 +118,10 @@ class ORunView extends Ui.DataField {
             firstY     = 45;
             firstYLbl  = 46;
             firstYDat  = 61;
-            secondY    = 87;
+            secondY    = 91;
             secondYLbl = 113;
             secondYDat = 90;
-            thirdY     = 130;
+            thirdY     = 131;
             thirdYDat  = 132;
     	    calcXVals(205, -22, -15, 40, -32, 0);
             return;
@@ -178,6 +182,10 @@ class ORunView extends Ui.DataField {
 			sldY1 = 0;
 			sldX2 = topcenter + 10;
 			sldY2 = 5;
+			topAlign1 = Gfx.TEXT_JUSTIFY_LEFT;
+			topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
+			topAlign3 = Gfx.TEXT_JUSTIFY_RIGHT;
+			topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
 		}
 		else {
 		    // Round watches ...
@@ -189,9 +197,12 @@ class ORunView extends Ui.DataField {
 			sldY1 = 10;
 			sldX2 = topcenter + 10;
 			sldY2 = 20;
+			topAlign1 = Gfx.TEXT_JUSTIFY_RIGHT;
+			topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
+			topAlign3 = Gfx.TEXT_JUSTIFY_LEFT;
+			topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
 		}
     }
-    
 
     //! The given info object contains all the current workout
     //! information. Calculate a value and return it in this method.
@@ -396,12 +407,12 @@ class ORunView extends Ui.DataField {
         // TOP fields
         // ----------
         
-        dc.drawText( slbX1, slbY1, Gfx.FONT_XTINY, slbLabel, Gfx.TEXT_JUSTIFY_RIGHT); 
+        dc.drawText( slbX1, slbY1, Gfx.FONT_XTINY, slbLabel, topAlign1 );
         dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
-        dc.drawText( slbX2, slbY2, Gfx.FONT_NUMBER_MEDIUM, getBearing(), Gfx.TEXT_JUSTIFY_RIGHT );
+        dc.drawText( slbX2, slbY2, Gfx.FONT_NUMBER_MEDIUM, getBearing(), topAlign2 );
         dc.setColor( forecol, Gfx.COLOR_TRANSPARENT );
-        dc.drawText( sldX1, sldY1, Gfx.FONT_XTINY, sldLabel, Gfx.TEXT_JUSTIFY_LEFT );
-        dc.drawText( sldX2, sldY2, Gfx.FONT_NUMBER_MEDIUM, getSld(), Gfx.TEXT_JUSTIFY_LEFT );
+        dc.drawText( sldX1, sldY1, Gfx.FONT_XTINY, sldLabel, topAlign3 );
+        dc.drawText( sldX2, sldY2, Gfx.FONT_NUMBER_MEDIUM, getSld(), topAlign4 );
         
         // -------------
         // MIDDLE fields
