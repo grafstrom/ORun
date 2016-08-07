@@ -1,0 +1,12 @@
+v 2.0.0
+  - Support for Fr230/235/630/735xt
+  - Full support for Vivoactive
+  - Altitude is now shown as delta from the reference waypoint
+  - Reference waypoint is now (re)set when pressing 'start' or 'lap'! Yay!!
+  - Adapt to beta release of "Biker Monkey" release of Garmin Connect IQ SDK
+
+v 1.0.0
+  - Limited support for Vivoactive
+  - Support for Fenix3, Epix and Fr920xt
+  - Due to limitation in SDK, reference waypoint is start location and cannot be changed
+  - First version

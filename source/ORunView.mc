@@ -5,7 +5,15 @@ using Toybox.Time as Time;
 using Toybox.Activity as Act;
 using Toybox.Graphics as Gfx;
 
-class ORunBase extends Ui.DataField {
+class ORunView extends Ui.DataField {
+
+	const devFenix3     = 1;
+	const devVivoactive = 2;
+	const devFr920      = 3;
+	const devEpix       = 4;
+	const devSemiRound  = 5;
+
+    var dev = devFenix3;
 
 	var backcol;
 	var forecol;
@@ -25,15 +33,54 @@ class ORunBase extends Ui.DataField {
 	var heart;
 	var speed;
 	var dist;
-	var alt;
 	var tid;
+	var startLap = 0;
+	var startAlt;
 	var startLoca;
 	var loca;
+	var alt;
+	var lap = 1;
+	
+	var firstY     = 80;
+	var firstYLbl  = 81;
+	var firstYDat  = 96;
+	var secondY    = 132;
+	var secondYLbl = 164;
+	var secondYDat = 131;
+	var thirdY     = 185;
+	var thirdYDat  = 189;
+	
+    var width = 218;
+    var halfWitt;
+	var middlew;
+	var halfMiddleWitt;
+    var topcenter;
+    var botcenter;
+	var altX;
+	var tidX;
+	var distX;
+	var paceX;
+	var todX;
+	var battX;
+	var slbX1;
+	var slbX2;
+	var slbY1;
+	var slbY2;
+	var sldX1;
+	var sldX2;
+	var sldY1;
+	var sldY2;
+	var topAlign1;
+	var topAlign2;
+	var topAlign3;
+	var topAlign4;
 	
     function onLayout(dc) {
     }
 
     function initialize() {
+        DataField.initialize();
+    
     	backcol = Gfx.COLOR_WHITE;
     	forecol = Gfx.COLOR_BLACK;
     	
@@ -49,7 +96,7 @@ class ORunBase extends Ui.DataField {
 		distLabel = Ui.loadResource(Rez.Strings.dist);
 		hbtLabel = Ui.loadResource(Rez.Strings.hbt);
 		altLabel = Ui.loadResource(Rez.Strings.alt);
-    
+		
     	if (Sys.getDeviceSettings().distanceUnits == Sys.UNIT_STATUTE) {
     		sldLabel = Ui.loadResource(Rez.Strings.sld_ft);
     		unitConv = 1609;
@@ -60,6 +107,132 @@ class ORunBase extends Ui.DataField {
     		unitConv = 1000;
     		distConv = 1;
     	}
+    	
+    	initDevice();
+    }
+    
+    function initDevice() {
+    	var dv = Ui.loadResource(Rez.Strings.device);
+    	if (dv.equals("vivoactive")) {
+    	    dev = devVivoactive;
+            firstY     = 45;
+            firstYLbl  = 46;
+            firstYDat  = 61;
+            secondY    = 91;
+            secondYLbl = 113;
+            secondYDat = 90;
+            thirdY     = 131;
+            thirdYDat  = 132;
+    	    calcXVals(205, -22, -15, 40, -32);
+            return;
+    	}
+    	else if (dv.equals("fr920xt")) {
+    	    dev = devFr920;
+            firstY     = 45;
+            firstYLbl  = 46;
+            firstYDat  = 61;
+            secondY    = 87;
+            secondYLbl = 113;
+            secondYDat = 90;
+            thirdY     = 130;
+            thirdYDat  = 132;
+    	    calcXVals(205, -22, -15, 40, -32);
+            return;
+    	}
+    	else if (dv.equals("epix")) {
+    	    dev = devEpix;
+            firstY     = 42;
+            firstYLbl  = 43;
+            firstYDat  = 57;
+            secondY    = 87;
+            secondYLbl = 110;
+            secondYDat = 86;
+            thirdY     = 130;
+            thirdYDat  = 130;
+    	    calcXVals(205, -22, -15, 40, -32);
+            return;
+    	}
+    	else if (dv.equals("fr230") ||
+    	         dv.equals("fr235") ||
+    	         dv.equals("fr630") ||
+    	         dv.equals("fr735xt")) {
+    	    dev = devSemiRound;
+            firstY     = 60;
+            firstYLbl  = 61;
+            firstYDat  = 77;
+            secondY    = 110;
+            secondYLbl = 139;
+            secondYDat = 110;
+            thirdY     = 160;
+            thirdYDat  = 160;
+    	    calcXVals(218, -15, -15, 7, -7);
+            return;
+    	}
+    	
+    	// Default settings are for fenix 3
+    	calcXVals(218, -15, -15, 7, -7);
+    }
+    
+    function calcXVals(devWidth, adjust1, adjust2, adjust3, adjust4) {
+	    width = devWidth;
+	    
+	    halfWitt = width / 2;
+		middlew = width / 3;
+		halfMiddleWitt = middlew / 2;
+		altX = middlew + halfMiddleWitt;
+		tidX = (halfWitt / 2) + 5;
+		distX = (3 * halfWitt / 2) - 5;
+		paceX = 2 * middlew + halfMiddleWitt;
+	    topcenter = halfWitt + adjust1;
+	    botcenter = halfWitt + adjust2;
+		todX = botcenter + adjust3;
+		battX = botcenter + adjust4;
+		
+		if (dev == devFenix3) {
+		    // Round watches ...
+			slbX1 = topcenter - 10;
+			slbY1 = 10;
+			slbX2 = topcenter - 10;
+			slbY2 = 20;
+			sldX1 = topcenter + 10;
+			sldY1 = 10;
+			sldX2 = topcenter + 10;
+			sldY2 = 20;
+			topAlign1 = Gfx.TEXT_JUSTIFY_RIGHT;
+			topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
+			topAlign3 = Gfx.TEXT_JUSTIFY_LEFT;
+			topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
+		}
+		else if (dev == devSemiRound) {
+		    // Semi-Round watches ...
+			slbX1 = topcenter - 10;
+			slbY1 = 0;
+			slbX2 = topcenter - 10;
+			slbY2 = 13;
+			sldX1 = topcenter + 10;
+			sldY1 = 0;
+			sldX2 = topcenter + 10;
+			sldY2 = 13;
+			topAlign1 = Gfx.TEXT_JUSTIFY_RIGHT;
+			topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
+			topAlign3 = Gfx.TEXT_JUSTIFY_LEFT;
+			topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
+		}
+		else {
+		    // Square watches ...
+			slbX1 = 0;
+			slbY1 = 0;
+			slbX2 = topcenter - 10;
+			slbY2 = 5;
+			sldX1 = width - 2;
+			sldY1 = 0;
+			sldX2 = topcenter + 10;
+			sldY2 = 5;
+			topAlign1 = Gfx.TEXT_JUSTIFY_LEFT;
+			topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
+			topAlign3 = Gfx.TEXT_JUSTIFY_RIGHT;
+			topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
+		}
     }
 
     //! The given info object contains all the current workout
@@ -71,13 +244,28 @@ class ORunBase extends Ui.DataField {
         speed = info.currentSpeed;
         dist = info.elapsedDistance;
         tid = info.elapsedTime;
-        alt = info.altitude;
         
-        if (info.startLocation != null) {
-        	startLoca = info.startLocation;
+        if (info.currentLocation != null && lap > startLap) {
+            startLoca = info.currentLocation;
+            startAlt = info.altitude;
+            startLap = lap;
         }
-        loca = info.currentLocation;
         
+        if (info.altitude != null && startAlt != null) {
+            alt = info.altitude - startAlt;
+        }
+        
+        loca = info.currentLocation;
+    }
+    
+    function onTimerStart() {
+        lap++;
+        Ui.requestUpdate();
+    }
+    
+    function onTimerLap() {
+        lap++;
+        Ui.requestUpdate();
     }
     
     function getPace() {
@@ -220,37 +408,15 @@ class ORunBase extends Ui.DataField {
             dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
         }
 	}
-}
-
-class ORunFenix3 extends ORunBase {
-
-	const firstY     = 80;
-	const firstYLbl  = 81;
-	const firstYDat  = 96;
-	const secondY    = 132;
-	const secondYLbl = 164;
-	const secondYDat = 131;
-	const thirdY     = 185;
-	const thirdYDat  = 189;
-
-    function initialize() {
-        ORunBase.initialize();
-    }
-    
+	
     //! Handle the update event
-    function onUpdate(dc)
+    function onUpdate(dc) 
     {
         dc.setColor(Gfx.COLOR_WHITE, backcol);
         dc.clear();
         
         dc.setColor(linecol, Gfx.COLOR_TRANSPARENT);
         dc.setPenWidth(3);
-        var width = dc.getWidth();
-        var halfWitt = width / 2;
-        var topcenter = halfWitt - 15;
-        var botcenter = halfWitt - 15;
-		var middlew = width / 3;
-		var halfMiddleWitt = middlew / 2;
         
         // Draw the BOLD lines 
         dc.drawLine( 0, firstY, width, firstY);         // Top horizontal 
@@ -271,12 +437,13 @@ class ORunFenix3 extends ORunBase {
         // ----------
         // TOP fields
         // ----------
-        dc.drawText( topcenter - 10, 10, Gfx.FONT_XTINY, slbLabel, Gfx.TEXT_JUSTIFY_RIGHT); 
+        
+        dc.drawText( slbX1, slbY1, Gfx.FONT_XTINY, slbLabel, topAlign1 );
         dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
-        dc.drawText( topcenter - 10, 20, Gfx.FONT_NUMBER_MEDIUM, getBearing(), Gfx.TEXT_JUSTIFY_RIGHT );
+        dc.drawText( slbX2, slbY2, Gfx.FONT_NUMBER_MEDIUM, getBearing(), topAlign2 );
         dc.setColor( forecol, Gfx.COLOR_TRANSPARENT );
-        dc.drawText( topcenter + 10, 10, Gfx.FONT_XTINY, sldLabel, Gfx.TEXT_JUSTIFY_LEFT );
-        dc.drawText( topcenter + 10, 20, Gfx.FONT_NUMBER_MEDIUM, getSld(), Gfx.TEXT_JUSTIFY_LEFT );
+        dc.drawText( sldX1, sldY1, Gfx.FONT_XTINY, sldLabel, topAlign3 );
+        dc.drawText( sldX2, sldY2, Gfx.FONT_NUMBER_MEDIUM, getSld(), topAlign4 );
         
         // -------------
         // MIDDLE fields
@@ -287,260 +454,33 @@ class ORunFenix3 extends ORunBase {
         dc.drawText( halfMiddleWitt, firstYLbl, Gfx.FONT_XTINY, hbtLabel, Gfx.TEXT_JUSTIFY_CENTER );
         dc.drawText( halfMiddleWitt, firstYDat, midfont, hrString, Gfx.TEXT_JUSTIFY_CENTER );
         
-        dc.drawText( middlew + halfMiddleWitt, firstYLbl, Gfx.FONT_XTINY, altLabel, Gfx.TEXT_JUSTIFY_CENTER );
+        dc.drawText( altX, firstYLbl, Gfx.FONT_XTINY, altLabel, Gfx.TEXT_JUSTIFY_CENTER );
         var altNum = getAlt();
         if (altNum > 9999) {
-        	dc.drawText( middlew + halfMiddleWitt, 100, Gfx.FONT_MEDIUM, altNum.toString(), Gfx.TEXT_JUSTIFY_CENTER );
+        	dc.drawText( altX, 100, Gfx.FONT_MEDIUM, altNum.toString(), Gfx.TEXT_JUSTIFY_CENTER );
         }
         else {
-        	dc.drawText( middlew + halfMiddleWitt, firstYDat, midfont, altNum.toString(), Gfx.TEXT_JUSTIFY_CENTER );
+        	dc.drawText( altX, firstYDat, midfont, altNum.toString(), Gfx.TEXT_JUSTIFY_CENTER );
         }
         
-        dc.drawText( 2 * middlew + halfMiddleWitt, firstYLbl, Gfx.FONT_XTINY, paceLabel, Gfx.TEXT_JUSTIFY_CENTER );
-        dc.drawText( 2 * middlew + halfMiddleWitt, firstYDat, midfont, getPace(), Gfx.TEXT_JUSTIFY_CENTER );
+        dc.drawText( paceX, firstYLbl, Gfx.FONT_XTINY, paceLabel, Gfx.TEXT_JUSTIFY_CENTER );
+        dc.drawText( paceX, firstYDat, midfont, getPace(), Gfx.TEXT_JUSTIFY_CENTER );
         
         // -------
         
-        dc.drawText( (halfWitt / 2) + 5, secondYDat, midfont, getTid(), Gfx.TEXT_JUSTIFY_CENTER );
-        dc.drawText( (halfWitt / 2) + 5, secondYLbl, Gfx.FONT_XTINY, tmrLabel, Gfx.TEXT_JUSTIFY_CENTER );
+        dc.drawText( tidX, secondYDat, midfont, getTid(), Gfx.TEXT_JUSTIFY_CENTER );
+        dc.drawText( tidX, secondYLbl, Gfx.FONT_XTINY, tmrLabel, Gfx.TEXT_JUSTIFY_CENTER );
         
-        dc.drawText( (3 * halfWitt / 2) - 5, secondYDat, midfont, getDist(), Gfx.TEXT_JUSTIFY_CENTER );
-        dc.drawText( (3 * halfWitt / 2) - 5, secondYLbl, Gfx.FONT_XTINY, distLabel, Gfx.TEXT_JUSTIFY_CENTER );
+        dc.drawText( distX, secondYDat, midfont, getDist(), Gfx.TEXT_JUSTIFY_CENTER );
+        dc.drawText( distX, secondYLbl, Gfx.FONT_XTINY, distLabel, Gfx.TEXT_JUSTIFY_CENTER );
         
         // -------------
         // Bottom fields
         // -------------
-        dc.drawText( botcenter + 7, thirdYDat, Gfx.FONT_XTINY, getTod(), Gfx.TEXT_JUSTIFY_LEFT );
+        dc.drawText( todX, thirdYDat, Gfx.FONT_XTINY, getTod(), Gfx.TEXT_JUSTIFY_LEFT );
         
         var batt = Sys.getSystemStats().battery.toNumber();
-        ORunBase.setBatteryColor(dc, batt);
-        dc.drawText( botcenter - 7, thirdYDat, Gfx.FONT_XTINY, batt + "%", Gfx.TEXT_JUSTIFY_RIGHT);
+        setBatteryColor(dc, batt);
+        dc.drawText( battX, thirdYDat, Gfx.FONT_XTINY, batt + "%", Gfx.TEXT_JUSTIFY_RIGHT);
 	}
-}	
-	
-class ORunVivoactive extends ORunBase {
-
-    function initialize() {
-        ORunBase.initialize();
-    }
-
-    function onUpdate(dc)
-    {
-        // Vivoactive apparently does not support a 'full screen' data-field :-(
-        // ... so we just display bearing and Straight-Line-Distance.
-    
-        dc.setColor(Gfx.COLOR_WHITE, backcol);
-        dc.clear();
-        
-        dc.setColor(linecol, Gfx.COLOR_TRANSPARENT);
-        dc.setPenWidth(3);
-        var width = dc.getWidth();
-        var halfWitt = width / 2;
-        var topcenter = halfWitt - 22;
-        
-        dc.drawLine( topcenter, 80, topcenter, 0 );
-        
-        dc.setPenWidth(1);
-        dc.setColor( forecol, Gfx.COLOR_TRANSPARENT );
-        
-        // ----------
-        // TOP fields
-        // ----------
-        dc.drawText( 0, 0, Gfx.FONT_XTINY, slbLabel, Gfx.TEXT_JUSTIFY_LEFT); 
-        dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
-        dc.drawText( topcenter - 10, 5, Gfx.FONT_NUMBER_MEDIUM, getBearing(), Gfx.TEXT_JUSTIFY_RIGHT );
-        dc.setColor( forecol, Gfx.COLOR_TRANSPARENT );
-        dc.drawText( width - 2, 0, Gfx.FONT_XTINY, sldLabel, Gfx.TEXT_JUSTIFY_RIGHT );
-        dc.drawText( topcenter + 10, 5, Gfx.FONT_NUMBER_MEDIUM, getSld(), Gfx.TEXT_JUSTIFY_LEFT );
-    }
-}
-
-class ORunEpix extends ORunBase {
-
-	const firstY     = 42;
-	const firstYLbl  = 43;
-	const firstYDat  = 57;
-	const secondY    = 87;
-	const secondYLbl = 110;
-	const secondYDat = 86;
-	const thirdY     = 130;
-	const thirdYDat  = 130;
-
-    function initialize() {
-        ORunBase.initialize();
-    }
-
-    function onUpdate(dc)
-    {
-        dc.setColor(Gfx.COLOR_WHITE, backcol);
-        dc.clear();
-        
-        dc.setColor(linecol, Gfx.COLOR_TRANSPARENT);
-        dc.setPenWidth(3);
-        var width = dc.getWidth();
-        var halfWitt = width / 2;
-        var topcenter = halfWitt - 22;
-        var botcenter = halfWitt - 15;
-		var middlew = width / 3;
-		var halfMiddleWitt = middlew / 2;
-        
-        // Draw the BOLD lines 
-        dc.drawLine( 0, firstY, width, firstY);         // Top horizontal 
-        dc.drawLine( topcenter, firstY, topcenter, 0 ); // Top vertical split-line
-        dc.drawLine( 0, thirdY, width, thirdY);         // Bottom horizontal 
-        
-        // Draw the thin middle lines 
-        dc.setPenWidth(1);
-        dc.drawLine( 0, secondY, width, secondY );                    // Middle horizontal 
-        dc.drawLine( middlew, firstY, middlew, secondY );             // HR/Alt vertical split-line 
-        dc.drawLine( 2 * middlew, firstY, 2 * middlew, secondY );     // Alt/Pace vertical split-line
-        
-        dc.drawLine( halfWitt, secondY, halfWitt, thirdY );           // Timer/Dist vertical split-line
-        
-        dc.drawLine( botcenter, thirdY, botcenter, dc.getHeight() );  // Battery/Time vertical split-line
-        dc.setColor( forecol, Gfx.COLOR_TRANSPARENT );
-        
-        // ----------
-        // TOP fields
-        // ----------
-        dc.drawText( 0, 0, Gfx.FONT_XTINY, slbLabel, Gfx.TEXT_JUSTIFY_LEFT); 
-        dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
-        dc.drawText( topcenter - 10, 5, Gfx.FONT_NUMBER_MEDIUM, getBearing(), Gfx.TEXT_JUSTIFY_RIGHT );
-        dc.setColor( forecol, Gfx.COLOR_TRANSPARENT );
-        dc.drawText( width - 2, 0, Gfx.FONT_XTINY, sldLabel, Gfx.TEXT_JUSTIFY_RIGHT );
-        dc.drawText( topcenter + 10, 5, Gfx.FONT_NUMBER_MEDIUM, getSld(), Gfx.TEXT_JUSTIFY_LEFT );
-        
-        // -------------
-        // MIDDLE fields
-        // -------------
-		var midfont = Gfx.FONT_LARGE;
-
-        var hrString = (heart != null ? heart.toString() : "");
-        dc.drawText( halfMiddleWitt, firstYLbl, Gfx.FONT_XTINY, hbtLabel, Gfx.TEXT_JUSTIFY_CENTER );
-        dc.drawText( halfMiddleWitt, firstYDat, midfont, hrString, Gfx.TEXT_JUSTIFY_CENTER );
-        
-        dc.drawText( middlew + halfMiddleWitt, firstYLbl, Gfx.FONT_XTINY, altLabel, Gfx.TEXT_JUSTIFY_CENTER );
-        var altNum = getAlt();
-        if (altNum > 9999) {
-        	dc.drawText( middlew + halfMiddleWitt, firstYDat, Gfx.FONT_MEDIUM, altNum.toString(), Gfx.TEXT_JUSTIFY_CENTER );
-        }
-        else {
-        	dc.drawText( middlew + halfMiddleWitt, firstYDat, midfont, altNum.toString(), Gfx.TEXT_JUSTIFY_CENTER );
-        }
-        
-        dc.drawText( 2 * middlew + halfMiddleWitt, firstYLbl, Gfx.FONT_XTINY, paceLabel, Gfx.TEXT_JUSTIFY_CENTER );
-        dc.drawText( 2 * middlew + halfMiddleWitt, firstYDat, midfont, getPace(), Gfx.TEXT_JUSTIFY_CENTER );
-        
-        // -------
-        
-        dc.drawText( (halfWitt / 2) + 5, secondYDat, midfont, getTid(), Gfx.TEXT_JUSTIFY_CENTER );
-        dc.drawText( (halfWitt / 2) + 5, secondYLbl, Gfx.FONT_XTINY, tmrLabel, Gfx.TEXT_JUSTIFY_CENTER );
-        
-        dc.drawText( (3 * halfWitt / 2) - 5, secondYDat, midfont, getDist(), Gfx.TEXT_JUSTIFY_CENTER );
-        dc.drawText( (3 * halfWitt / 2) - 5, secondYLbl, Gfx.FONT_XTINY, distLabel, Gfx.TEXT_JUSTIFY_CENTER );
-        
-        // -------------
-        // Bottom fields
-        // -------------
-        dc.drawText( botcenter + 40, thirdYDat, Gfx.FONT_XTINY, getTod(), Gfx.TEXT_JUSTIFY_LEFT );
-        
-        var batt = Sys.getSystemStats().battery.toNumber();
-        ORunBase.setBatteryColor(dc, batt);
-        dc.drawText( botcenter - 32, thirdYDat, Gfx.FONT_XTINY, batt + "%", Gfx.TEXT_JUSTIFY_RIGHT);
-    }
-}
-
-class ORunFr920xt extends ORunBase {
-
-	const firstY     = 45;
-	const firstYLbl  = 46;
-	const firstYDat  = 61;
-	const secondY    = 87;
-	const secondYLbl = 113;
-	const secondYDat = 90;
-	const thirdY     = 130;
-	const thirdYDat  = 132;
-
-    function initialize() {
-        ORunBase.initialize();
-    }
-
-    function onUpdate(dc)
-    {
-        dc.setColor(Gfx.COLOR_WHITE, backcol);
-        dc.clear();
-        
-        dc.setColor(linecol, Gfx.COLOR_TRANSPARENT);
-        dc.setPenWidth(3);
-        var width = dc.getWidth();
-        var halfWitt = width / 2;
-        var topcenter = halfWitt - 22;
-        var botcenter = halfWitt - 15;
-		var middlew = width / 3;
-		var halfMiddleWitt = middlew / 2;
-        
-        // Draw the BOLD lines 
-        dc.drawLine( 0, firstY, width, firstY);         // Top horizontal 
-        dc.drawLine( topcenter, firstY, topcenter, 0 ); // Top vertical split-line
-        dc.drawLine( 0, thirdY, width, thirdY);         // Bottom horizontal 
-        
-        // Draw the thin middle lines 
-        dc.setPenWidth(1);
-        dc.drawLine( 0, secondY, width, secondY );                    // Middle horizontal 
-        dc.drawLine( middlew, firstY, middlew, secondY );             // HR/Alt vertical split-line 
-        dc.drawLine( 2 * middlew, firstY, 2 * middlew, secondY );     // Alt/Pace vertical split-line
-        
-        dc.drawLine( halfWitt, secondY, halfWitt, thirdY );           // Timer/Dist vertical split-line
-        
-        dc.drawLine( botcenter, thirdY, botcenter, dc.getHeight() );  // Battery/Time vertical split-line
-        dc.setColor( forecol, Gfx.COLOR_TRANSPARENT );
-        
-        // ----------
-        // TOP fields
-        // ----------
-        dc.drawText( 0, 0, Gfx.FONT_XTINY, slbLabel, Gfx.TEXT_JUSTIFY_LEFT); 
-        dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
-        dc.drawText( topcenter - 10, 5, Gfx.FONT_NUMBER_MEDIUM, getBearing(), Gfx.TEXT_JUSTIFY_RIGHT );
-        dc.setColor( forecol, Gfx.COLOR_TRANSPARENT );
-        dc.drawText( width - 2, 0, Gfx.FONT_XTINY, sldLabel, Gfx.TEXT_JUSTIFY_RIGHT );
-        dc.drawText( topcenter + 10, 5, Gfx.FONT_NUMBER_MEDIUM, getSld(), Gfx.TEXT_JUSTIFY_LEFT );
-        
-        // -------------
-        // MIDDLE fields
-        // -------------
-		var midfont = Gfx.FONT_LARGE;
-
-        var hrString = (heart != null ? heart.toString() : "");
-        dc.drawText( halfMiddleWitt, firstYLbl, Gfx.FONT_XTINY, hbtLabel, Gfx.TEXT_JUSTIFY_CENTER );
-        dc.drawText( halfMiddleWitt, firstYDat, midfont, hrString, Gfx.TEXT_JUSTIFY_CENTER );
-        
-        dc.drawText( middlew + halfMiddleWitt, firstYLbl, Gfx.FONT_XTINY, altLabel, Gfx.TEXT_JUSTIFY_CENTER );
-        var altNum = getAlt();
-        if (altNum > 9999) {
-        	dc.drawText( middlew + halfMiddleWitt, firstYDat, Gfx.FONT_MEDIUM, altNum.toString(), Gfx.TEXT_JUSTIFY_CENTER );
-        }
-        else {
-        	dc.drawText( middlew + halfMiddleWitt, firstYDat, midfont, altNum.toString(), Gfx.TEXT_JUSTIFY_CENTER );
-        }
-        
-        dc.drawText( 2 * middlew + halfMiddleWitt, firstYLbl, Gfx.FONT_XTINY, paceLabel, Gfx.TEXT_JUSTIFY_CENTER );
-        dc.drawText( 2 * middlew + halfMiddleWitt, firstYDat, midfont, getPace(), Gfx.TEXT_JUSTIFY_CENTER );
-        
-        // -------
-        
-        dc.drawText( (halfWitt / 2) + 5, secondYDat, midfont, getTid(), Gfx.TEXT_JUSTIFY_CENTER );
-        dc.drawText( (halfWitt / 2) + 5, secondYLbl, Gfx.FONT_XTINY, tmrLabel, Gfx.TEXT_JUSTIFY_CENTER );
-        
-        dc.drawText( (3 * halfWitt / 2) - 5, secondYDat, midfont, getDist(), Gfx.TEXT_JUSTIFY_CENTER );
-        dc.drawText( (3 * halfWitt / 2) - 5, secondYLbl, Gfx.FONT_XTINY, distLabel, Gfx.TEXT_JUSTIFY_CENTER );
-        
-        // -------------
-        // Bottom fields
-        // -------------
-        dc.drawText( botcenter + 40, thirdYDat, Gfx.FONT_XTINY, getTod(), Gfx.TEXT_JUSTIFY_LEFT );
-        
-        var batt = Sys.getSystemStats().battery.toNumber();
-        ORunBase.setBatteryColor(dc, batt);
-        dc.drawText( botcenter - 32, thirdYDat, Gfx.FONT_XTINY, batt + "%", Gfx.TEXT_JUSTIFY_RIGHT);
-    }
 }
