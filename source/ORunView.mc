@@ -11,7 +11,7 @@ class ORunView extends Ui.DataField {
 	const devVivoactive = 2;
 	const devFr920      = 3;
 	const devEpix       = 4;
-	const devFr230      = 5;
+	const devSemiRound  = 5;
 
     var dev = devFenix3;
 
@@ -123,7 +123,7 @@ class ORunView extends Ui.DataField {
             secondYDat = 90;
             thirdY     = 131;
             thirdYDat  = 132;
-    	    calcXVals(205, -22, -15, 40, -32, 0);
+    	    calcXVals(205, -22, -15, 40, -32);
             return;
     	}
     	else if (dv.equals("fr920xt")) {
@@ -136,7 +136,7 @@ class ORunView extends Ui.DataField {
             secondYDat = 90;
             thirdY     = 130;
             thirdYDat  = 132;
-    	    calcXVals(205, -22, -15, 40, -32, 0);
+    	    calcXVals(205, -22, -15, 40, -32);
             return;
     	}
     	else if (dv.equals("epix")) {
@@ -149,15 +149,31 @@ class ORunView extends Ui.DataField {
             secondYDat = 86;
             thirdY     = 130;
             thirdYDat  = 130;
-    	    calcXVals(205, -22, -15, 40, -32, 0);
+    	    calcXVals(205, -22, -15, 40, -32);
+            return;
+    	}
+    	else if (dv.equals("fr230") ||
+    	         dv.equals("fr235") ||
+    	         dv.equals("fr630") ||
+    	         dv.equals("fr735xt")) {
+    	    dev = devSemiRound;
+            firstY     = 60;
+            firstYLbl  = 61;
+            firstYDat  = 77;
+            secondY    = 110;
+            secondYLbl = 139;
+            secondYDat = 110;
+            thirdY     = 160;
+            thirdYDat  = 160;
+    	    calcXVals(218, -15, -15, 7, -7);
             return;
     	}
     	
     	// Default settings are for fenix 3
-    	calcXVals(218, -15, -15, 7, -7, 10);
+    	calcXVals(218, -15, -15, 7, -7);
     }
     
-    function calcXVals(devWidth, adjust1, adjust2, adjust3, adjust4, topY) {
+    function calcXVals(devWidth, adjust1, adjust2, adjust3, adjust4) {
 	    width = devWidth;
 	    
 	    halfWitt = width / 2;
@@ -172,22 +188,7 @@ class ORunView extends Ui.DataField {
 		todX = botcenter + adjust3;
 		battX = botcenter + adjust4;
 		
-		if (topY == 0) {
-		    // Square watches ...
-			slbX1 = 0;
-			slbY1 = 0;
-			slbX2 = topcenter - 10;
-			slbY2 = 5;
-			sldX1 = width - 2;
-			sldY1 = 0;
-			sldX2 = topcenter + 10;
-			sldY2 = 5;
-			topAlign1 = Gfx.TEXT_JUSTIFY_LEFT;
-			topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
-			topAlign3 = Gfx.TEXT_JUSTIFY_RIGHT;
-			topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
-		}
-		else {
+		if (dev == devFenix3) {
 		    // Round watches ...
 			slbX1 = topcenter - 10;
 			slbY1 = 10;
@@ -200,6 +201,36 @@ class ORunView extends Ui.DataField {
 			topAlign1 = Gfx.TEXT_JUSTIFY_RIGHT;
 			topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
 			topAlign3 = Gfx.TEXT_JUSTIFY_LEFT;
+			topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
+		}
+		else if (dev == devSemiRound) {
+		    // Semi-Round watches ...
+			slbX1 = topcenter - 10;
+			slbY1 = 0;
+			slbX2 = topcenter - 10;
+			slbY2 = 13;
+			sldX1 = topcenter + 10;
+			sldY1 = 0;
+			sldX2 = topcenter + 10;
+			sldY2 = 13;
+			topAlign1 = Gfx.TEXT_JUSTIFY_RIGHT;
+			topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
+			topAlign3 = Gfx.TEXT_JUSTIFY_LEFT;
+			topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
+		}
+		else {
+		    // Square watches ...
+			slbX1 = 0;
+			slbY1 = 0;
+			slbX2 = topcenter - 10;
+			slbY2 = 5;
+			sldX1 = width - 2;
+			sldY1 = 0;
+			sldX2 = topcenter + 10;
+			sldY2 = 5;
+			topAlign1 = Gfx.TEXT_JUSTIFY_LEFT;
+			topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
+			topAlign3 = Gfx.TEXT_JUSTIFY_RIGHT;
 			topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
 		}
     }
