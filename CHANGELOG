@@ -1,0 +1,6 @@
+
+v 1.0.0
+  - Limited support for Vivoactive
+  - Support for Fenix3, Epix and Fr920xt
+  - Due to limitation in SDK, reference waypoint is start location and cannot be changed
+  - First version
