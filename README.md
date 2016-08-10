@@ -2,8 +2,8 @@
 
 A custom orienteering data-field for Garmin Connect IQ devices.
 
-Supported devices; Fenix3, Epix, Fr920xt, Fr735xt, Fr630, Fr235, Fr230 and Vivoactive.
-Requires Connect IQ v1.3.0, currently available as a beta in Garmin's "Biker Monkey" SDK offering.
+Supported devices; Fenix3, Fr920xt, Fr735xt, Fr630, Fr235, Fr230 and Vivoactive.<br>
+Minimum requirement: Connect IQ, Aikido v1.3
 
 Pressing 'start' or 'lap' sets the current reference waypoint.
 From left to right, top to bottom these are the displayed fields:
