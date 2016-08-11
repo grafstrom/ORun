@@ -1,3 +1,6 @@
+v 2.1.1
+  - Add support for fenix3 HR
+
 v 2.1.0
   - Add .iq file for "Garmin Store"
   - Remove support for epix :-(
