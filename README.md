@@ -5,7 +5,7 @@ A custom orienteering data-field for Garmin Connect IQ devices.
 ORun gives you current bearing, straight line distance and altitude from the last "reference" waypoint.<br>
 Pressing 'start' or 'lap' sets the current reference waypoint.<br>
 
-With ORun you can quickly find your current location on any physical map given that the "reference" waypoint was a known location.<br>
+With ORun you can quickly find your current location on any physical map given that the "reference" waypoint was a known location.
 ORun is not allowed on orienteering competitions but can be a useful tool during orienteering training or when just hiking with a map.<br>
 
 ORun is designed for a "1 field layout" watch-page but displays 9 fields of information.<br>
