@@ -1,5 +1,5 @@
 <resources>
-    <string id="AppName">ORun</string>
+    <string id="AppName">ORun3</string>
     <string id="device">default</string>
     <bitmap id="LauncherIcon" filename="images/launcher_icon.png" />
     

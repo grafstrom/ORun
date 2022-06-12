@@ -1,4 +1,7 @@
 <resources>
+    <string id="AppName">ORun3</string>
+    <string id="device">default</string>
+
     <string id="sld_ft">FÅG ft</string>
     <string id="sld_m">FÅG m</string>
     <string id="slb">Grd</string>
