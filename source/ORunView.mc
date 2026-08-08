@@ -7,6 +7,7 @@ using Toybox.Graphics as Gfx;
 
 class ORunView extends Ui.DataField {
 
+	// mike note: following are UI settings to work with various dimensions of Garmin device - possibly better to use barrels and put these variables in separate device-specific file
 	const devSemiRound  = 1;
 	const devVivoactive = 2;
 	const devFenix3     = 3;
@@ -16,34 +17,9 @@ class ORunView extends Ui.DataField {
 	const devFenix7     = 7;
 	const devFr920      = 9;
 
-    var dev = devFenix3;
+    var dev = devFenix3; // mike note: default Fenix3 dimensions for UI arrangement
 
-	var backcol;
-	var forecol;
-	var linecol;
-
-	var distLabel;
-	var paceLabel;
-	var slbLabel;
-	var sldLabel;
-	var tmrLabel;
-	var hbtLabel;
-	var altLabel;
-	
-	var distConv;
-	var unitConv;
-	
-	var heart;
-	var speed;
-	var dist;
-	var tid;
-	var startLap = 0;
-	var startAlt;
-	var startLoca;
-	var loca;
-	var alt;
-	var lap = 1;
-	
+	// more device-specific dimensions values for UI arrangement
 	var firstY     = 80;
 	var firstYLbl  = 81;
 	var firstYDat  = 96;
@@ -59,12 +35,7 @@ class ORunView extends Ui.DataField {
 	var halfMiddleWitt;
     var topcenter;
     var botcenter;
-	var altX;
-	var tidX;
-	var distX;
-	var paceX;
-	var todX;
-	var battX;
+	
 	var slbX1;
 	var slbX2;
 	var slbY1;
@@ -77,35 +48,115 @@ class ORunView extends Ui.DataField {
 	var topAlign2;
 	var topAlign3;
 	var topAlign4;
+
+	var altX;
+	var tidX;
+	var distX;
+	var paceX;
+	var todX;
+	var battX;
+
+
+
+
+
+	// mike note: ----------------------------- after this line variables are used for core functionality, NOT DEVICE SPECIFIC
+
+	// mike note: other view variables - colors
+	var backcol;
+	var forecol;
+	var linecol;
+
+	// mike note: 
+	var distLabel;
+	var paceLabel;
+	var slbLabel;
+	var sldLabel;
+	var tmrLabel;
+	var hbtLabel;
+	var altLabel;
 	
+	// mike note: conversion factor values for far-distance 'dist' for miles/km and short-distance 'unit' for feet/meters
+	var distConv;
+	var unitConv;
+	
+	// mike note: these variables updated in compute, and used in calculations for final view display updates
+	var heart;
+	var speed;
+	var dist;
+	var tid;
+
+	var startLap = 0; // mike note: startLap is set to 0 upon run
+	var startAlt;
+	var startLoca;
+	var loca;
+	var alt;
+	var lap = 1; // mike note: lap at 1 upon run
+		
+	// -------------------------------------------------------------------------------------------------------------------
     function onLayout(dc) {
     }
+	// -------------------------------------------------------------------------------------------------------------------
+    
 
-    function initialize() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	function initialize() {  // mike note: initialize loads strings, get unit-settings
         DataField.initialize();
     
-    	backcol = Gfx.COLOR_WHITE;
-    	forecol = Gfx.COLOR_BLACK;
+    	backcol = Gfx.COLOR_WHITE;										// mike note: unnecessary initialization of color settings
+    	forecol = Gfx.COLOR_BLACK;										// mike note: these two statements could probably be removed
     	
     	// Inverted
-    	backcol = Gfx.COLOR_BLACK;
+    	backcol = Gfx.COLOR_BLACK;										// mike note: initialize color settings
     	forecol = Gfx.COLOR_WHITE;
     	
     	linecol = Gfx.COLOR_BLUE;
     	
-    	slbLabel = Ui.loadResource(Rez.Strings.slb);
+    	slbLabel = Ui.loadResource(Rez.Strings.slb);					// mike note: load strings for datafield labels
     	tmrLabel = Ui.loadResource(Rez.Strings.timer);
 		paceLabel = Ui.loadResource(Rez.Strings.pace);
 		distLabel = Ui.loadResource(Rez.Strings.dist);
 		hbtLabel = Ui.loadResource(Rez.Strings.hbt);
 		altLabel = Ui.loadResource(Rez.Strings.alt);
 		
-    	if (Sys.getDeviceSettings().distanceUnits == Sys.UNIT_STATUTE) {
+    	if (Sys.getDeviceSettings().distanceUnits == Sys.UNIT_STATUTE) { // mike note: update conversion factor to miles/feet
     		sldLabel = Ui.loadResource(Rez.Strings.sld_ft);
     		unitConv = 1609;
     		distConv = 3.28084;
     	}
-    	else {
+    	else { 													 // mike note: update conversion factor to kilometers/meters
     		sldLabel = Ui.loadResource(Rez.Strings.sld_m);
     		unitConv = 1000;
     		distConv = 1;
@@ -113,8 +164,10 @@ class ORunView extends Ui.DataField {
     	
     	initDevice();
     }
-    
+    // -------------------------------------------------------------------------------------------------------------------
     function initDevice() {
+		System.println("running initialization for sizing");
+
     	var dv = Ui.loadResource(Rez.Strings.device);
         if (dv.equals("fenix7x")) {
             dev = devFenix7;
@@ -230,11 +283,13 @@ class ORunView extends Ui.DataField {
         // Default settings are for fenix 3
         calcXVals(218, -15, -15, 7, -7);
     }
-    
+    // -------------------------------------------------------------------------------------------------------------------
+
 	// adjust1 - X adjustment from middle of top vertical line
 	// adjust2 - X adjustment from middle of bottom vertical line
 	// adjust3 - X adjustment from bottom vertical for time-of-day
 	// adjust4 - X adjustment from bottom vertical for battery pct
+
     function calcXVals(devWidth, adjust1, adjust2, adjust3, adjust4) {
 	    width = devWidth;
 	    
@@ -327,12 +382,43 @@ class ORunView extends Ui.DataField {
 			topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
 		}
     }
+	// -------------------------------------------------------------------------------------------------------------------
+    
+	
 
-    //! The given info object contains all the current workout
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//! The given info object contains all the current workout
     //! information. Calculate a value and return it in this method.
     function compute(info) {
         // See Activity.Info in the documentation for available information.
     
+		// mike note: compute updates heart, speed, dist, tid (elapsed time), startLoca (currentLocation), startAlt (altitude), lap, alt (altitude), Loca (currentLocation)
+
         heart = info.currentHeartRate;
         speed = info.currentSpeed;
         dist = info.elapsedDistance;
@@ -342,6 +428,7 @@ class ORunView extends Ui.DataField {
             startLoca = info.currentLocation;
             startAlt = info.altitude;
             startLap = lap;
+			System.println("  compute: lap is now " + lap);
         }
         
         if (info.altitude != null && startAlt != null) {
@@ -350,44 +437,46 @@ class ORunView extends Ui.DataField {
         
         loca = info.currentLocation;
     }
-    
-    function onTimerStart() {
+    // -------------------------------------------------------------------------------------------------------------------
+    function onTimerStart() { // mike note: increment lap when user presses start, which is interesting to me
         lap++;
+		System.println("  user pressed Start: lap is now " + lap);
         Ui.requestUpdate();
     }
-    
-    function onTimerLap() {
+    // -------------------------------------------------------------------------------------------------------------------
+    function onTimerLap() { // mike note: increment lap when user presses lap
         lap++;
+		System.println("  user pressed Lap:   lap is now " + lap);
         Ui.requestUpdate();
     }
-    
-    function getPace() {
+    // -------------------------------------------------------------------------------------------------------------------
+    function getPace() { // mike note: simple method returns pace with unit conversion  (runs with elapsed time as argument)
 		if (speed != null and speed >= 0.5) {
     		return fmt_num((unitConv / speed).toNumber());
     	}
     	return "0.0";
     }
-    
-    function fmt_num(num) {
+    // -------------------------------------------------------------------------------------------------------------------
+    function fmt_num(num) { // formats time into minutes + seconds for display
         return (num / 60) + ":" + (num % 60).format("%02d");
     }
-    
-    function getDist() {
+    // -------------------------------------------------------------------------------------------------------------------
+    function getDist() { // mike note: get unit-converted distance string
 		if (dist != null) {
     		return (dist / unitConv).format("%0.2f");
     	}
     	return "0.00";
     }
-    
-    function getAlt() {
+    // -------------------------------------------------------------------------------------------------------------------
+    function getAlt() { // mike note: get altitude, converted for units
     
 		if (alt != null) {
     		return (alt * distConv).toNumber();
     	}
     	return 0;
     }
-    
-    function getTid() {
+    // -------------------------------------------------------------------------------------------------------------------
+    function getTid() { // mike note: get the elapsed activity time in MM:SS or HH:MM:SET format
     
     	if (tid != null) {
     		var totsec = tid / 1000;
@@ -401,33 +490,33 @@ class ORunView extends Ui.DataField {
         	}
         	return Lang.format("$1$:$2$", [min.format("%02d"), sec.format("%02d")]);
     	}
-    	return "00:00";
+    	return "00:00"; // return "00:00" if elapsed timer is null
     }
-    
-    function getTod() {
+    // -------------------------------------------------------------------------------------------------------------------
+    function getTod() { // mike note: get the Time of day
     	var klokk = System.getClockTime();
         return Lang.format("$1$:$2$:$3$", [klokk.hour.format("%02d"), klokk.min.format("%02d"), klokk.sec.format("%02d")]);
     }
-    
-    function getBearing() {
+    // -------------------------------------------------------------------------------------------------------------------
+    function getBearing() { // mike note: safety wrapper for computeBearing // this could be best, although other ways exist to do this
     	if (startLoca != null and loca != null) {
     		return computeBearing(startLoca, loca).toString();
     	}
-    	return "";
+    	return ""; //  mike note: returns string
     }
-    
-    function getSld() {
+    // -------------------------------------------------------------------------------------------------------------------
+    function getSld() { // mike note: safety wrapper for computeBearing // this could be best, although other ways exist to do this
     	if (startLoca != null and loca != null) {
     		return computeDistance(startLoca, loca).toString();
     	} 
-    	return "";
+    	return ""; //  mike note: returns string
     }
-	
-	function degrees(n) {
+	// -------------------------------------------------------------------------------------------------------------------
+	function degrees(n) { // mike note: newer models on Garmin have this built-in function in Math library I believe
 	  return n * (180 / Math.PI);
-	}
-	
-	function atan2(y, x) {
+	} // mike note: returns degrees
+	// -------------------------------------------------------------------------------------------------------------------
+	function atan2(y, x) { // mike note: this function has historically been troublesome when garmin updates its backend firmware, check on atan2 vs log vs logn (ln)
 		if (x > 0) {
 			return Math.atan((y / x));
 		}
@@ -446,10 +535,10 @@ class ORunView extends Ui.DataField {
 			return -Math.PI / 2;
 		}
 		
-		return 0.0;
+		return 0.0; // mike note: returns degrees
 	}
-	
-	function computeBearing(pos1, pos2) {
+	// -------------------------------------------------------------------------------------------------------------------
+	function computeBearing(pos1, pos2) { // mike note: rhumb line bearing (constant bearing, meaning it crosses all meridians of longitude at same angle)
 	
 	    var startLat = pos1.toRadians()[0].toFloat();
 	    var startLong = pos1.toRadians()[1].toFloat();
@@ -471,9 +560,9 @@ class ORunView extends Ui.DataField {
 	    var deg = degrees(calc);
 	    return (deg + 360.0).toNumber() % 360;
 	}
-	
-	function computeDistance (pos1, pos2) {
-	    var lat1, lat2, lon1, lon2, lat, lon;
+	// -------------------------------------------------------------------------------------------------------------------
+	function computeDistance (pos1, pos2) { // mike note: calculate distance using Equirectangular Projection (flat-surface) approximation, best suited for orienteering or close distances
+	    var lat1, lat2, lon1, lon2, lat, lon; // mike note: last var lon is unused, could be deleted
 	    var dx, dy, distance;
 	
 	    lat1 = pos1.toDegrees()[0].toFloat();
@@ -488,8 +577,8 @@ class ORunView extends Ui.DataField {
 	    
 	    return (distConv * distance).toNumber();
 	}
-	
-	function setBatteryColor(dc, battery) {
+	// -------------------------------------------------------------------------------------------------------------------
+	function setBatteryColor(dc, battery) { // mike note: change color of battery % if over 30%, over 10%
         if (battery > 30) {
             dc.setColor( Gfx.COLOR_GREEN, Gfx.COLOR_TRANSPARENT );
         }
@@ -500,15 +589,15 @@ class ORunView extends Ui.DataField {
             dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
         }
 	}
-	
+	// -------------------------------------------------------------------------------------------------------------------
     //! Handle the update event
     function onUpdate(dc) 
     {
         dc.setColor(Gfx.COLOR_WHITE, backcol);
-        dc.clear();
+        dc.clear(); // paint background color
         
         dc.setColor(linecol, Gfx.COLOR_TRANSPARENT);
-        dc.setPenWidth(3);
+        dc.setPenWidth(3); // set foreground color linecol for printing lines, text
         
         // Draw the BOLD lines 
         dc.drawLine( 0, firstY, width, firstY);         // Top horizontal 
@@ -526,51 +615,62 @@ class ORunView extends Ui.DataField {
         dc.drawLine( botcenter, thirdY, botcenter, dc.getHeight() );  // Battery/Time vertical split-line
         dc.setColor( forecol, Gfx.COLOR_TRANSPARENT );
 		
-        // ----------
-        // TOP fields
-        // ----------
+        // ---------- ////////////////////////////////////
+        // TOP fields ////////////////////////////////////
+        // ---------- ////////////////////////////////////
         
+		// mike note: top left - Deg / slb - degrees bearing (in RED medium font)
         dc.drawText( slbX1, slbY1, Gfx.FONT_XTINY, slbLabel, topAlign1 );
         dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
         dc.drawText( slbX2, slbY2, Gfx.FONT_NUMBER_MEDIUM, getBearing(), topAlign2 );
-        dc.setColor( forecol, Gfx.COLOR_TRANSPARENT );
+        
+		// mike note: top right - SLD straight-line distance in ft or m (in med font)
+		dc.setColor( forecol, Gfx.COLOR_TRANSPARENT );
         dc.drawText( sldX1, sldY1, Gfx.FONT_XTINY, sldLabel, topAlign3 );
         dc.drawText( sldX2, sldY2, Gfx.FONT_NUMBER_MEDIUM, getSld(), topAlign4 );
         
-        // -------------
-        // MIDDLE fields
-        // -------------
+        // ------------- ////////////////////////////////////
+        // MIDDLE fields ////////////////////////////////////
+        // ------------- ////////////////////////////////////
 		var midfont = Gfx.FONT_LARGE;
 
+		// mike note: middle left - heart rate in bpm
         var hrString = (heart != null ? heart.toString() : "");
         dc.drawText( halfMiddleWitt, firstYLbl, Gfx.FONT_XTINY, hbtLabel, Gfx.TEXT_JUSTIFY_CENTER );
         dc.drawText( halfMiddleWitt, firstYDat, midfont, hrString, Gfx.TEXT_JUSTIFY_CENTER );
         
+		// mike note: middle center - altitude with unit conversion
         dc.drawText( altX, firstYLbl, Gfx.FONT_XTINY, altLabel, Gfx.TEXT_JUSTIFY_CENTER );
         var altNum = getAlt();
-        if (altNum > 9999) {
+        if (altNum > 9999) { // mike note: if elevation over 9999 (10k ft or m?), use smaller font (med instead of large)
         	dc.drawText( altX, 100, Gfx.FONT_MEDIUM, altNum.toString(), Gfx.TEXT_JUSTIFY_CENTER );
         }
         else {
         	dc.drawText( altX, firstYDat, midfont, altNum.toString(), Gfx.TEXT_JUSTIFY_CENTER );
         }
         
+		// mike note: middle right - pace with unit conversion
         dc.drawText( paceX, firstYLbl, Gfx.FONT_XTINY, paceLabel, Gfx.TEXT_JUSTIFY_CENTER );
-        dc.drawText( paceX, firstYDat, midfont, getPace(), Gfx.TEXT_JUSTIFY_CENTER );
+        dc.drawText( paceX, firstYDat, midfont, getPace(), Gfx.TEXT_JUSTIFY_CENTER ); 					
         
-        // -------
+        // ------- // mike note: lower half of middle fields 
         
+		// mike note: lower middle left - elapsed activity time, formatted
         dc.drawText( tidX, secondYDat, midfont, getTid(), Gfx.TEXT_JUSTIFY_CENTER );
         dc.drawText( tidX, secondYLbl, Gfx.FONT_XTINY, tmrLabel, Gfx.TEXT_JUSTIFY_CENTER );
         
+		// mike note: lower middle right - converted activity distance total (does not reset upon new lap)
         dc.drawText( distX, secondYDat, midfont, getDist(), Gfx.TEXT_JUSTIFY_CENTER );
         dc.drawText( distX, secondYLbl, Gfx.FONT_XTINY, distLabel, Gfx.TEXT_JUSTIFY_CENTER );
         
-        // -------------
-        // Bottom fields
-        // -------------
-        dc.drawText( todX, thirdYDat, Gfx.FONT_XTINY, getTod(), Gfx.TEXT_JUSTIFY_LEFT );
+        // ------------- ////////////////////////////////////
+        // Bottom fields ////////////////////////////////////
+        // ------------- ////////////////////////////////////
         
+		// mike note: time of day HH:MM:SS
+		dc.drawText( todX, thirdYDat, Gfx.FONT_XTINY, getTod(), Gfx.TEXT_JUSTIFY_LEFT );
+        
+		// mike note: battery percentage, writing in different color depending upon percentage
         var batt = Sys.getSystemStats().battery.toNumber();
         setBatteryColor(dc, batt);
         dc.drawText( battX, thirdYDat, Gfx.FONT_XTINY, batt + "%", Gfx.TEXT_JUSTIFY_RIGHT);
