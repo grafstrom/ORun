@@ -95,8 +95,28 @@ class ORunView extends Ui.DataField {
 		
 	// -------------------------------------------------------------------------------------------------------------------
     function onLayout(dc) {
-		System.println("onlayout...");
+		var profile = Ui.loadResource(Rez.Strings.layoutProfile);
+		if (profile.equals("modern")) {
+			initModernLayout(dc);
+		}
     }
+	// -------------------------------------------------------------------------------------------------------------------
+	function initModernLayout(dc) {
+		var h = dc.getHeight();
+		var w = dc.getWidth();
+
+		dev = devFenix6;
+		firstY = (h * 40 / 100).toNumber();
+		firstYLbl = firstY + 5;
+		firstYDat = firstY + 24;
+		secondY = (h * 65 / 100).toNumber();
+		secondYLbl = secondY + 36;
+		secondYDat = secondY + 2;
+		thirdY = (h * 88 / 100).toNumber();
+		thirdYDat = thirdY + 2;
+
+		calcXVals(w, -15, -15, 7, -7);
+	}
 	// -------------------------------------------------------------------------------------------------------------------
     
 	function initialize() {  // mike note: initialize loads strings, get unit-settings
@@ -165,120 +185,77 @@ class ORunView extends Ui.DataField {
 
     	var dv = Ui.loadResource(Rez.Strings.device);
         if (dv.equals("fenix7x")) {
-            dev = devFenix7;
-            firstY     = 100;
-            firstYLbl  = 101;
-            firstYDat  = 120;
-            secondY    = 170;
-            secondYLbl = 220;
-            secondYDat = 180;
-            thirdY     = 242;
-            thirdYDat  = 250;
-            calcXVals(280, -15, -15, 7, -7);
+					   dev = devFenix7;
+					   setDeviceLayout(100, 101, 120, 170, 220, 180, 242, 250);
+			calcXVals(280, -15, -15, 7, -7);
             return;
         }
         else if (dv.equals("fenix7") ||
                  dv.equals("fenix6") ||
                  dv.equals("fenix6pro")) {
-            dev = devFenix6;
-            firstY     = 105;
-            firstYLbl  = 110;
-            firstYDat  = 124;
-            secondY    = 170;
-            secondYLbl = 206;
-            secondYDat = 172;
-            thirdY     = 228;
-            thirdYDat  = 230;
-            calcXVals(260, -15, -15, 7, -7);
+					   dev = devFenix6;
+					   setDeviceLayout(105, 110, 124, 170, 206, 172, 228, 230);
+			calcXVals(260, -15, -15, 7, -7);
             return;
         }
         else if (dv.equals("fenix6xpro")) {
-            dev = devFenix6;
-            firstY     = 110;
-            firstYLbl  = 115;
-            firstYDat  = 130;
-            secondY    = 180;
-            secondYLbl = 220;
-            secondYDat = 182;
-            thirdY     = 246;
-            thirdYDat  = 248;
-            calcXVals(280, -10, -15, 7, -7);
+					   dev = devFenix6;
+					   setDeviceLayout(110, 115, 130, 180, 220, 182, 246, 248);
+			calcXVals(280, -10, -15, 7, -7);
             return;
         }
         else if (dv.equals("fenix5") ||
                  dv.equals("fenix5x")) {
-            dev = devFenix5;
-            firstY     = 80;
-            firstYLbl  = 81;
-            firstYDat  = 104;
-            secondY    = 140;
-            secondYLbl = 172;
-            secondYDat = 142;
-            thirdY     = 200;
-            thirdYDat  = 202;
-            calcXVals(240, -15, -20, 5, -5);
+					   dev = devFenix5;
+					   setDeviceLayout(80, 81, 104, 140, 172, 142, 200, 202);
+			calcXVals(240, -15, -20, 5, -5);
             return;
         }
         else if (dv.equals("vivoactive")) {
-    	    dev = devVivoactive;
-            firstY     = 45;
-            firstYLbl  = 46;
-            firstYDat  = 61;
-            secondY    = 91;
-            secondYLbl = 113;
-            secondYDat = 90;
-            thirdY     = 131;
-            thirdYDat  = 132;
-    	    calcXVals(205, -22, -15, 40, -32);
+				   dev = devVivoactive;
+				   setDeviceLayout(45, 46, 61, 91, 113, 90, 131, 132);
+		     calcXVals(205, -22, -15, 40, -32);
             return;
     	}
     	else if (dv.equals("fr920xt")) {
-    	    dev = devFr920;
-            firstY     = 45;
-            firstYLbl  = 46;
-            firstYDat  = 61;
-            secondY    = 87;
-            secondYLbl = 113;
-            secondYDat = 90;
-            thirdY     = 130;
-            thirdYDat  = 132;
-    	    calcXVals(205, -22, -15, 40, -32);
+				   dev = devFr920;
+				   setDeviceLayout(45, 46, 61, 87, 113, 90, 130, 132);
+		     calcXVals(205, -22, -15, 40, -32);
             return;
     	}
     	else if (dv.equals("epix")) {
-    	    dev = devEpix;
-            firstY     = 42;
-            firstYLbl  = 43;
-            firstYDat  = 57;
-            secondY    = 87;
-            secondYLbl = 110;
-            secondYDat = 86;
-            thirdY     = 130;
-            thirdYDat  = 130;
-    	    calcXVals(205, -22, -15, 40, -32);
+				   dev = devEpix;
+				   setDeviceLayout(42, 43, 57, 87, 110, 86, 130, 130);
+		     calcXVals(205, -22, -15, 40, -32);
             return;
     	}
     	else if (dv.equals("fr230") ||
     	         dv.equals("fr235") ||
     	         dv.equals("fr630") ||
     	         dv.equals("fr735xt")) {
-    	    dev = devSemiRound;
-            firstY     = 60;
-            firstYLbl  = 61;
-            firstYDat  = 77;
-            secondY    = 110;
-            secondYLbl = 139;
-            secondYDat = 110;
-            thirdY     = 160;
-            thirdYDat  = 160;
-    	    calcXVals(218, -15, -15, 7, -7);
+				   dev = devSemiRound;
+				   setDeviceLayout(60, 61, 77, 110, 139, 110, 160, 160);
+		     calcXVals(218, -15, -15, 7, -7);
             return;
     	}
     	
         // Default settings are for fenix 3
-        calcXVals(218, -15, -15, 7, -7);
+		dev = devFenix3;
+		setDeviceLayout(80, 81, 96, 132, 164, 131, 185, 189);
+	 calcXVals(218, -15, -15, 7, -7);
     }
     // -------------------------------------------------------------------------------------------------------------------
+	function setDeviceLayout(y1, yl1, yd1, y2, yl2, yd2, y3, yd3) {
+		firstY = y1;
+		firstYLbl = yl1;
+		firstYDat = yd1;
+		secondY = y2;
+		secondYLbl = yl2;
+		secondYDat = yd2;
+		thirdY = y3;
+		thirdYDat = yd3;
+	}
+	// -------------------------------------------------------------------------------------------------------------------
 
 	// adjust1 - X adjustment from middle of top vertical line
 	// adjust2 - X adjustment from middle of bottom vertical line
@@ -308,58 +285,23 @@ class ORunView extends Ui.DataField {
 
 		if (dev == devFenix7) {
 		    // Round watches ...
-			slbX1 = topcenter - 7;
-			slbY1 = 10;
-			slbX2 = topcenter - 7;
-			slbY2 = 30;
-			sldX1 = topcenter + 7;
-			sldY1 = 10;
-			sldX2 = topcenter + 7;
-			sldY2 = 30;
+			setRoundTop(7, 10, 30);
 		}
 		else if (dev == devFenix6) {
 		    // Round watches ...
-			slbX1 = topcenter - 7;
-			slbY1 = 10;
-			slbX2 = topcenter - 7;
-			slbY2 = 37;
-			sldX1 = topcenter + 7;
-			sldY1 = 10;
-			sldX2 = topcenter + 7;
-			sldY2 = 37;
+			setRoundTop(7, 10, 37);
 		}
 		else if (dev == devFenix5) {
 		    // Round watches ...
-			slbX1 = topcenter - 10;
-			slbY1 = 10;
-			slbX2 = topcenter - 10;
-			slbY2 = 37;
-			sldX1 = topcenter + 10;
-			sldY1 = 10;
-			sldX2 = topcenter + 10;
-			sldY2 = 37;
+			setRoundTop(10, 10, 37);
 		}
 		else if (dev == devFenix3) {
 		    // Round watches ...
-			slbX1 = topcenter - 10;
-			slbY1 = 10;
-			slbX2 = topcenter - 10;
-			slbY2 = 20;
-			sldX1 = topcenter + 10;
-			sldY1 = 10;
-			sldX2 = topcenter + 10;
-			sldY2 = 20;
+			setRoundTop(10, 10, 20);
 		}
 		else if (dev == devSemiRound) {
 		    // Semi-Round watches ...
-			slbX1 = topcenter - 10;
-			slbY1 = 0;
-			slbX2 = topcenter - 10;
-			slbY2 = 13;
-			sldX1 = topcenter + 10;
-			sldY1 = 0;
-			sldX2 = topcenter + 10;
-			sldY2 = 13;
+			setRoundTop(10, 0, 13);
 		}
 		else {
 		    // Square watches ...
@@ -377,6 +319,17 @@ class ORunView extends Ui.DataField {
 			topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
 		}
     }
+	// -------------------------------------------------------------------------------------------------------------------
+	function setRoundTop(offset, y1, y2) {
+		slbX1 = topcenter - offset;
+		slbY1 = y1;
+		slbX2 = topcenter - offset;
+		slbY2 = y2;
+		sldX1 = topcenter + offset;
+		sldY1 = y1;
+		sldX2 = topcenter + offset;
+		sldY2 = y2;
+	}
 	// -------------------------------------------------------------------------------------------------------------------
     
 	

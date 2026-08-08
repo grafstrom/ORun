@@ -1,6 +1,9 @@
 <resources>
     <string id="AppName">ORun3</string>
     <string id="device">default</string>
+    <string id="layoutProfile">legacy</string>
+    <string id="layoutShape">round</string>
+    <string id="layoutTune">000000000000</string>
     <bitmap id="LauncherIcon" filename="images/launcher_icon.png" />
     
     <string id="sld_ft">SLD ft</string>

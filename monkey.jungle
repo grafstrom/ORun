@@ -1,1 +1,25 @@
 project.manifest = manifest.xml
+
+base.sourcePath = source
+base.resourcePath = resources
+
+# Modern products use the measured layout path. Legacy products continue to use
+# the existing resource profiles and ORunView layout path.
+d2bravo.resourcePath = $(base.resourcePath);resources-modern
+d2bravo_titanium.resourcePath = $(base.resourcePath);resources-modern
+descentg1.resourcePath = $(base.resourcePath);resources-modern
+vivoactive_hr.resourcePath = $(base.resourcePath);resources-modern
+
+fenix5.resourcePath = $(base.resourcePath);resources-fenix5
+fenix5x.resourcePath = $(base.resourcePath);resources-fenix5x
+fenix6.resourcePath = $(base.resourcePath);resources-fenix6
+fenix6pro.resourcePath = $(base.resourcePath);resources-fenix6pro
+fenix6xpro.resourcePath = $(base.resourcePath);resources-fenix6xpro
+fenix7.resourcePath = $(base.resourcePath);resources-fenix7
+fenix7x.resourcePath = $(base.resourcePath);resources-fenix7x
+fr230.resourcePath = $(base.resourcePath);resources-fr230
+fr235.resourcePath = $(base.resourcePath);resources-fr235
+fr630.resourcePath = $(base.resourcePath);resources-fr630
+fr735xt.resourcePath = $(base.resourcePath);resources-fr735xt
+fr920xt.resourcePath = $(base.resourcePath);resources-fr920xt
+vivoactive.resourcePath = $(base.resourcePath);resources-vivoactive
