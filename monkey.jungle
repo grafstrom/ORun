@@ -3,6 +3,30 @@ project.manifest = manifest.xml
 base.sourcePath = source
 base.resourcePath = resources
 
+# Keep the existing implementation isolated from modern source changes.
+d2bravo.sourcePath = source-legacy
+d2bravo_titanium.sourcePath = source-legacy
+descentg1.sourcePath = source-legacy
+fenix3.sourcePath = source-legacy
+fenix3_hr.sourcePath = source-legacy
+fenix5.sourcePath = source-legacy
+fenix5x.sourcePath = source-legacy
+fenix6.sourcePath = source-legacy
+fenix6pro.sourcePath = source-legacy
+fenix6xpro.sourcePath = source-legacy
+fenix7.sourcePath = source-legacy
+fenix7x.sourcePath = source-legacy
+fr230.sourcePath = source-legacy
+fr235.sourcePath = source-legacy
+fr630.sourcePath = source-legacy
+fr735xt.sourcePath = source-legacy
+fr920xt.sourcePath = source-legacy
+vivoactive.sourcePath = source-legacy
+vivoactive_hr.sourcePath = source-legacy
+
+# Modern source path pilot.
+fr165.sourcePath = source-modern
+
 # Modern resource profiles will be mapped here after a target device is selected
 # and its geometry has been verified.
 fr165.resourcePath = $(base.resourcePath);resources-fr165
