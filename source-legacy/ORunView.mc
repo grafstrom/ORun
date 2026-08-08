@@ -1,8 +1,5 @@
 using Toybox.WatchUi as Ui;
-using Toybox.Application as App;
 using Toybox.System as Sys;
-using Toybox.Time as Time;
-using Toybox.Activity as Act;
 using Toybox.Graphics as Gfx;
 
 class ORunView extends Ui.DataField {
@@ -95,50 +92,7 @@ class ORunView extends Ui.DataField {
 		
 	// -------------------------------------------------------------------------------------------------------------------
     function onLayout(dc) {
-		var profile = Ui.loadResource(Rez.Strings.layoutProfile);
-		if (profile.equals("modern")) {
-			initModernLayout(dc);
-		}
     }
-	// -------------------------------------------------------------------------------------------------------------------
-	function initModernLayout(dc) {
-		var h = dc.getHeight();
-		var w = dc.getWidth();
-
-		dev = devFenix6;
-		firstY = (h * 40 / 100).toNumber();
-		firstYLbl = firstY + 5;
-		firstYDat = firstY + 24;
-		secondY = (h * 65 / 100).toNumber();
-		secondYLbl = secondY + 36;
-		secondYDat = secondY + 2;
-		thirdY = (h * 88 / 100).toNumber();
-		thirdYDat = thirdY + 2;
-
-		calcXVals(w, -15, -15, 7, -7);
-		applyModernSpacing(dc);
-	}
-	// -------------------------------------------------------------------------------------------------------------------
-	function applyModernSpacing(dc) {
-		var smallH = dc.getFontHeight(Gfx.FONT_XTINY);
-		var halfH = (smallH / 2).toNumber();
-		topcenter += 8;
-		slbX1 += 8;
-		slbX2 += 8;
-		sldX1 += 8;
-		sldX2 += 8;
-
-		slbY1 += smallH - 5;
-		slbY2 += smallH - 10;
-		sldY1 += smallH - 5;
-		sldY2 += smallH - 10;
-
-		firstYLbl += halfH - 14;
-		firstYDat += halfH - 2;
-
-		secondYLbl -= smallH + 3;
-		secondYDat += smallH - 3;
-	}
 	// -------------------------------------------------------------------------------------------------------------------
     
 	function initialize() {  // mike note: initialize loads strings, get unit-settings
@@ -645,8 +599,10 @@ class ORunView extends Ui.DataField {
         setBatteryColor(dc, batt);
         dc.drawText( battX, thirdYDat, Gfx.FONT_XTINY, batt + "%", Gfx.TEXT_JUSTIFY_RIGHT);
 
-		System.println(memstr());    
+
+		// System.println(memstr()); // mike note: added for memory awareness
 	}
-	function memstr () { return ((Toybox.System.getSystemStats().freeMemory.toFloat()/Toybox.System.getSystemStats().totalMemory.toFloat()) * 100).toNumber() + "% available"; } 
+	// // mike note: added for memory awareness
+	// function memstr () { return ((Toybox.System.getSystemStats().freeMemory.toFloat()/Toybox.System.getSystemStats().totalMemory.toFloat()) * 100).toNumber() + "% available"; } 
 
 }
