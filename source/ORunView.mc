@@ -95,43 +95,10 @@ class ORunView extends Ui.DataField {
 		
 	// -------------------------------------------------------------------------------------------------------------------
     function onLayout(dc) {
+		System.println("onlayout...");
     }
 	// -------------------------------------------------------------------------------------------------------------------
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	function initialize() {  // mike note: initialize loads strings, get unit-settings
         DataField.initialize();
     
@@ -165,6 +132,34 @@ class ORunView extends Ui.DataField {
     	initDevice();
     }
     // -------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     function initDevice() {
 		System.println("running initialization for sizing");
 
@@ -674,5 +669,9 @@ class ORunView extends Ui.DataField {
         var batt = Sys.getSystemStats().battery.toNumber();
         setBatteryColor(dc, batt);
         dc.drawText( battX, thirdYDat, Gfx.FONT_XTINY, batt + "%", Gfx.TEXT_JUSTIFY_RIGHT);
+
+		System.println(memstr());    
 	}
+	function memstr () { return ((Toybox.System.getSystemStats().freeMemory.toFloat()/Toybox.System.getSystemStats().totalMemory.toFloat()) * 100).toNumber() + "% available"; } 
+
 }
