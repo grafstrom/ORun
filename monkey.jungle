@@ -3,12 +3,8 @@ project.manifest = manifest.xml
 base.sourcePath = source
 base.resourcePath = resources
 
-# Modern products use the measured layout path. Legacy products continue to use
-# the existing resource profiles and ORunView layout path.
-d2bravo.resourcePath = $(base.resourcePath);resources-modern
-d2bravo_titanium.resourcePath = $(base.resourcePath);resources-modern
-descentg1.resourcePath = $(base.resourcePath);resources-modern
-vivoactive_hr.resourcePath = $(base.resourcePath);resources-modern
+# Modern resource profiles will be mapped here after a target device is selected
+# and its geometry has been verified.
 
 fenix5.resourcePath = $(base.resourcePath);resources-fenix5
 fenix5x.resourcePath = $(base.resourcePath);resources-fenix5x
