@@ -5,6 +5,7 @@ base.resourcePath = resources
 
 # Modern resource profiles will be mapped here after a target device is selected
 # and its geometry has been verified.
+fr165.resourcePath = $(base.resourcePath);resources-fr165
 
 fenix5.resourcePath = $(base.resourcePath);resources-fenix5
 fenix5x.resourcePath = $(base.resourcePath);resources-fenix5x

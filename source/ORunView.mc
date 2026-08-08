@@ -116,6 +116,28 @@ class ORunView extends Ui.DataField {
 		thirdYDat = thirdY + 2;
 
 		calcXVals(w, -15, -15, 7, -7);
+		applyModernSpacing(dc);
+	}
+	// -------------------------------------------------------------------------------------------------------------------
+	function applyModernSpacing(dc) {
+		var smallH = dc.getFontHeight(Gfx.FONT_XTINY);
+		var halfH = (smallH / 2).toNumber();
+		topcenter += 8;
+		slbX1 += 8;
+		slbX2 += 8;
+		sldX1 += 8;
+		sldX2 += 8;
+
+		slbY1 += smallH - 5;
+		slbY2 += smallH - 10;
+		sldY1 += smallH - 5;
+		sldY2 += smallH - 10;
+
+		firstYLbl += halfH - 14;
+		firstYDat += halfH - 2;
+
+		secondYLbl -= smallH + 3;
+		secondYDat += smallH - 3;
 	}
 	// -------------------------------------------------------------------------------------------------------------------
     
