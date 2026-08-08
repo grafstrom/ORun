@@ -75,25 +75,13 @@ class ORunView extends Ui.DataField {
 	var tmrLabel;
 	var hbtLabel;
 	var altLabel;
-	
+
 	// mike note: conversion factor values for far-distance 'dist' for miles/km and short-distance 'unit' for feet/meters
 	var distConv;
 	var unitConv;
 	var core;
-	
-	// mike note: these variables updated in compute, and used in calculations for final view display updates
-	var heart;
-	var speed;
-	var dist;
-	var tid;
 
-	var startLap = 0; // mike note: startLap is set to 0 upon run
-	var startAlt;
-	var startLoca;
-	var loca;
-	var alt;
-	var lap = 1; // mike note: lap at 1 upon run
-		
+	
 	// -------------------------------------------------------------------------------------------------------------------
     function onLayout(dc) {
 		var profile = Ui.loadResource(Rez.Strings.layoutProfile);
@@ -123,22 +111,30 @@ class ORunView extends Ui.DataField {
 	function applyModernSpacing(dc) {
 		var smallH = dc.getFontHeight(Gfx.FONT_XTINY);
 		var halfH = (smallH / 2).toNumber();
-		topcenter += 8;
-		slbX1 += 8;
-		slbX2 += 8;
-		sldX1 += 8;
-		sldX2 += 8;
+		var topX = Ui.loadResource(Rez.Strings.topShiftX).toNumber();
+		var topLabelY = Ui.loadResource(Rez.Strings.topLabelShiftY).toNumber();
+		var topValueY = Ui.loadResource(Rez.Strings.topValueShiftY).toNumber();
+		var middleTopLabelY = Ui.loadResource(Rez.Strings.middleTopLabelShiftY).toNumber();
+		var middleTopValueY = Ui.loadResource(Rez.Strings.middleTopValueShiftY).toNumber();
+		var middleBottomLabelY = Ui.loadResource(Rez.Strings.middleBottomLabelShiftY).toNumber();
+		var middleBottomValueY = Ui.loadResource(Rez.Strings.middleBottomValueShiftY).toNumber();
 
-		slbY1 += smallH - 5;
-		slbY2 += smallH - 10;
-		sldY1 += smallH - 5;
-		sldY2 += smallH - 10;
+		topcenter += topX;
+		slbX1 += topX;
+		slbX2 += topX;
+		sldX1 += topX;
+		sldX2 += topX;
 
-		firstYLbl += halfH - 14;
-		firstYDat += halfH - 2;
+		slbY1 += smallH + topLabelY;
+		slbY2 += smallH + topValueY;
+		sldY1 += smallH + topLabelY;
+		sldY2 += smallH + topValueY;
 
-		secondYLbl -= smallH + 3;
-		secondYDat += smallH - 3;
+		firstYLbl += halfH + middleTopLabelY;
+		firstYDat += halfH + middleTopValueY;
+
+		secondYLbl += smallH + middleBottomLabelY;
+		secondYDat += smallH + middleBottomValueY;
 	}
 	// -------------------------------------------------------------------------------------------------------------------
     
@@ -391,55 +387,33 @@ class ORunView extends Ui.DataField {
 	//! The given info object contains all the current workout
     //! information. Calculate a value and return it in this method.
     function compute(info) {
-        // See Activity.Info in the documentation for available information.
-    
-		// mike note: compute updates heart, speed, dist, tid (elapsed time), startLoca (currentLocation), startAlt (altitude), lap, alt (altitude), Loca (currentLocation)
-
-        heart = info.currentHeartRate;
-        speed = info.currentSpeed;
-        dist = info.elapsedDistance;
-        tid = info.elapsedTime;
-        
-        if (info.currentLocation != null && lap > startLap) {
-            startLoca = info.currentLocation;
-            startAlt = info.altitude;
-            startLap = lap;
-			System.println("  compute: lap is now " + lap);
-        }
-        
-        if (info.altitude != null && startAlt != null) {
-            alt = info.altitude - startAlt;
-        }
-        
-        loca = info.currentLocation;
+		core.compute(info);
     }
     // -------------------------------------------------------------------------------------------------------------------
     function onTimerStart() { // mike note: increment lap when user presses start, which is interesting to me
-        lap++;
-		System.println("  user pressed Start: lap is now " + lap);
+		core.onTimerStart();
         Ui.requestUpdate();
     }
     // -------------------------------------------------------------------------------------------------------------------
     function onTimerLap() { // mike note: increment lap when user presses lap
-        lap++;
-		System.println("  user pressed Lap:   lap is now " + lap);
+		core.onTimerLap();
         Ui.requestUpdate();
     }
     // -------------------------------------------------------------------------------------------------------------------
     function getPace() {
-    	return core.getPace(speed);
+	return core.getPace(core.speed);
     }
     // -------------------------------------------------------------------------------------------------------------------
     function getDist() {
-    	return core.getDist(dist);
+	return core.getDist(core.dist);
     }
     // -------------------------------------------------------------------------------------------------------------------
     function getAlt() {
-    	return core.getAlt(alt);
+	return core.getAlt(core.alt);
     }
     // -------------------------------------------------------------------------------------------------------------------
     function getTid() {
-    	return core.getTid(tid);
+	return core.getTid(core.tid);
     }
     // -------------------------------------------------------------------------------------------------------------------
     function getTod() {
@@ -447,15 +421,15 @@ class ORunView extends Ui.DataField {
     }
     // -------------------------------------------------------------------------------------------------------------------
     function getBearing() { // mike note: safety wrapper for computeBearing // this could be best, although other ways exist to do this
-    	if (startLoca != null and loca != null) {
-    		return core.computeBearing(startLoca, loca).toString();
+	    if (core.startLoca != null and core.loca != null) {
+			return core.computeBearing(core.startLoca, core.loca).toString();
     	}
     	return ""; //  mike note: returns string
     }
     // -------------------------------------------------------------------------------------------------------------------
     function getSld() { // mike note: safety wrapper for computeBearing // this could be best, although other ways exist to do this
-    	if (startLoca != null and loca != null) {
-    		return core.computeDistance(startLoca, loca).toString();
+	    if (core.startLoca != null and core.loca != null) {
+			return core.computeDistance(core.startLoca, core.loca).toString();
     	} 
     	return ""; //  mike note: returns string
     }
@@ -517,7 +491,7 @@ class ORunView extends Ui.DataField {
 		var midfont = Gfx.FONT_LARGE;
 
 		// mike note: middle left - heart rate in bpm
-        var hrString = (heart != null ? heart.toString() : "");
+		var hrString = (core.heart != null ? core.heart.toString() : "");
         dc.drawText( halfMiddleWitt, firstYLbl, Gfx.FONT_XTINY, hbtLabel, Gfx.TEXT_JUSTIFY_CENTER );
         dc.drawText( halfMiddleWitt, firstYDat, midfont, hrString, Gfx.TEXT_JUSTIFY_CENTER );
         

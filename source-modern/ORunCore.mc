@@ -6,6 +6,16 @@ class ORunCore {
 
     var distConv = 1;
     var unitConv = 1000;
+    var heart;
+    var speed;
+    var dist;
+    var tid;
+    var startLap = 0;
+    var startAlt;
+    var startLoca;
+    var loca;
+    var alt;
+    var lap = 1;
 
     function setDistanceConversion(value) {
         distConv = value;
@@ -13,6 +23,36 @@ class ORunCore {
 
     function setUnitConversion(value) {
         unitConv = value;
+    }
+
+    function compute(info) {
+        heart = info.currentHeartRate;
+        speed = info.currentSpeed;
+        dist = info.elapsedDistance;
+        tid = info.elapsedTime;
+
+        if (info.currentLocation != null and lap > startLap) {
+            startLoca = info.currentLocation;
+            startAlt = info.altitude;
+            startLap = lap;
+            System.println("  compute: lap is now " + lap);
+        }
+
+        if (info.altitude != null and startAlt != null) {
+            alt = info.altitude - startAlt;
+        }
+
+        loca = info.currentLocation;
+    }
+
+    function onTimerStart() {
+        lap++;
+        System.println("  user pressed Start: lap is now " + lap);
+    }
+
+    function onTimerLap() {
+        lap++;
+        System.println("  user pressed Lap:   lap is now " + lap);
     }
 
     function getPace(speed) {

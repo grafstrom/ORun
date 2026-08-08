@@ -2,4 +2,11 @@
     <string id="layoutProfile">modern</string>
     <string id="layoutShape">round</string>
     <string id="layoutTune">000000000000</string>
+    <string id="topShiftX">0</string>
+    <string id="topLabelShiftY">0</string>
+    <string id="topValueShiftY">0</string>
+    <string id="middleTopLabelShiftY">0</string>
+    <string id="middleTopValueShiftY">0</string>
+    <string id="middleBottomLabelShiftY">0</string>
+    <string id="middleBottomValueShiftY">0</string>
 </resources>
