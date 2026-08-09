@@ -219,7 +219,21 @@ class ORunView extends Ui.DataField {
         // Default settings are for fenix 3
 		dev = devFenix3;
 		setDeviceLayout(80, 81, 96, 132, 164, 131, 185, 189);
-	 calcXVals(218, -15, -15, 7, -7);
+	 	calcXVals(218, -15, -15, 7, -7);
+
+
+		// IMPORTANT mike note:
+		// the above default values may be working for fenix 3,
+		// but they also may correspond to the following watches,
+		// considering there are no separate resource files for them!
+		//   - d2bravo
+		//   - d2bravo_titanium
+		//   - descentg1
+		//   - fenix3
+		//   - fenix3_hr
+		//   - vivoactive_hr
+
+
     }
     // -------------------------------------------------------------------------------------------------------------------
 	function setDeviceLayout(y1, yl1, yd1, y2, yl2, yd2, y3, yd3) {

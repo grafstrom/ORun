@@ -1,74 +1,83 @@
 project.manifest = manifest.xml
 
+##############################################################################################################################
+# source #####################################################################################################################
 
-# source ############################################################
+# default sourcePath is source-modern for ALL newer watches
+base.sourcePath = source/modern-source
 
-# default sourcePath is source-modern for newer watches
-base.sourcePath = source-modern
-
-# Keep the existing implementation isolated from modern source changes.
-d2bravo.sourcePath = source-legacy
-d2bravo_titanium.sourcePath = source-legacy
-descentg1.sourcePath = source-legacy
-fenix3.sourcePath = source-legacy
-fenix3_hr.sourcePath = source-legacy
-fr230.sourcePath = source-legacy
-fr235.sourcePath = source-legacy
-fr630.sourcePath = source-legacy
-fr735xt.sourcePath = source-legacy
-fr920xt.sourcePath = source-legacy
-vivoactive.sourcePath = source-legacy
-vivoactive_hr.sourcePath = source-legacy
-# following watches have been migrated to modern layout via default source-modern
-# fenix5.sourcePath = source-legacy
-# fenix5x.sourcePath = source-legacy
-# fenix6.sourcePath = source-legacy
-# fenix6pro.sourcePath = source-legacy
-# fenix6xpro.sourcePath = source-legacy
-# fenix7.sourcePath = source-legacy
-# fenix7x.sourcePath = source-legacy
+# sourcePath for below legacy devices is source/legacy-source
+d2bravo.sourcePath = source/legacy-source
+d2bravo_titanium.sourcePath = source/legacy-source
+descentg1.sourcePath = source/legacy-source
+fenix3.sourcePath = source/legacy-source
+fenix3_hr.sourcePath = source/legacy-source
+fr230.sourcePath = source/legacy-source
+fr235.sourcePath = source/legacy-source
+fr630.sourcePath = source/legacy-source
+fr735xt.sourcePath = source/legacy-source
+fr920xt.sourcePath = source/legacy-source
+vivoactive.sourcePath = source/legacy-source
+vivoactive_hr.sourcePath = source/legacy-source
 
 
-# resources #########################################################
+##############################################################################################################################
+# resources ##################################################################################################################
 
 # default resourcePath has image, good for all devices
 base.resourcePath = resources
 
-fr230.resourcePath = $(base.resourcePath);resources-fr230
-fr235.resourcePath = $(base.resourcePath);resources-fr235
-fr630.resourcePath = $(base.resourcePath);resources-fr630
-fr735xt.resourcePath = $(base.resourcePath);resources-fr735xt
-fr920xt.resourcePath = $(base.resourcePath);resources-fr920xt
-vivoactive.resourcePath = $(base.resourcePath);resources-vivoactive
+fr230.resourcePath = $(base.resourcePath);layouts/legacy-layouts/resources-fr230
+fr235.resourcePath = $(base.resourcePath);layouts/legacy-layouts/resources-fr235
+fr630.resourcePath = $(base.resourcePath);layouts/legacy-layouts/resources-fr630
+fr735xt.resourcePath = $(base.resourcePath);layouts/legacy-layouts/resources-fr735xt
+fr920xt.resourcePath = $(base.resourcePath);layouts/legacy-layouts/resources-fr920xt
+vivoactive.resourcePath = $(base.resourcePath);layouts/legacy-layouts/resources-vivoactive
 
 # included as older watches, but really these are modern watches...
-fenix5.resourcePath = $(base.resourcePath);resources-fenix5
-fenix5x.resourcePath = $(base.resourcePath);resources-fenix5x
-fenix6.resourcePath = $(base.resourcePath);resources-fenix6
-fenix6pro.resourcePath = $(base.resourcePath);resources-fenix6pro
-fenix6xpro.resourcePath = $(base.resourcePath);resources-fenix6xpro
-fenix7.resourcePath = $(base.resourcePath);resources-fenix7
-fenix7x.resourcePath = $(base.resourcePath);resources-fenix7x
+# fenix6.resourcePath = $(base.resourcePath);resources-fenix6
+# fenix6pro.resourcePath = $(base.resourcePath);resources-fenix6pro
+# fenix6xpro.resourcePath = $(base.resourcePath);resources-fenix6xpro
+# fenix7.resourcePath = $(base.resourcePath);resources-fenix7
+# fenix7x.resourcePath = $(base.resourcePath);resources-fenix7x
+
+
+
+
 
 # Modern resource profiles mapped by geometry after verification.
 
-# round-390x390 devices
-approachs7042mm.resourcePath =      $(base.resourcePath);resources-round-390x390
-descentmk343mm.resourcePath = 		$(base.resourcePath);resources-round-390x390
-epix2pro42mm.resourcePath = 		$(base.resourcePath);resources-round-390x390
-marq2.resourcePath = 				$(base.resourcePath);resources-round-390x390
-marq2aviator.resourcePath = 		$(base.resourcePath);resources-round-390x390
-approachs50.resourcePath = 			$(base.resourcePath);resources-round-390x390
-instinct3amoled45mm.resourcePath = 	$(base.resourcePath);resources-round-390x390
-# d2air move up slightly...
-d2air.resourcePath = 				$(base.resourcePath);resources-round-390x390-venu
-venu.resourcePath = 				$(base.resourcePath);resources-round-390x390-venu
-venud.resourcePath = 				$(base.resourcePath);resources-round-390x390-venu
-venu3s.resourcePath = 				$(base.resourcePath);resources-round-390x390-venu
-vivoactive5.resourcePath = 			$(base.resourcePath);resources-round-390x390-venu
-# fr165
-fr165.resourcePath = 				$(base.resourcePath);resources-round-390x390-fr165
-fr165m.resourcePath = 				$(base.resourcePath);resources-round-390x390-fr165
+# round-240x240 // g2g
+d2charlie.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+d2delta.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+d2deltapx.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+d2deltas.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+descentmk1.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+fenix5.resourcePath =               $(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+fenix5plus.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+fenix5splus.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+fenix5x.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+fenix5xplus.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+fr645.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+fr645m.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+fr935.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+
+# round-390x390 devices // g2g    <-- should MOVE entire layout up some... 
+approachs7042mm.resourcePath =      $(base.resourcePath);layouts/modern-layouts/resources-round-390x390
+descentmk343mm.resourcePath = 		$(base.resourcePath);layouts/modern-layouts/resources-round-390x390
+epix2pro42mm.resourcePath = 		$(base.resourcePath);layouts/modern-layouts/resources-round-390x390
+marq2.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-390x390
+marq2aviator.resourcePath = 		$(base.resourcePath);layouts/modern-layouts/resources-round-390x390
+approachs50.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-390x390
+
+# round-390x390 d2air // g2g
+d2air.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-390x390-d2air
+venu.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-390x390-d2air
+venud.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-390x390-d2air
+
+# round-390x390 fr165 // g2g
+fr165.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-390x390-fr165
+fr165m.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-390x390-fr165
 
 
 

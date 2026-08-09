@@ -24,4 +24,4 @@ From left to right, top to bottom these are the displayed fields:
 8. Battery power
 9. Time of day
 
-![Image of ORun](ORun.jpg)
+![Image of ORun](images/ORun.jpg)

@@ -19,21 +19,21 @@ class ORunView extends Ui.DataField {
     // var dev = devFenix3; // mike note: default Fenix3 dimensions for UI arrangement
 
 	// more device-specific dimensions values for UI arrangement
-	var firstY     = 80;
-	var firstYLbl  = 81;
-	var firstYDat  = 96;
-	var secondY    = 132;
-	var secondYLbl = 164;
-	var secondYDat = 131;
-	var thirdY     = 185;
-	var thirdYDat  = 189;
+	var firstY     		= 80;
+	var firstYLabel  	= 81;
+	var firstYData  	= 96;
+	var secondY    		= 132;
+	var secondYLabel 	= 164;
+	var secondYData 	= 131;
+	var thirdY     		= 185;
+	var thirdYData  	= 189;
 	
-    var rezWidth = 218; // defaults but safe defaults
+    var rezWidth 		= 218; // defaults but safe defaults
     var halfWitt;
 	var middlew;
-	var halfMiddleWitt;
-    var topcenter;
-    var botcenter;
+	var halfMiddleWidth;
+    var topCenter;
+    var bottomCenter;
 	
 	var slbX1;
 	var slbX2;
@@ -81,13 +81,13 @@ class ORunView extends Ui.DataField {
     function onLayout(dc) { //initModernLayout(dc);
 
 		firstY = Ui.loadResource(Rez.Strings.firstY).toNumber();
-		firstYLbl = Ui.loadResource(Rez.Strings.firstYLbl).toNumber();
-		firstYDat = Ui.loadResource(Rez.Strings.firstYDat).toNumber();
+		firstYLabel = Ui.loadResource(Rez.Strings.firstYLabel).toNumber();
+		firstYData = Ui.loadResource(Rez.Strings.firstYData).toNumber();
 		secondY = Ui.loadResource(Rez.Strings.secondY).toNumber();
-		secondYLbl = Ui.loadResource(Rez.Strings.secondYLbl).toNumber();
-		secondYDat = Ui.loadResource(Rez.Strings.secondYDat).toNumber();
+		secondYLabel = Ui.loadResource(Rez.Strings.secondYLabel).toNumber();
+		secondYData = Ui.loadResource(Rez.Strings.secondYData).toNumber();
 		thirdY = Ui.loadResource(Rez.Strings.thirdY).toNumber();
-		thirdYDat = Ui.loadResource(Rez.Strings.thirdYDat).toNumber();
+		thirdYData = Ui.loadResource(Rez.Strings.thirdYData).toNumber();
 
 		rezWidth = Ui.loadResource(Rez.Strings.width).toNumber(); //easier to use dc.getWidth(), but easier to debug/maintain if we load from resource file
 	    if (rezWidth != dc.getWidth()) {
@@ -95,15 +95,15 @@ class ORunView extends Ui.DataField {
 		}
 		halfWitt = rezWidth / 2;
 		middlew = rezWidth / 3;
-		halfMiddleWitt = middlew / 2;
-		altX = middlew + halfMiddleWitt;
+		halfMiddleWidth = middlew / 2;
+		altX = middlew + halfMiddleWidth;
 		tidX = (halfWitt / 2) + 5;
 		distX = (3 * halfWitt / 2) - 5;
-		paceX = 2 * middlew + halfMiddleWitt;
-	    topcenter = halfWitt + Ui.loadResource(Rez.Strings.topCenterAdjust).toNumber();    // X adjustment from middle of top vertical line
-	    botcenter = halfWitt + Ui.loadResource(Rez.Strings.bottomCenterAdjust).toNumber(); // X adjustment from middle of bottom vertical line
-		todX = botcenter + Ui.loadResource(Rez.Strings.todAdjust).toNumber();              // X adjustment from bottom vertical for time-of-day
-		battX = botcenter + Ui.loadResource(Rez.Strings.batteryAdjust).toNumber();         // X adjustment from bottom vertical for battery pct
+		paceX = 2 * middlew + halfMiddleWidth;
+	    topCenter = halfWitt + Ui.loadResource(Rez.Strings.topCenterXAdjust).toNumber();    // X adjustment from middle of top vertical line
+	    bottomCenter = halfWitt + Ui.loadResource(Rez.Strings.bottomCenterXAdjust).toNumber(); // X adjustment from middle of bottom vertical line
+		todX = bottomCenter + Ui.loadResource(Rez.Strings.todXAdjust).toNumber();              // X adjustment from bottom vertical for time-of-day
+		battX = bottomCenter + Ui.loadResource(Rez.Strings.batteryXAdjust).toNumber();         // X adjustment from bottom vertical for battery pct
 		
 		var shape = System.getDeviceSettings().screenShape;
 		var rezShape = Ui.loadResource(Rez.Strings.shape);
@@ -112,17 +112,17 @@ class ORunView extends Ui.DataField {
 		}
 
 		// default for round layout  (rezShape == System.SCREEN_SHAPE_RECTANGLE)
-		var offset = Ui.loadResource(Rez.Strings.topXOffset).toNumber();
-		var y1 = Ui.loadResource(Rez.Strings.topDatY).toNumber();
-		var y2 = Ui.loadResource(Rez.Strings.topLblY).toNumber();
-		slbX1 = topcenter - offset;
-		slbY1 = y1;
-		slbX2 = topcenter - offset;
-		slbY2 = y2;
-		sldX1 = topcenter + offset;
-		sldY1 = y1;
-		sldX2 = topcenter + offset;
-		sldY2 = y2;
+		var topXOffsets = Ui.loadResource(Rez.Strings.topXOffsets).toNumber();
+		var topYLabel = Ui.loadResource(Rez.Strings.topYLabel).toNumber();
+		var topYData = Ui.loadResource(Rez.Strings.topYData).toNumber();
+		slbX1 = topCenter - topXOffsets;
+		slbY1 = topYLabel;
+		slbX2 = topCenter - topXOffsets;
+		slbY2 = topYData;
+		sldX1 = topCenter + topXOffsets;
+		sldY1 = topYLabel;
+		sldX2 = topCenter + topXOffsets;
+		sldY2 = topYData;
 		// default align for round layout  (rezShape == System.SCREEN_SHAPE_RECTANGLE)
 		topAlign1 = Gfx.TEXT_JUSTIFY_RIGHT;
 		topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
@@ -133,11 +133,11 @@ class ORunView extends Ui.DataField {
 		if (rezShape == System.SCREEN_SHAPE_RECTANGLE) {
 			slbX1 = 0;
 			slbY1 = 0;
-			slbX2 = topcenter - 10;
+			slbX2 = topCenter - 10;
 			slbY2 = 5;
 			sldX1 = rezWidth - 2;
 			sldY1 = 0;
-			sldX2 = topcenter + 10;
+			sldX2 = topCenter + 10;
 			sldY2 = 5;
 			topAlign1 = Gfx.TEXT_JUSTIFY_LEFT;
 			topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
@@ -266,7 +266,7 @@ class ORunView extends Ui.DataField {
         
         // Draw the BOLD lines 
         dc.drawLine( 0, firstY, rezWidth, firstY);         // Top horizontal 
-        dc.drawLine( topcenter, firstY, topcenter, 0 ); // Top vertical split-line
+        dc.drawLine( topCenter, firstY, topCenter, 0 ); // Top vertical split-line
         dc.drawLine( 0, thirdY, rezWidth, thirdY);         // Bottom horizontal 
         
         // Draw the thin middle lines 
@@ -277,7 +277,7 @@ class ORunView extends Ui.DataField {
         
         dc.drawLine( halfWitt, secondY, halfWitt, thirdY );           // Timer/Dist vertical split-line
         
-        dc.drawLine( botcenter, thirdY, botcenter, dc.getHeight() );  // Battery/Time vertical split-line
+        dc.drawLine( bottomCenter, thirdY, bottomCenter, dc.getHeight() );  // Battery/Time vertical split-line
         dc.setColor( forecol, Gfx.COLOR_TRANSPARENT );
 		
         // ---------- ////////////////////////////////////
@@ -301,50 +301,50 @@ class ORunView extends Ui.DataField {
 
 		// mike note: middle left - heart rate in bpm
 		var hrString = (core.heart != null ? core.heart.toString() : "");
-        dc.drawText( halfMiddleWitt, firstYLbl, Gfx.FONT_XTINY, hbtLabel, Gfx.TEXT_JUSTIFY_CENTER );
-        dc.drawText( halfMiddleWitt, firstYDat, midfont, hrString, Gfx.TEXT_JUSTIFY_CENTER );
+        dc.drawText( halfMiddleWidth, firstYLabel, Gfx.FONT_XTINY, hbtLabel, Gfx.TEXT_JUSTIFY_CENTER );
+        dc.drawText( halfMiddleWidth, firstYData, midfont, hrString, Gfx.TEXT_JUSTIFY_CENTER );
         
 		// mike note: middle center - altitude with unit conversion
-        dc.drawText( altX, firstYLbl, Gfx.FONT_XTINY, altLabel, Gfx.TEXT_JUSTIFY_CENTER );
+        dc.drawText( altX, firstYLabel, Gfx.FONT_XTINY, altLabel, Gfx.TEXT_JUSTIFY_CENTER );
         var altNum = getAlt();
         if (altNum > 9999) { // mike note: if elevation over 9999 (10k ft or m?), use smaller font (med instead of large)
         	dc.drawText( altX, 100, Gfx.FONT_MEDIUM, altNum.toString(), Gfx.TEXT_JUSTIFY_CENTER );
         }
         else {
-        	dc.drawText( altX, firstYDat, midfont, altNum.toString(), Gfx.TEXT_JUSTIFY_CENTER );
+        	dc.drawText( altX, firstYData, midfont, altNum.toString(), Gfx.TEXT_JUSTIFY_CENTER );
         }
         
 		// mike note: middle right - pace with unit conversion
-        dc.drawText( paceX, firstYLbl, Gfx.FONT_XTINY, paceLabel, Gfx.TEXT_JUSTIFY_CENTER );
-        dc.drawText( paceX, firstYDat, midfont, getPace(), Gfx.TEXT_JUSTIFY_CENTER ); 					
+        dc.drawText( paceX, firstYLabel, Gfx.FONT_XTINY, paceLabel, Gfx.TEXT_JUSTIFY_CENTER );
+        dc.drawText( paceX, firstYData, midfont, getPace(), Gfx.TEXT_JUSTIFY_CENTER ); 					
         
         // ------- // mike note: lower half of middle fields 
         
 		// mike note: lower middle left - elapsed activity time, formatted
-        dc.drawText( tidX, secondYDat, midfont, getTid(), Gfx.TEXT_JUSTIFY_CENTER );
-        dc.drawText( tidX, secondYLbl, Gfx.FONT_XTINY, tmrLabel, Gfx.TEXT_JUSTIFY_CENTER );
+        dc.drawText( tidX, secondYData, midfont, getTid(), Gfx.TEXT_JUSTIFY_CENTER );
+        dc.drawText( tidX, secondYLabel, Gfx.FONT_XTINY, tmrLabel, Gfx.TEXT_JUSTIFY_CENTER );
         
 		// mike note: lower middle right - converted activity distance total (does not reset upon new lap)
-        dc.drawText( distX, secondYDat, midfont, getDist(), Gfx.TEXT_JUSTIFY_CENTER );
-        dc.drawText( distX, secondYLbl, Gfx.FONT_XTINY, distLabel, Gfx.TEXT_JUSTIFY_CENTER );
+        dc.drawText( distX, secondYData, midfont, getDist(), Gfx.TEXT_JUSTIFY_CENTER );
+        dc.drawText( distX, secondYLabel, Gfx.FONT_XTINY, distLabel, Gfx.TEXT_JUSTIFY_CENTER );
         
         // ------------- ////////////////////////////////////
         // Bottom fields ////////////////////////////////////
         // ------------- ////////////////////////////////////
         
 		// mike note: time of day HH:MM:SS
-		dc.drawText( todX, thirdYDat, Gfx.FONT_XTINY, getTod(), Gfx.TEXT_JUSTIFY_LEFT );
+		dc.drawText( todX, thirdYData, Gfx.FONT_XTINY, getTod(), Gfx.TEXT_JUSTIFY_LEFT );
         
 		// mike note: battery percentage, writing in different color depending upon percentage
         var batt = Sys.getSystemStats().battery.toNumber();
         setBatteryColor(dc, batt);
-        dc.drawText( battX, thirdYDat, Gfx.FONT_XTINY, batt + "%", Gfx.TEXT_JUSTIFY_RIGHT);
+        dc.drawText( battX, thirdYData, Gfx.FONT_XTINY, batt + "%", Gfx.TEXT_JUSTIFY_RIGHT);
 
 		// mike note: for testing memory
-		// System.println(memstr());    
+		 System.println(memstr());    
 	}
 	// mike note: for testing memory
-	//function memstr () { return ((Toybox.System.getSystemStats().freeMemory.toFloat()/Toybox.System.getSystemStats().totalMemory.toFloat()) * 100).toNumber() + "% available"; } 
+	function memstr () { return ((Toybox.System.getSystemStats().freeMemory.toFloat()/Toybox.System.getSystemStats().totalMemory.toFloat()) * 100).toNumber() + "% available"; } 
 }
 // ======================================================================================================================
 // notes below, class ends here
@@ -357,15 +357,15 @@ class ORunView extends Ui.DataField {
 
 	
 	// -------------------------------------------------------------------------------------------------------------------
-	// function setRoundTop(offset, y1, y2) {
-	// 	slbX1 = topcenter - offset;
-	// 	slbY1 = y1;
-	// 	slbX2 = topcenter - offset;
-	// 	slbY2 = y2;
-	// 	sldX1 = topcenter + offset;
-	// 	sldY1 = y1;
-	// 	sldX2 = topcenter + offset;
-	// 	sldY2 = y2;
+	// function setRoundTop(topXOffsets, topYLabel, topYData) {
+	// 	slbX1 = topCenter - topXOffsets;
+	// 	slbY1 = topYLabel;
+	// 	slbX2 = topCenter - topXOffsets;
+	// 	slbY2 = topYData;
+	// 	sldX1 = topCenter + topXOffsets;
+	// 	sldY1 = topYLabel;
+	// 	sldX2 = topCenter + topXOffsets;
+	// 	sldY2 = topYData;
 	// }
 
 	
@@ -393,11 +393,11 @@ class ORunView extends Ui.DataField {
 	// 	    // Square watches ...
 	// 		slbX1 = 0;
 	// 		slbY1 = 0;
-	// 		slbX2 = topcenter - 10;
+	// 		slbX2 = topCenter - 10;
 	// 		slbY2 = 5;
 	// 		sldX1 = rezWidth - 2;
 	// 		sldY1 = 0;
-	// 		sldX2 = topcenter + 10;
+	// 		sldX2 = topCenter + 10;
 	// 		sldY2 = 5;
 	// 		topAlign1 = Gfx.TEXT_JUSTIFY_LEFT;
 	// 		topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
@@ -410,13 +410,13 @@ class ORunView extends Ui.DataField {
 
 	// 	setDeviceLayout(
 	// 		Ui.loadResource(Rez.Strings.layoutFirstY).toNumber(),
-	// 		Ui.loadResource(Rez.Strings.layoutFirstYLbl).toNumber(),
-	// 		Ui.loadResource(Rez.Strings.layoutFirstYDat).toNumber(),
+	// 		Ui.loadResource(Rez.Strings.layoutfirstYLabel).toNumber(),
+	// 		Ui.loadResource(Rez.Strings.layoutfirstYData).toNumber(),
 	// 		Ui.loadResource(Rez.Strings.layoutSecondY).toNumber(),
-	// 		Ui.loadResource(Rez.Strings.layoutSecondYLbl).toNumber(),
-	// 		Ui.loadResource(Rez.Strings.layoutSecondYDat).toNumber(),
+	// 		Ui.loadResource(Rez.Strings.layoutsecondYLabel).toNumber(),
+	// 		Ui.loadResource(Rez.Strings.layoutsecondYData).toNumber(),
 	// 		Ui.loadResource(Rez.Strings.layoutThirdY).toNumber(),
-	// 		Ui.loadResource(Rez.Strings.layoutThirdYDat).toNumber()
+	// 		Ui.loadResource(Rez.Strings.layoutthirdYData).toNumber()
 	// 	);
 	// 	calcXVals(
 	// 		Ui.loadResource(Rez.Strings.layoutWidth).toNumber(),
@@ -527,15 +527,15 @@ class ORunView extends Ui.DataField {
 	//  	calcXVals(218, -15, -15, 7, -7);
     // }
     // -------------------------------------------------------------------------------------------------------------------
-	// function setDeviceLayout(y1, yl1, yd1, y2, yl2, yd2, y3, yd3) {
+	// function setDeviceLayout(topYLabel, yl1, yd1, topYData, yl2, yd2, y3, yd3) {
 	// 	firstY = Ui.loadResource(Rez.Strings.layoutFirstY).toNumber();
-	// 	firstYLbl = Ui.loadResource(Rez.Strings.layoutFirstYLbl).toNumber();
-	// 	firstYDat = Ui.loadResource(Rez.Strings.layoutFirstYDat).toNumber();
+	// 	firstYLabel = Ui.loadResource(Rez.Strings.layoutfirstYLabel).toNumber();
+	// 	firstYData = Ui.loadResource(Rez.Strings.layoutfirstYData).toNumber();
 	// 	secondY = Ui.loadResource(Rez.Strings.layoutSecondY).toNumber();
-	// 	secondYLbl = Ui.loadResource(Rez.Strings.layoutSecondYLbl).toNumber();
-	// 	secondYDat = Ui.loadResource(Rez.Strings.layoutSecondYDat).toNumber();
+	// 	secondYLabel = Ui.loadResource(Rez.Strings.layoutsecondYLabel).toNumber();
+	// 	secondYData = Ui.loadResource(Rez.Strings.layoutsecondYData).toNumber();
 	// 	thirdY = Ui.loadResource(Rez.Strings.layoutThirdY).toNumber();
-	// 	thirdYDat = Ui.loadResource(Rez.Strings.layoutThirdYDat).toNumber();
+	// 	thirdYData = Ui.loadResource(Rez.Strings.layoutthirdYData).toNumber();
 	// }
 	// -------------------------------------------------------------------------------------------------------------------
 
@@ -548,15 +548,15 @@ class ORunView extends Ui.DataField {
 	//     rezWidth = Ui.loadResource(Rez.Strings.layoutWidth).toNumber();
 	//     halfWitt = rezWidth / 2;
 	// 	middlew = rezWidth / 3;
-	// 	halfMiddleWitt = middlew / 2;
-	// 	altX = middlew + halfMiddleWitt;
+	// 	halfMiddleWidth = middlew / 2;
+	// 	altX = middlew + halfMiddleWidth;
 	// 	tidX = (halfWitt / 2) + 5;
 	// 	distX = (3 * halfWitt / 2) - 5;
-	// 	paceX = 2 * middlew + halfMiddleWitt;
-	//     topcenter = halfWitt + Ui.loadResource(Rez.Strings.layoutTopCenterAdjust).toNumber();
-	//     botcenter = halfWitt + Ui.loadResource(Rez.Strings.layoutBottomCenterAdjust).toNumber();
-	// 	todX = botcenter + Ui.loadResource(Rez.Strings.layoutTodAdjust).toNumber();
-	// 	battX = botcenter + Ui.loadResource(Rez.Strings.layoutBatteryAdjust).toNumber();
+	// 	paceX = 2 * middlew + halfMiddleWidth;
+	//     topCenter = halfWitt + Ui.loadResource(Rez.Strings.layoutTopCenterAdjust).toNumber();
+	//     bottomCenter = halfWitt + Ui.loadResource(Rez.Strings.layoutBottomCenterAdjust).toNumber();
+	// 	todX = bottomCenter + Ui.loadResource(Rez.Strings.layoutTodAdjust).toNumber();
+	// 	battX = bottomCenter + Ui.loadResource(Rez.Strings.layoutBatteryAdjust).toNumber();
 		
 	// 	// Std align for round(ish) layout ...
 	// 	topAlign1 = Gfx.TEXT_JUSTIFY_RIGHT;
@@ -588,11 +588,11 @@ class ORunView extends Ui.DataField {
 	// 	    // Square watches ...
 	// 		slbX1 = 0;
 	// 		slbY1 = 0;
-	// 		slbX2 = topcenter - 10;
+	// 		slbX2 = topCenter - 10;
 	// 		slbY2 = 5;
 	// 		sldX1 = rezWidth - 2;
 	// 		sldY1 = 0;
-	// 		sldX2 = topcenter + 10;
+	// 		sldX2 = topCenter + 10;
 	// 		sldY2 = 5;
 	// 		topAlign1 = Gfx.TEXT_JUSTIFY_LEFT;
 	// 		topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
