@@ -98,12 +98,13 @@ class ORunView extends Ui.DataField {
 	function initialize() {  // mike note: initialize loads strings, get unit-settings
         DataField.initialize();
     
+		// mike note: useful for debugging display
     	backcol = Gfx.COLOR_WHITE;										// mike note: unnecessary initialization of color settings
     	forecol = Gfx.COLOR_BLACK;										// mike note: these two statements could probably be removed
     	
     	// Inverted
-    	backcol = Gfx.COLOR_BLACK;										// mike note: initialize color settings
-    	forecol = Gfx.COLOR_WHITE;
+    	// backcol = Gfx.COLOR_BLACK;										// mike note: initialize color settings
+    	// forecol = Gfx.COLOR_WHITE;
     	
     	linecol = Gfx.COLOR_BLUE;
     	
@@ -600,9 +601,9 @@ class ORunView extends Ui.DataField {
         dc.drawText( battX, thirdYDat, Gfx.FONT_XTINY, batt + "%", Gfx.TEXT_JUSTIFY_RIGHT);
 
 
-		// System.println(memstr()); // mike note: added for memory awareness
+		System.println(memstr()); // mike note: added for memory awareness
 	}
 	// // mike note: added for memory awareness
-	// function memstr () { return ((Toybox.System.getSystemStats().freeMemory.toFloat()/Toybox.System.getSystemStats().totalMemory.toFloat()) * 100).toNumber() + "% available"; } 
+	function memstr () { return ((Toybox.System.getSystemStats().freeMemory.toFloat()/Toybox.System.getSystemStats().totalMemory.toFloat()) * 100).toNumber() + "% available"; } 
 
 }

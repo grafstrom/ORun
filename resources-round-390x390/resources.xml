@@ -1,0 +1,12 @@
+<resources>
+    <string id="layoutProfile">modern</string>
+    <string id="layoutShape">round</string>
+    <string id="layoutTune">390390000000</string>
+    <string id="topShiftX">-2</string>
+    <string id="topLabelShiftY">24</string>
+    <string id="topValueShiftY">19</string>
+    <string id="middleTopLabelShiftY">0</string>
+    <string id="middleTopValueShiftY">12</string>
+    <string id="middleBottomLabelShiftY">19</string>
+    <string id="middleBottomValueShiftY">1</string>
+</resources>

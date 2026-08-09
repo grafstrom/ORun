@@ -109,32 +109,30 @@ class ORunView extends Ui.DataField {
 	}
 	// -------------------------------------------------------------------------------------------------------------------
 	function applyModernSpacing(dc) {
-		var smallH = dc.getFontHeight(Gfx.FONT_XTINY);
-		var halfH = (smallH / 2).toNumber();
-		var topX = Ui.loadResource(Rez.Strings.topShiftX).toNumber();
-		var topLabelY = Ui.loadResource(Rez.Strings.topLabelShiftY).toNumber();
-		var topValueY = Ui.loadResource(Rez.Strings.topValueShiftY).toNumber();
-		var middleTopLabelY = Ui.loadResource(Rez.Strings.middleTopLabelShiftY).toNumber();
-		var middleTopValueY = Ui.loadResource(Rez.Strings.middleTopValueShiftY).toNumber();
-		var middleBottomLabelY = Ui.loadResource(Rez.Strings.middleBottomLabelShiftY).toNumber();
-		var middleBottomValueY = Ui.loadResource(Rez.Strings.middleBottomValueShiftY).toNumber();
+		var topXShift = Ui.loadResource(Rez.Strings.topShiftX).toNumber();
+		var topLabelShiftY = Ui.loadResource(Rez.Strings.topLabelShiftY).toNumber();
+		var topValueShiftY = Ui.loadResource(Rez.Strings.topValueShiftY).toNumber();
+		var middleTopLabelShiftY = Ui.loadResource(Rez.Strings.middleTopLabelShiftY).toNumber();
+		var middleTopValueShiftY = Ui.loadResource(Rez.Strings.middleTopValueShiftY).toNumber();
+		var middleBottomLabelShiftY = Ui.loadResource(Rez.Strings.middleBottomLabelShiftY).toNumber();
+		var middleBottomValueShiftY = Ui.loadResource(Rez.Strings.middleBottomValueShiftY).toNumber();
 
-		topcenter += topX;
-		slbX1 += topX;
-		slbX2 += topX;
-		sldX1 += topX;
-		sldX2 += topX;
+		topcenter += topXShift;
+		slbX1 += topXShift;
+		slbX2 += topXShift;
+		sldX1 += topXShift;
+		sldX2 += topXShift;
 
-		slbY1 += smallH + topLabelY;
-		slbY2 += smallH + topValueY;
-		sldY1 += smallH + topLabelY;
-		sldY2 += smallH + topValueY;
-
-		firstYLbl += halfH + middleTopLabelY;
-		firstYDat += halfH + middleTopValueY;
-
-		secondYLbl += smallH + middleBottomLabelY;
-		secondYDat += smallH + middleBottomValueY;
+		slbY1 += topLabelShiftY;
+		slbY2 += topValueShiftY;
+		sldY1 += topLabelShiftY;
+		sldY2 += topValueShiftY;
+		
+		firstYLbl += middleTopLabelShiftY;
+		firstYDat += middleTopValueShiftY;
+		
+		secondYLbl += middleBottomLabelShiftY;
+		secondYDat += middleBottomValueShiftY;
 	}
 	// -------------------------------------------------------------------------------------------------------------------
     
@@ -142,12 +140,13 @@ class ORunView extends Ui.DataField {
         DataField.initialize();
 		core = new ORunCore();
     
+    	// mike note: useful for debugging display
     	backcol = Gfx.COLOR_WHITE;										// mike note: unnecessary initialization of color settings
     	forecol = Gfx.COLOR_BLACK;										// mike note: these two statements could probably be removed
     	
     	// Inverted
-    	backcol = Gfx.COLOR_BLACK;										// mike note: initialize color settings
-    	forecol = Gfx.COLOR_WHITE;
+    	// backcol = Gfx.COLOR_BLACK;										// mike note: initialize color settings
+    	// forecol = Gfx.COLOR_WHITE;
     	
     	linecol = Gfx.COLOR_BLUE;
     	
@@ -400,20 +399,22 @@ class ORunView extends Ui.DataField {
         Ui.requestUpdate();
     }
     // -------------------------------------------------------------------------------------------------------------------
-    function getPace() {
-	return core.getPace(core.speed);
+    
+	
+	function getPace() {
+		return core.getPace(core.speed);
     }
     // -------------------------------------------------------------------------------------------------------------------
     function getDist() {
-	return core.getDist(core.dist);
+		return core.getDist(core.dist);
     }
     // -------------------------------------------------------------------------------------------------------------------
     function getAlt() {
-	return core.getAlt(core.alt);
+		return core.getAlt(core.alt);
     }
     // -------------------------------------------------------------------------------------------------------------------
     function getTid() {
-	return core.getTid(core.tid);
+		return core.getTid(core.tid);
     }
     // -------------------------------------------------------------------------------------------------------------------
     function getTod() {

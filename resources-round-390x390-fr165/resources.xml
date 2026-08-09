@@ -3,10 +3,10 @@
     <string id="layoutShape">round</string>
     <string id="layoutTune">390390000000</string>
     <string id="topShiftX">8</string>
-    <string id="topLabelShiftY">-5</string>
-    <string id="topValueShiftY">-10</string>
-    <string id="middleTopLabelShiftY">-14</string>
-    <string id="middleTopValueShiftY">-2</string>
-    <string id="middleBottomLabelShiftY">-3</string>
+    <string id="topLabelShiftY">24</string>
+    <string id="topValueShiftY">19</string>
+    <string id="middleTopLabelShiftY">0</string>
+    <string id="middleTopValueShiftY">12</string>
+    <string id="middleBottomLabelShiftY">18</string>
     <string id="middleBottomValueShiftY">-3</string>
 </resources>
