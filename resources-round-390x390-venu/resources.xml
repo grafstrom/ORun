@@ -1,5 +1,5 @@
 <resources>
-    <string id="deviceTypeHelper">round-390x390-fr165</string>
+    <string id="deviceTypeHelper">round-390x390-venu</string>
     <string id="shape">round</string>
     <string id="width">390</string>
 
@@ -7,12 +7,12 @@
     <string id="firstYLbl">161</string>
     <string id="firstYDat">192</string>
     <string id="secondY">253</string>
-    <string id="secondYLbl">307</string>
+    <string id="secondYLbl">306</string>
     <string id="secondYDat">252</string>
     <string id="thirdY">343</string>
     <string id="thirdYDat">345</string>
-    
-    <string id="topCenterAdjust">-7</string>
+
+    <string id="topCenterAdjust">-17</string>
     <string id="bottomCenterAdjust">-15</string>
     <string id="todAdjust">7</string>
     <string id="batteryAdjust">-7</string>

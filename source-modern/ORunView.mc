@@ -8,16 +8,15 @@ using Toybox.Graphics as Gfx;
 class ORunView extends Ui.DataField {
 
 	// mike note: following are UI settings to work with various dimensions of Garmin device - possibly better to use barrels and put these variables in separate device-specific file
-	const devSemiRound  = 1;
-	const devVivoactive = 2;
-	const devFenix3     = 3;
-	const devEpix       = 4;
-	const devFenix5     = 5;
-	const devFenix6     = 6;
-	const devFenix7     = 7;
-	const devFr920      = 9;
-
-    var dev = devFenix3; // mike note: default Fenix3 dimensions for UI arrangement
+	// const devSemiRound  = 1;
+	// const devVivoactive = 2;
+	// const devFenix3     = 3;
+	// const devEpix       = 4;
+	// const devFenix5     = 5;
+	// const devFenix6     = 6;
+	// const devFenix7     = 7;
+	// const devFr920      = 9;
+    // var dev = devFenix3; // mike note: default Fenix3 dimensions for UI arrangement
 
 	// more device-specific dimensions values for UI arrangement
 	var firstY     = 80;
@@ -29,7 +28,7 @@ class ORunView extends Ui.DataField {
 	var thirdY     = 185;
 	var thirdYDat  = 189;
 	
-    var width = 218;
+    var rezWidth = 218; // defaults but safe defaults
     var halfWitt;
 	var middlew;
 	var halfMiddleWitt;
@@ -57,9 +56,6 @@ class ORunView extends Ui.DataField {
 	var battX;
 
 
-
-
-
 	// mike note: ----------------------------- after this line variables are used for core functionality, NOT DEVICE SPECIFIC
 
 	// mike note: other view variables - colors
@@ -81,61 +77,83 @@ class ORunView extends Ui.DataField {
 	var unitConv;
 	var core;
 
-	
 	// -------------------------------------------------------------------------------------------------------------------
-    function onLayout(dc) {
-		var profile = Ui.loadResource(Rez.Strings.layoutProfile);
-		if (profile.equals("modern")) {
-			initModernLayout(dc);
+    function onLayout(dc) { //initModernLayout(dc);
+
+		firstY = Ui.loadResource(Rez.Strings.firstY).toNumber();
+		firstYLbl = Ui.loadResource(Rez.Strings.firstYLbl).toNumber();
+		firstYDat = Ui.loadResource(Rez.Strings.firstYDat).toNumber();
+		secondY = Ui.loadResource(Rez.Strings.secondY).toNumber();
+		secondYLbl = Ui.loadResource(Rez.Strings.secondYLbl).toNumber();
+		secondYDat = Ui.loadResource(Rez.Strings.secondYDat).toNumber();
+		thirdY = Ui.loadResource(Rez.Strings.thirdY).toNumber();
+		thirdYDat = Ui.loadResource(Rez.Strings.thirdYDat).toNumber();
+
+		rezWidth = Ui.loadResource(Rez.Strings.width).toNumber(); //easier to use dc.getWidth(), but easier to debug/maintain if we load from resource file
+	    if (rezWidth != dc.getWidth()) {
+			Sys.println("ERROR: dc.getWidth() does not match Ui.loadResource(Rez.Strings.width).toNumber()");
+		}
+		halfWitt = rezWidth / 2;
+		middlew = rezWidth / 3;
+		halfMiddleWitt = middlew / 2;
+		altX = middlew + halfMiddleWitt;
+		tidX = (halfWitt / 2) + 5;
+		distX = (3 * halfWitt / 2) - 5;
+		paceX = 2 * middlew + halfMiddleWitt;
+	    topcenter = halfWitt + Ui.loadResource(Rez.Strings.topCenterAdjust).toNumber();    // X adjustment from middle of top vertical line
+	    botcenter = halfWitt + Ui.loadResource(Rez.Strings.bottomCenterAdjust).toNumber(); // X adjustment from middle of bottom vertical line
+		todX = botcenter + Ui.loadResource(Rez.Strings.todAdjust).toNumber();              // X adjustment from bottom vertical for time-of-day
+		battX = botcenter + Ui.loadResource(Rez.Strings.batteryAdjust).toNumber();         // X adjustment from bottom vertical for battery pct
+		
+		var shape = System.getDeviceSettings().screenShape;
+		var rezShape = Ui.loadResource(Rez.Strings.shape);
+		if ((shape == System.SCREEN_SHAPE_RECTANGLE) && (!rezShape.equals("rectangle"))) {
+			Sys.println("ERROR: System.getDeviceSettings().screenShape does not match Ui.loadResource(Rez.Strings.shape)");
+		}
+
+		// default for round layout  (rezShape == System.SCREEN_SHAPE_RECTANGLE)
+		var offset = Ui.loadResource(Rez.Strings.topXOffset).toNumber();
+		var y1 = Ui.loadResource(Rez.Strings.topDatY).toNumber();
+		var y2 = Ui.loadResource(Rez.Strings.topLblY).toNumber();
+		slbX1 = topcenter - offset;
+		slbY1 = y1;
+		slbX2 = topcenter - offset;
+		slbY2 = y2;
+		sldX1 = topcenter + offset;
+		sldY1 = y1;
+		sldX2 = topcenter + offset;
+		sldY2 = y2;
+		// default align for round layout  (rezShape == System.SCREEN_SHAPE_RECTANGLE)
+		topAlign1 = Gfx.TEXT_JUSTIFY_RIGHT;
+		topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
+		topAlign3 = Gfx.TEXT_JUSTIFY_LEFT;
+		topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
+		
+		// alter if rectangle layout...
+		if (rezShape == System.SCREEN_SHAPE_RECTANGLE) {
+			slbX1 = 0;
+			slbY1 = 0;
+			slbX2 = topcenter - 10;
+			slbY2 = 5;
+			sldX1 = rezWidth - 2;
+			sldY1 = 0;
+			sldX2 = topcenter + 10;
+			sldY2 = 5;
+			topAlign1 = Gfx.TEXT_JUSTIFY_LEFT;
+			topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
+			topAlign3 = Gfx.TEXT_JUSTIFY_RIGHT;
+			topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
+		} else if (System has :SCREEN_SHAPE_SEMI_OCTAGON){ // first confirm that watch recognizes the terminology octagonal
+			if (shape == System.SCREEN_SHAPE_SEMI_OCTAGON) {
+				System.println("need to handle octagonal display format");
+			} 
 		}
     }
 	// -------------------------------------------------------------------------------------------------------------------
-	function initModernLayout(dc) {
-		var h = dc.getHeight();
-		var w = dc.getWidth();
-
-		dev = devFenix6;
-		firstY = (h * 40 / 100).toNumber();
-		firstYLbl = firstY + 5;
-		firstYDat = firstY + 24;
-		secondY = (h * 65 / 100).toNumber();
-		secondYLbl = secondY + 36;
-		secondYDat = secondY + 2;
-		thirdY = (h * 88 / 100).toNumber();
-		thirdYDat = thirdY + 2;
-
-		calcXVals(w, -15, -15, 7, -7);
-		applyModernSpacing(dc);
-	}
 	// -------------------------------------------------------------------------------------------------------------------
-	function applyModernSpacing(dc) {
-		var topXShift = Ui.loadResource(Rez.Strings.topShiftX).toNumber();
-		var topLabelShiftY = Ui.loadResource(Rez.Strings.topLabelShiftY).toNumber();
-		var topValueShiftY = Ui.loadResource(Rez.Strings.topValueShiftY).toNumber();
-		var middleTopLabelShiftY = Ui.loadResource(Rez.Strings.middleTopLabelShiftY).toNumber();
-		var middleTopValueShiftY = Ui.loadResource(Rez.Strings.middleTopValueShiftY).toNumber();
-		var middleBottomLabelShiftY = Ui.loadResource(Rez.Strings.middleBottomLabelShiftY).toNumber();
-		var middleBottomValueShiftY = Ui.loadResource(Rez.Strings.middleBottomValueShiftY).toNumber();
-
-		topcenter += topXShift;
-		slbX1 += topXShift;
-		slbX2 += topXShift;
-		sldX1 += topXShift;
-		sldX2 += topXShift;
-
-		slbY1 += topLabelShiftY;
-		slbY2 += topValueShiftY;
-		sldY1 += topLabelShiftY;
-		sldY2 += topValueShiftY;
-		
-		firstYLbl += middleTopLabelShiftY;
-		firstYDat += middleTopValueShiftY;
-		
-		secondYLbl += middleBottomLabelShiftY;
-		secondYDat += middleBottomValueShiftY;
-	}
+	// after this is business logic, less focused on device-specific display metrics
 	// -------------------------------------------------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------------------------------------------------
 	function initialize() {  // mike note: initialize loads strings, get unit-settings
         DataField.initialize();
 		core = new ORunCore();
@@ -171,218 +189,10 @@ class ORunView extends Ui.DataField {
 			core.setDistanceConversion(distConv);
 			core.setUnitConversion(unitConv);
     	}
-    	
-    	initDevice();
-    }
-    // -------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    function initDevice() {
-		System.println("running initialization for sizing");
-
-    	var dv = Ui.loadResource(Rez.Strings.device);
-        if (dv.equals("fenix7x")) {
-					   dev = devFenix7;
-					   setDeviceLayout(100, 101, 120, 170, 220, 180, 242, 250);
-			calcXVals(280, -15, -15, 7, -7);
-            return;
-        }
-        else if (dv.equals("fenix7") ||
-                 dv.equals("fenix6") ||
-                 dv.equals("fenix6pro")) {
-					   dev = devFenix6;
-					   setDeviceLayout(105, 110, 124, 170, 206, 172, 228, 230);
-			calcXVals(260, -15, -15, 7, -7);
-            return;
-        }
-        else if (dv.equals("fenix6xpro")) {
-					   dev = devFenix6;
-					   setDeviceLayout(110, 115, 130, 180, 220, 182, 246, 248);
-			calcXVals(280, -10, -15, 7, -7);
-            return;
-        }
-        else if (dv.equals("fenix5") ||
-                 dv.equals("fenix5x")) {
-					   dev = devFenix5;
-					   setDeviceLayout(80, 81, 104, 140, 172, 142, 200, 202);
-			calcXVals(240, -15, -20, 5, -5);
-            return;
-        }
-        else if (dv.equals("vivoactive")) {
-				   dev = devVivoactive;
-				   setDeviceLayout(45, 46, 61, 91, 113, 90, 131, 132);
-		     calcXVals(205, -22, -15, 40, -32);
-            return;
-    	}
-    	else if (dv.equals("fr920xt")) {
-				   dev = devFr920;
-				   setDeviceLayout(45, 46, 61, 87, 113, 90, 130, 132);
-		     calcXVals(205, -22, -15, 40, -32);
-            return;
-    	}
-    	else if (dv.equals("epix")) {
-				   dev = devEpix;
-				   setDeviceLayout(42, 43, 57, 87, 110, 86, 130, 130);
-		     calcXVals(205, -22, -15, 40, -32);
-            return;
-    	}
-    	else if (dv.equals("fr230") ||
-    	         dv.equals("fr235") ||
-    	         dv.equals("fr630") ||
-    	         dv.equals("fr735xt")) {
-				   dev = devSemiRound;
-				   setDeviceLayout(60, 61, 77, 110, 139, 110, 160, 160);
-		     calcXVals(218, -15, -15, 7, -7);
-            return;
-    	}
-    	
-        // Default settings are for fenix 3
-		dev = devFenix3;
-		setDeviceLayout(80, 81, 96, 132, 164, 131, 185, 189);
-	 calcXVals(218, -15, -15, 7, -7);
-    }
-    // -------------------------------------------------------------------------------------------------------------------
-	function setDeviceLayout(y1, yl1, yd1, y2, yl2, yd2, y3, yd3) {
-		firstY = y1;
-		firstYLbl = yl1;
-		firstYDat = yd1;
-		secondY = y2;
-		secondYLbl = yl2;
-		secondYDat = yd2;
-		thirdY = y3;
-		thirdYDat = yd3;
-	}
-	// -------------------------------------------------------------------------------------------------------------------
-
-	// adjust1 - X adjustment from middle of top vertical line
-	// adjust2 - X adjustment from middle of bottom vertical line
-	// adjust3 - X adjustment from bottom vertical for time-of-day
-	// adjust4 - X adjustment from bottom vertical for battery pct
-
-    function calcXVals(devWidth, adjust1, adjust2, adjust3, adjust4) {
-	    width = devWidth;
-	    
-	    halfWitt = width / 2;
-		middlew = width / 3;
-		halfMiddleWitt = middlew / 2;
-		altX = middlew + halfMiddleWitt;
-		tidX = (halfWitt / 2) + 5;
-		distX = (3 * halfWitt / 2) - 5;
-		paceX = 2 * middlew + halfMiddleWitt;
-	    topcenter = halfWitt + adjust1;
-	    botcenter = halfWitt + adjust2;
-		todX = botcenter + adjust3;
-		battX = botcenter + adjust4;
 		
-		// Std align for round(ish) layout ...
-		topAlign1 = Gfx.TEXT_JUSTIFY_RIGHT;
-		topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
-		topAlign3 = Gfx.TEXT_JUSTIFY_LEFT;
-		topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
-
-		if (dev == devFenix7) {
-		    // Round watches ...
-			setRoundTop(7, 10, 30);
-		}
-		else if (dev == devFenix6) {
-		    // Round watches ...
-			setRoundTop(7, 10, 37);
-		}
-		else if (dev == devFenix5) {
-		    // Round watches ...
-			setRoundTop(10, 10, 37);
-		}
-		else if (dev == devFenix3) {
-		    // Round watches ...
-			setRoundTop(10, 10, 20);
-		}
-		else if (dev == devSemiRound) {
-		    // Semi-Round watches ...
-			setRoundTop(10, 0, 13);
-		}
-		else {
-		    // Square watches ...
-			slbX1 = 0;
-			slbY1 = 0;
-			slbX2 = topcenter - 10;
-			slbY2 = 5;
-			sldX1 = width - 2;
-			sldY1 = 0;
-			sldX2 = topcenter + 10;
-			sldY2 = 5;
-			topAlign1 = Gfx.TEXT_JUSTIFY_LEFT;
-			topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
-			topAlign3 = Gfx.TEXT_JUSTIFY_RIGHT;
-			topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
-		}
+		// Modern layout metrics are loaded in onLayout from device profile resources.
     }
-	// -------------------------------------------------------------------------------------------------------------------
-	function setRoundTop(offset, y1, y2) {
-		slbX1 = topcenter - offset;
-		slbY1 = y1;
-		slbX2 = topcenter - offset;
-		slbY2 = y2;
-		sldX1 = topcenter + offset;
-		sldY1 = y1;
-		sldX2 = topcenter + offset;
-		sldY2 = y2;
-	}
-	// -------------------------------------------------------------------------------------------------------------------
-    
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // -------------------------------------------------------------------------------------------------------------------
 	//! The given info object contains all the current workout
     //! information. Calculate a value and return it in this method.
     function compute(info) {
@@ -399,8 +209,6 @@ class ORunView extends Ui.DataField {
         Ui.requestUpdate();
     }
     // -------------------------------------------------------------------------------------------------------------------
-    
-	
 	function getPace() {
 		return core.getPace(core.speed);
     }
@@ -457,13 +265,13 @@ class ORunView extends Ui.DataField {
         dc.setPenWidth(3); // set foreground color linecol for printing lines, text
         
         // Draw the BOLD lines 
-        dc.drawLine( 0, firstY, width, firstY);         // Top horizontal 
+        dc.drawLine( 0, firstY, rezWidth, firstY);         // Top horizontal 
         dc.drawLine( topcenter, firstY, topcenter, 0 ); // Top vertical split-line
-        dc.drawLine( 0, thirdY, width, thirdY);         // Bottom horizontal 
+        dc.drawLine( 0, thirdY, rezWidth, thirdY);         // Bottom horizontal 
         
         // Draw the thin middle lines 
         dc.setPenWidth(1);
-        dc.drawLine( 0, secondY, width, secondY );                    // Middle horizontal 
+        dc.drawLine( 0, secondY, rezWidth, secondY );                    // Middle horizontal 
         dc.drawLine( middlew, firstY, middlew, secondY );             // HR/Alt vertical split-line 
         dc.drawLine( 2 * middlew, firstY, 2 * middlew, secondY );     // Alt/Pace vertical split-line
         
@@ -532,8 +340,265 @@ class ORunView extends Ui.DataField {
         setBatteryColor(dc, batt);
         dc.drawText( battX, thirdYDat, Gfx.FONT_XTINY, batt + "%", Gfx.TEXT_JUSTIFY_RIGHT);
 
-		System.println(memstr());    
+		// mike note: for testing memory
+		// System.println(memstr());    
 	}
-	function memstr () { return ((Toybox.System.getSystemStats().freeMemory.toFloat()/Toybox.System.getSystemStats().totalMemory.toFloat()) * 100).toNumber() + "% available"; } 
-
+	// mike note: for testing memory
+	//function memstr () { return ((Toybox.System.getSystemStats().freeMemory.toFloat()/Toybox.System.getSystemStats().totalMemory.toFloat()) * 100).toNumber() + "% available"; } 
 }
+// ======================================================================================================================
+// notes below, class ends here
+
+
+
+
+
+
+
+	
+	// -------------------------------------------------------------------------------------------------------------------
+	// function setRoundTop(offset, y1, y2) {
+	// 	slbX1 = topcenter - offset;
+	// 	slbY1 = y1;
+	// 	slbX2 = topcenter - offset;
+	// 	slbY2 = y2;
+	// 	sldX1 = topcenter + offset;
+	// 	sldY1 = y1;
+	// 	sldX2 = topcenter + offset;
+	// 	sldY2 = y2;
+	// }
+
+	
+	// 	if (dev == devFenix7) {
+	// 	    // Round watches ...
+	// 		setRoundTop(7, 10, 30);
+	// 	}
+	// 	else if (dev == devFenix6) {
+	// 	    // Round watches ...
+	// 		setRoundTop(7, 10, 37);
+	// 	}
+	// 	else if (dev == devFenix5) {
+	// 	    // Round watches ...
+	// 		setRoundTop(10, 10, 37);
+	// 	}
+	// 	else if (dev == devFenix3) {
+	// 	    // Round watches ...
+	// 		setRoundTop(10, 10, 20);
+	// 	}
+	// 	else if (dev == devSemiRound) {
+	// 	    // Semi-Round watches ...
+	// 		setRoundTop(10, 0, 13);
+	// 	}
+	// 	else {
+	// 	    // Square watches ...
+	// 		slbX1 = 0;
+	// 		slbY1 = 0;
+	// 		slbX2 = topcenter - 10;
+	// 		slbY2 = 5;
+	// 		sldX1 = rezWidth - 2;
+	// 		sldY1 = 0;
+	// 		sldX2 = topcenter + 10;
+	// 		sldY2 = 5;
+	// 		topAlign1 = Gfx.TEXT_JUSTIFY_LEFT;
+	// 		topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
+	// 		topAlign3 = Gfx.TEXT_JUSTIFY_RIGHT;
+	// 		topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
+	// 	}
+	// -------------------------------------------------------------------------------------------------------------------
+	// function initModernLayout(dc) {
+	// 	//setLayoutDeviceClass(Ui.loadResource(Rez.Strings.layoutDeviceClass));
+
+	// 	setDeviceLayout(
+	// 		Ui.loadResource(Rez.Strings.layoutFirstY).toNumber(),
+	// 		Ui.loadResource(Rez.Strings.layoutFirstYLbl).toNumber(),
+	// 		Ui.loadResource(Rez.Strings.layoutFirstYDat).toNumber(),
+	// 		Ui.loadResource(Rez.Strings.layoutSecondY).toNumber(),
+	// 		Ui.loadResource(Rez.Strings.layoutSecondYLbl).toNumber(),
+	// 		Ui.loadResource(Rez.Strings.layoutSecondYDat).toNumber(),
+	// 		Ui.loadResource(Rez.Strings.layoutThirdY).toNumber(),
+	// 		Ui.loadResource(Rez.Strings.layoutThirdYDat).toNumber()
+	// 	);
+	// 	calcXVals(
+	// 		Ui.loadResource(Rez.Strings.layoutWidth).toNumber(),
+	// 		Ui.loadResource(Rez.Strings.layoutTopCenterAdjust).toNumber(),
+	// 		Ui.loadResource(Rez.Strings.layoutBottomCenterAdjust).toNumber(),
+	// 		Ui.loadResource(Rez.Strings.layoutTodAdjust).toNumber(),
+	// 		Ui.loadResource(Rez.Strings.layoutBatteryAdjust).toNumber()
+	// 	);
+	// }
+	// -------------------------------------------------------------------------------------------------------------------
+	// function setLayoutDeviceClass(layoutClass) {
+	// 	if (layoutClass.equals("fenix7")) {
+	// 		dev = devFenix7;
+	// 	}
+	// 	else if (layoutClass.equals("fenix6")) {
+	// 		dev = devFenix6;
+	// 	}
+	// 	else if (layoutClass.equals("fenix5")) {
+	// 		dev = devFenix5;
+	// 	}
+	// 	else if (layoutClass.equals("fenix3")) {
+	// 		dev = devFenix3;
+	// 	}
+	// 	else if (layoutClass.equals("semiround")) {
+	// 		dev = devSemiRound;
+	// 	}
+	// 	else if (layoutClass.equals("vivoactive")) {
+	// 		dev = devVivoactive;
+	// 	}
+	// 	else if (layoutClass.equals("epix")) {
+	// 		dev = devEpix;
+	// 	}
+	// 	else if (layoutClass.equals("fr920")) {
+	// 		dev = devFr920;
+	// 	}
+	// 	else {
+	// 		dev = devFenix6;
+	// 	}
+	// }
+	// -------------------------------------------------------------------------------------------------------------------
+    
+
+
+
+
+    // function initDevice() {
+	// 	System.println("running initialization for sizing");
+
+    // 	var dv = Ui.loadResource(Rez.Strings.device);
+    //     if (dv.equals("fenix7x")) {
+	// 				   dev = devFenix7;
+	// 				   setDeviceLayout(100, 101, 120, 170, 220, 180, 242, 250);
+	// 		calcXVals(280, -15, -15, 7, -7);
+    //         return;
+    //     }
+    //     else if (dv.equals("fenix7") ||
+    //              dv.equals("fenix6") ||
+    //              dv.equals("fenix6pro")) {
+	// 				   dev = devFenix6;
+	// 				   setDeviceLayout(105, 110, 124, 170, 206, 172, 228, 230);
+	// 		calcXVals(260, -15, -15, 7, -7);
+    //         return;
+    //     }
+    //     else if (dv.equals("fenix6xpro")) {
+	// 				   dev = devFenix6;
+	// 				   setDeviceLayout(110, 115, 130, 180, 220, 182, 246, 248);
+	// 		calcXVals(280, -10, -15, 7, -7);
+    //         return;
+    //     }
+    //     else if (dv.equals("fenix5") ||
+    //              dv.equals("fenix5x")) {
+	// 				   dev = devFenix5;
+	// 				   setDeviceLayout(80, 81, 104, 140, 172, 142, 200, 202);
+	// 		calcXVals(240, -15, -20, 5, -5);
+    //         return;
+    //     }
+    //     // else if (dv.equals("vivoactive")) {
+	// 	// 		   dev = devVivoactive;
+	// 	// 		   setDeviceLayout(45, 46, 61, 91, 113, 90, 131, 132);
+	// 	//      calcXVals(205, -22, -15, 40, -32);
+    //     //     return;
+    // 	// }
+    // 	// else if (dv.equals("fr920xt")) {
+	// 	// 		   dev = devFr920;
+	// 	// 		   setDeviceLayout(45, 46, 61, 87, 113, 90, 130, 132);
+	// 	//      calcXVals(205, -22, -15, 40, -32);
+    //     //     return;
+    // 	// }
+    // 	// else if (dv.equals("epix")) {
+	// 	// 		   dev = devEpix;
+	// 	// 		   setDeviceLayout(42, 43, 57, 87, 110, 86, 130, 130);
+	// 	//      calcXVals(205, -22, -15, 40, -32);
+    //     //     return;
+    // 	// }
+    // 	// else if (dv.equals("fr230") ||
+    // 	//          dv.equals("fr235") ||
+    // 	//          dv.equals("fr630") ||
+    // 	//          dv.equals("fr735xt")) {
+	// 	// 		   dev = devSemiRound;
+	// 	// 		   setDeviceLayout(60, 61, 77, 110, 139, 110, 160, 160);
+	// 	//      calcXVals(218, -15, -15, 7, -7);
+    //     //     return;
+    // 	// }
+    	
+    //     // Default settings are for fenix 3
+	// 	dev = devFenix3;
+	// 	setDeviceLayout(80, 81, 96, 132, 164, 131, 185, 189);
+	//  	calcXVals(218, -15, -15, 7, -7);
+    // }
+    // -------------------------------------------------------------------------------------------------------------------
+	// function setDeviceLayout(y1, yl1, yd1, y2, yl2, yd2, y3, yd3) {
+	// 	firstY = Ui.loadResource(Rez.Strings.layoutFirstY).toNumber();
+	// 	firstYLbl = Ui.loadResource(Rez.Strings.layoutFirstYLbl).toNumber();
+	// 	firstYDat = Ui.loadResource(Rez.Strings.layoutFirstYDat).toNumber();
+	// 	secondY = Ui.loadResource(Rez.Strings.layoutSecondY).toNumber();
+	// 	secondYLbl = Ui.loadResource(Rez.Strings.layoutSecondYLbl).toNumber();
+	// 	secondYDat = Ui.loadResource(Rez.Strings.layoutSecondYDat).toNumber();
+	// 	thirdY = Ui.loadResource(Rez.Strings.layoutThirdY).toNumber();
+	// 	thirdYDat = Ui.loadResource(Rez.Strings.layoutThirdYDat).toNumber();
+	// }
+	// -------------------------------------------------------------------------------------------------------------------
+
+	// adjust1 - X adjustment from middle of top vertical line
+	// adjust2 - X adjustment from middle of bottom vertical line
+	// adjust3 - X adjustment from bottom vertical for time-of-day
+	// adjust4 - X adjustment from bottom vertical for battery pct
+
+    // function calcXVals() { //devWidth, adjust1, adjust2, adjust3, adjust4) {
+	//     rezWidth = Ui.loadResource(Rez.Strings.layoutWidth).toNumber();
+	//     halfWitt = rezWidth / 2;
+	// 	middlew = rezWidth / 3;
+	// 	halfMiddleWitt = middlew / 2;
+	// 	altX = middlew + halfMiddleWitt;
+	// 	tidX = (halfWitt / 2) + 5;
+	// 	distX = (3 * halfWitt / 2) - 5;
+	// 	paceX = 2 * middlew + halfMiddleWitt;
+	//     topcenter = halfWitt + Ui.loadResource(Rez.Strings.layoutTopCenterAdjust).toNumber();
+	//     botcenter = halfWitt + Ui.loadResource(Rez.Strings.layoutBottomCenterAdjust).toNumber();
+	// 	todX = botcenter + Ui.loadResource(Rez.Strings.layoutTodAdjust).toNumber();
+	// 	battX = botcenter + Ui.loadResource(Rez.Strings.layoutBatteryAdjust).toNumber();
+		
+	// 	// Std align for round(ish) layout ...
+	// 	topAlign1 = Gfx.TEXT_JUSTIFY_RIGHT;
+	// 	topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
+	// 	topAlign3 = Gfx.TEXT_JUSTIFY_LEFT;
+	// 	topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
+
+	// 	if (dev == devFenix7) {
+	// 	    // Round watches ...
+	// 		setRoundTop(7, 10, 30);
+	// 	}
+	// 	else if (dev == devFenix6) {
+	// 	    // Round watches ...
+	// 		setRoundTop(7, 10, 37);
+	// 	}
+	// 	else if (dev == devFenix5) {
+	// 	    // Round watches ...
+	// 		setRoundTop(10, 10, 37);
+	// 	}
+	// 	else if (dev == devFenix3) {
+	// 	    // Round watches ...
+	// 		setRoundTop(10, 10, 20);
+	// 	}
+	// 	else if (dev == devSemiRound) {
+	// 	    // Semi-Round watches ...
+	// 		setRoundTop(10, 0, 13);
+	// 	}
+	// 	else {
+	// 	    // Square watches ...
+	// 		slbX1 = 0;
+	// 		slbY1 = 0;
+	// 		slbX2 = topcenter - 10;
+	// 		slbY2 = 5;
+	// 		sldX1 = rezWidth - 2;
+	// 		sldY1 = 0;
+	// 		sldX2 = topcenter + 10;
+	// 		sldY2 = 5;
+	// 		topAlign1 = Gfx.TEXT_JUSTIFY_LEFT;
+	// 		topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
+	// 		topAlign3 = Gfx.TEXT_JUSTIFY_RIGHT;
+	// 		topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
+	// 	}
+    // }
+	// -------------------------------------------------------------------------------------------------------------------
+    

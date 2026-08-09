@@ -1,3 +1,17 @@
 <resources>
     <string id="device">fenix5</string>
+    <string id="layoutDeviceClass">fenix5</string>
+    <string id="layoutFirstY">80</string>
+    <string id="layoutFirstYLbl">81</string>
+    <string id="layoutFirstYDat">104</string>
+    <string id="layoutSecondY">140</string>
+    <string id="layoutSecondYLbl">172</string>
+    <string id="layoutSecondYDat">142</string>
+    <string id="layoutThirdY">200</string>
+    <string id="layoutThirdYDat">202</string>
+    <string id="layoutWidth">240</string>
+    <string id="layoutTopCenterAdjust">-15</string>
+    <string id="layoutBottomCenterAdjust">-20</string>
+    <string id="layoutTodAdjust">5</string>
+    <string id="layoutBatteryAdjust">-5</string>
 </resources>

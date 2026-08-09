@@ -58,15 +58,14 @@ descentmk343mm.resourcePath = 		$(base.resourcePath);resources-round-390x390
 epix2pro42mm.resourcePath = 		$(base.resourcePath);resources-round-390x390
 marq2.resourcePath = 				$(base.resourcePath);resources-round-390x390
 marq2aviator.resourcePath = 		$(base.resourcePath);resources-round-390x390
-# d2air
-d2air.resourcePath = 				$(base.resourcePath);resources-round-390x390-d2air
-venu.resourcePath = 				$(base.resourcePath);resources-round-390x390
-venud.resourcePath = 				$(base.resourcePath);resources-round-390x390
-# approachs50
 approachs50.resourcePath = 			$(base.resourcePath);resources-round-390x390
 instinct3amoled45mm.resourcePath = 	$(base.resourcePath);resources-round-390x390
-venu3s.resourcePath = 				$(base.resourcePath);resources-round-390x390
-vivoactive5.resourcePath = 			$(base.resourcePath);resources-round-390x390
+# d2air move up slightly...
+d2air.resourcePath = 				$(base.resourcePath);resources-round-390x390-venu
+venu.resourcePath = 				$(base.resourcePath);resources-round-390x390-venu
+venud.resourcePath = 				$(base.resourcePath);resources-round-390x390-venu
+venu3s.resourcePath = 				$(base.resourcePath);resources-round-390x390-venu
+vivoactive5.resourcePath = 			$(base.resourcePath);resources-round-390x390-venu
 # fr165
 fr165.resourcePath = 				$(base.resourcePath);resources-round-390x390-fr165
 fr165m.resourcePath = 				$(base.resourcePath);resources-round-390x390-fr165
