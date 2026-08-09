@@ -1,6 +1,6 @@
 <resources>
     <!-- dimensions & type of device + reference device -->
-    <string id="deviceTypeHelper">round-240x240</string>
+    <string id="deviceTypeHelper">round-240x240-approachs60</string>
     <!-- values are checked with system during run -->
     <string id="shape">round</string>
     <string id="width">240</string>
@@ -12,26 +12,26 @@
 
 
     <!-- Y - (round watches only) - slb/Deg & sld(ft/m) Labels -->
-    <string id="topYLabel">13</string>
+    <string id="topYLabel">14</string>
     <!-- Y - (round watches only) - slb/Deg & sld(ft/m) Data -->
-    <string id="topYData">25</string>
+    <string id="topYData">32</string>
 
     <!-- Y - top horizontal line -->
-    <string id="firstY">84</string>
+    <string id="firstY">83</string>
     <!-- Y - HR, Alt, Pace - Label then Data -->
-    <string id="firstYLabel">87</string>
+    <string id="firstYLabel">85</string>
     <string id="firstYData">107</string>
 
     <!-- Y - thin middle horizontal line -->
     <string id="secondY">145</string>
     <!-- Y - Timer, Dist - Data then Label -->
     <string id="secondYData">145</string>
-    <string id="secondYLabel">181</string>
+    <string id="secondYLabel">178</string>
 
     <!-- Y - bottom horizontal line -->
-    <string id="thirdY">205</string>
+    <string id="thirdY">203</string>
     <!-- Y - battery percentage, time of day - Data only -->
-    <string id="thirdYData">209</string>
+    <string id="thirdYData">205</string>
 
 
 
@@ -40,7 +40,7 @@
     <!-- X - vertical line in bottom section -->
     <string id="bottomCenterXAdjust">-16</string>
     <!-- X - battery horizontal adjustment -->
-    <string id="batteryXAdjust">-6</string>
+    <string id="batteryXAdjust">-5</string>
     <!-- X - time of day horizontal adjustment -->
-    <string id="todXAdjust">6</string>
+    <string id="todXAdjust">5</string>
 </resources>

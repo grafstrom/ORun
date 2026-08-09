@@ -5,8 +5,10 @@
     <string id="shape">round</string>
     <string id="width">390</string>
 
-    <!-- Y - (round watches only) - spacing between slb/Deg & sld(ft/m) and top center line -->
+    <!-- X - (round watches only) - spacing between slb/Deg & sld(ft/m) and top center line -->
     <string id="topXOffsets">18</string>
+    
+
     <!-- Y - (round watches only) - slb/Deg & sld(ft/m) Labels -->
     <string id="topYLabel">23</string>
     <!-- Y - (round watches only) - slb/Deg & sld(ft/m) Data -->
@@ -20,14 +22,16 @@
 
     <!-- Y - thin middle horizontal line -->
     <string id="secondY">243</string>
-    <!-- Y - Timer, Dist - Label then Data -->
-    <string id="secondYLabel">296</string>
+    <!-- Y - Timer, Dist - Data then Label -->
     <string id="secondYData">242</string>
+    <string id="secondYLabel">296</string>
 
     <!-- Y - bottom horizontal line -->
     <string id="thirdY">333</string>
     <!-- Y - battery percentage, time of day - Data only -->
     <string id="thirdYData">335</string>
+
+
 
     <!-- X - vertical line in top section -->
     <string id="topCenterXAdjust">-17</string>

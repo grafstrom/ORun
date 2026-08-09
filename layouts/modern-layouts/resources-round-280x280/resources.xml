@@ -1,46 +1,50 @@
 <resources>
     <!-- dimensions & type of device + reference device -->
-    <string id="deviceTypeHelper">round-240x240</string>
+    <string id="deviceTypeHelper">round-280x280</string>
+
+    <!-- tested on 
+    
+    -->
+
     <!-- values are checked with system during run -->
     <string id="shape">round</string>
-    <string id="width">240</string>
+    <string id="width">280</string>
 
     <!-- X - (round watches only) - spacing between slb/Deg & sld(ft/m) and top center line -->
-    <string id="topXOffsets">9</string>
-
-
+    <string id="topXOffsets">10</string>
+    
 
 
     <!-- Y - (round watches only) - slb/Deg & sld(ft/m) Labels -->
-    <string id="topYLabel">13</string>
+    <string id="topYLabel">20</string>
     <!-- Y - (round watches only) - slb/Deg & sld(ft/m) Data -->
-    <string id="topYData">25</string>
+    <string id="topYData">35</string>
 
     <!-- Y - top horizontal line -->
-    <string id="firstY">84</string>
+    <string id="firstY">103</string>
     <!-- Y - HR, Alt, Pace - Label then Data -->
-    <string id="firstYLabel">87</string>
-    <string id="firstYData">107</string>
+    <string id="firstYLabel">109</string>
+    <string id="firstYData">130</string>
 
     <!-- Y - thin middle horizontal line -->
-    <string id="secondY">145</string>
+    <string id="secondY">177</string>
     <!-- Y - Timer, Dist - Data then Label -->
-    <string id="secondYData">145</string>
-    <string id="secondYLabel">181</string>
-
+    <string id="secondYData">179</string>
+    <string id="secondYLabel">221</string>
+    
     <!-- Y - bottom horizontal line -->
-    <string id="thirdY">205</string>
+    <string id="thirdY">245</string>
     <!-- Y - battery percentage, time of day - Data only -->
-    <string id="thirdYData">209</string>
+    <string id="thirdYData">250</string>
 
 
 
     <!-- X - vertical line in top section -->
     <string id="topCenterXAdjust">-8</string>
     <!-- X - vertical line in bottom section -->
-    <string id="bottomCenterXAdjust">-16</string>
+    <string id="bottomCenterXAdjust">-20</string>
     <!-- X - battery horizontal adjustment -->
-    <string id="batteryXAdjust">-6</string>
+    <string id="batteryXAdjust">-7</string>
     <!-- X - time of day horizontal adjustment -->
-    <string id="todXAdjust">6</string>
+    <string id="todXAdjust">7</string>
 </resources>

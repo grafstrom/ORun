@@ -6,41 +6,41 @@
     <string id="width">240</string>
 
     <!-- X - (round watches only) - spacing between slb/Deg & sld(ft/m) and top center line -->
-    <string id="topXOffsets">9</string>
+    <string id="topXOffsets">6</string>
 
 
 
 
     <!-- Y - (round watches only) - slb/Deg & sld(ft/m) Labels -->
-    <string id="topYLabel">13</string>
+    <string id="topYLabel">6</string>
     <!-- Y - (round watches only) - slb/Deg & sld(ft/m) Data -->
-    <string id="topYData">25</string>
+    <string id="topYData">37</string>
 
     <!-- Y - top horizontal line -->
-    <string id="firstY">84</string>
+    <string id="firstY">80</string>
     <!-- Y - HR, Alt, Pace - Label then Data -->
-    <string id="firstYLabel">87</string>
-    <string id="firstYData">107</string>
+    <string id="firstYLabel">81</string>
+    <string id="firstYData">104</string>
 
     <!-- Y - thin middle horizontal line -->
-    <string id="secondY">145</string>
+    <string id="secondY">141</string>
     <!-- Y - Timer, Dist - Data then Label -->
-    <string id="secondYData">145</string>
-    <string id="secondYLabel">181</string>
+    <string id="secondYData">140</string>
+    <string id="secondYLabel">172</string>
 
     <!-- Y - bottom horizontal line -->
-    <string id="thirdY">205</string>
+    <string id="thirdY">200</string>
     <!-- Y - battery percentage, time of day - Data only -->
-    <string id="thirdYData">209</string>
+    <string id="thirdYData">202</string>
 
 
 
     <!-- X - vertical line in top section -->
-    <string id="topCenterXAdjust">-8</string>
+    <string id="topCenterXAdjust">-12</string>
     <!-- X - vertical line in bottom section -->
-    <string id="bottomCenterXAdjust">-16</string>
+    <string id="bottomCenterXAdjust">-20</string>
     <!-- X - battery horizontal adjustment -->
-    <string id="batteryXAdjust">-6</string>
+    <string id="batteryXAdjust">-5</string>
     <!-- X - time of day horizontal adjustment -->
-    <string id="todXAdjust">6</string>
+    <string id="todXAdjust">5</string>
 </resources>
