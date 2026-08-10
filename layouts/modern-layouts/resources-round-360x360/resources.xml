@@ -7,44 +7,43 @@
 
     <!-- tested on
     fr265s
-    venu2s
     -->
 
     <!-- X - (round watches only) - spacing between slb/Deg & sld(ft/m) and top center line -->
-    <string id="topXOffsets">5</string>
+    <string id="topXOffsets">6</string>
         
 
 
     <!-- Y - (round watches only) - slb/Deg & sld(ft/m) Labels -->
-    <string id="topYLabel">30</string>
+    <string id="topYLabel">27</string>
     <!-- Y - (round watches only) - slb/Deg & sld(ft/m) Data -->
-    <string id="topYData">55</string>
+    <string id="topYData">48</string>
 
     <!-- Y - top horizontal line -->
-    <string id="firstY">142</string>
+    <string id="firstY">133</string>
     <!-- Y - HR, Alt, Pace - Label then Data -->
-    <string id="firstYLabel">149</string>
-    <string id="firstYData">174</string>
+    <string id="firstYLabel">139</string>
+    <string id="firstYData">165</string>
 
     <!-- Y - thin middle horizontal line -->
-    <string id="secondY">237</string>
+    <string id="secondY">224</string>
     <!-- Y - Timer, Dist - Data then Label -->
-    <string id="secondYData">243</string>
-    <string id="secondYLabel">295</string>
+    <string id="secondYData">227</string>
+    <string id="secondYLabel">281</string>
 
     <!-- Y - bottom horizontal line -->
-    <string id="thirdY">325</string>
+    <string id="thirdY">314</string>
     <!-- Y - battery percentage, time of day - Data only -->
-    <string id="thirdYData">330</string>
+    <string id="thirdYData">318</string>
 
 
 
     <!-- X - vertical line in top section -->
-    <string id="topCenterXAdjust">-17</string>
+    <string id="topCenterXAdjust">-5</string>
     <!-- X - vertical line in bottom section -->
-    <string id="bottomCenterXAdjust">-15</string>
+    <string id="bottomCenterXAdjust">-23</string>
     <!-- X - battery horizontal adjustment -->
-    <string id="batteryXAdjust">-10</string>
+    <string id="batteryXAdjust">-7</string>
     <!-- X - time of day horizontal adjustment -->
-    <string id="todXAdjust">10</string>    
+    <string id="todXAdjust">7</string>    
 </resources>

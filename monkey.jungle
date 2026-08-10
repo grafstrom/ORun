@@ -34,15 +34,6 @@ fr735xt.resourcePath = $(base.resourcePath);layouts/legacy-layouts/resources-fr7
 fr920xt.resourcePath = $(base.resourcePath);layouts/legacy-layouts/resources-fr920xt
 vivoactive.resourcePath = $(base.resourcePath);layouts/legacy-layouts/resources-vivoactive
 
-# included as older watches, but really these are modern watches...
-# fenix6.resourcePath = $(base.resourcePath);resources-fenix6
-# fenix6pro.resourcePath = $(base.resourcePath);resources-fenix6pro
-# fenix6xpro.resourcePath = $(base.resourcePath);resources-fenix6xpro
-# fenix7.resourcePath = $(base.resourcePath);resources-fenix7
-# fenix7x.resourcePath = $(base.resourcePath);resources-fenix7x
-
-
-
 
 
 # Modern resource profiles, should allow for "automatic-compatibility" with new models, some of the time
@@ -126,20 +117,9 @@ fenix7xpronowifi.resourcePath = 		$(base.resourcePath);layouts/modern-layouts/re
 # round-280x280-enduro3 // g2g
 enduro3.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-280x280-enduro3
 fenix8solar51mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-280x280-enduro3
-
+# round-360x360 // g2g
 fr265s.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-360x360
-# venu2s.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-360x360-venu2s
-
-
-
-
-
-
-
-
-
-
-
+venu2s.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-360x360-venu2s
 
 # round-390x390 devices // g2g
 approachs50.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-390x390
@@ -148,22 +128,50 @@ descentmk343mm.resourcePath = 		$(base.resourcePath);layouts/modern-layouts/reso
 epix2pro42mm.resourcePath = 		$(base.resourcePath);layouts/modern-layouts/resources-round-390x390
 marq2.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-390x390
 marq2aviator.resourcePath = 		$(base.resourcePath);layouts/modern-layouts/resources-round-390x390
-
 # round-390x390 d2air // g2g
 d2air.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-390x390-d2air
 venu.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-390x390-d2air
 venud.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-390x390-d2air
-
 # round-390x390 fr165 // g2g
 fr165.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-390x390-fr165
 fr165m.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-390x390-fr165
 
+# round-416x416 // g2g
+d2mach1.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-416x416
+epix2.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-416x416
+epix2pro47mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-416x416
+# round-416x416-fenixe // g2g
+fenixe.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fenixe
+fenix843mm.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fenixe
+# round-416x416-fr265 // g2g
+fr265.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fr265
+instinct3amoled50mm.resourcePath =      $(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fr265
+# round-416x416-d2airx10 // g2g
+d2airx10.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-d2airx10
+venu2.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-d2airx10
+venu2plus.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-d2airx10
+
+# round-454x454 // g2g
+approachs7047mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-454x454
+descentmk351mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-454x454
+epix2pro51mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-454x454
+# round-454x454-fr965 // g2g
+fr965.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-454x454-fr965
+# round-454x454-venu3 // g2g
+venu3.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-454x454-venu3
 
 
 
-
-
+# octagonal devices
 
 # semioctagon-176x176 
 descentg1.resourcePath =                $(base.resourcePath);layouts/modern-layouts/resources-semioctagon-176x176
 
+
+instinct2s.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-semi-octagon-163x156
+
+instincte40mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-semi-octagon-166x166
+
+
+
+# rectangular devices

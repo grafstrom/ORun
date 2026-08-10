@@ -36,9 +36,9 @@
     <!-- X - vertical line in top section -->
     <string id="topCenterXAdjust">-17</string>
     <!-- X - vertical line in bottom section -->
-    <string id="bottomCenterXAdjust">-15</string>
+    <string id="bottomCenterXAdjust">-25</string>
     <!-- X - battery horizontal adjustment -->
-    <string id="batteryXAdjust">-20</string>
+    <string id="batteryXAdjust">-10</string>
     <!-- X - time of day horizontal adjustment -->
-    <string id="todXAdjust">7</string>
+    <string id="todXAdjust">10</string>
 </resources>
