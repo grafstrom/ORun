@@ -1,0 +1,49 @@
+<resources>
+    <!-- dimensions & type of device + reference device -->
+    <string id="deviceTypeHelper">round-454x454-fenix847mm</string>
+    <!-- values are checked with system during run -->
+    <string id="shape">round</string>
+    <string id="width">454</string>
+
+    <!-- tested on
+    fenix847mm
+    -->
+
+    <!-- X - (round watches only) - spacing between slb/Deg & sld(ft/m) and top center line -->
+    <string id="topXOffsets">4</string>
+
+
+
+    <!-- Y - (round watches only) - slb/Deg & sld(ft/m) Labels -->
+    <string id="topYLabel">30</string>
+    <!-- Y - (round watches only) - slb/Deg & sld(ft/m) Data -->
+    <string id="topYData">53</string>
+
+    <!-- Y - top horizontal line -->
+    <string id="firstY">171</string>
+    <!-- Y - HR, Alt, Pace - Label then Data -->
+    <string id="firstYLabel">180</string>
+    <string id="firstYData">218</string>
+
+    <!-- Y - thin middle horizontal line -->
+    <string id="secondY">289</string>
+    <!-- Y - Timer, Dist - Data then Label -->
+    <string id="secondYData">295</string>
+    <string id="secondYLabel">360</string>
+
+    <!-- Y - bottom horizontal line -->
+    <string id="thirdY">403</string>
+    <!-- Y - battery percentage, time of day - Data only -->
+    <string id="thirdYData">405</string>
+    
+
+
+    <!-- X - vertical line in top section -->
+    <string id="topCenterXAdjust">-8</string>
+    <!-- X - vertical line in bottom section -->
+    <string id="bottomCenterXAdjust">-26</string>
+    <!-- X - battery horizontal adjustment -->
+    <string id="batteryXAdjust">-6</string>
+    <!-- X - time of day horizontal adjustment -->
+    <string id="todXAdjust">6</string>
+</resources>

@@ -189,13 +189,12 @@ class ORunView extends Ui.DataField {
         DataField.initialize();
 		core = new ORunCore();
     
-		// set as false to enable debugging with 
 		// mike note: useful for debugging display
-		backcol = Gfx.COLOR_WHITE;										// mike note: unnecessary initialization of color settings
-		forecol = Gfx.COLOR_BLACK;										// mike note: these two statements could probably be removed
+		backcol = Gfx.COLOR_WHITE;
+		forecol = Gfx.COLOR_BLACK;
     	
-		// backcol = Gfx.COLOR_BLACK;	// dark mode (normal for production) // mike note: initialize color settings
-		// forecol = Gfx.COLOR_WHITE;
+		//backcol = Gfx.COLOR_BLACK;	// dark mode (normal for production) // mike note: initialize color settings
+		//forecol = Gfx.COLOR_WHITE;
     	
 
     	linecol = Gfx.COLOR_BLUE;
@@ -373,10 +372,10 @@ class ORunView extends Ui.DataField {
         dc.drawText( battX, thirdYData, Gfx.FONT_XTINY, batt + "%", Gfx.TEXT_JUSTIFY_RIGHT);
 
 		// mike note: for testing memory
-		 System.println(memstr());    
+		// System.println(memstr());    
 	}
 	// mike note: for testing memory
-	function memstr () { return ((Toybox.System.getSystemStats().freeMemory.toFloat()/Toybox.System.getSystemStats().totalMemory.toFloat()) * 100).toNumber() + "% available"; } 
+	//function memstr () { return ((Toybox.System.getSystemStats().freeMemory.toFloat()/Toybox.System.getSystemStats().totalMemory.toFloat()) * 100).toNumber() + "% available"; } 
 }
 // ======================================================================================================================
 // notes below, class ends here
