@@ -116,10 +116,6 @@ fenix7.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources
 fenix7pro.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-260x260
 fenix7pronowifi.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-260x260
 
-
-
-
-
 # round-280x280 // g2g
 descentmk2.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-280x280
 enduro.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-280x280
@@ -127,10 +123,9 @@ fenix6xpro.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resour
 fenix7x.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-280x280
 fenix7xpro.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-280x280
 fenix7xpronowifi.resourcePath = 		$(base.resourcePath);layouts/modern-layouts/resources-round-280x280
-# round-280x280-enduro3
-# here
-enduro3.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-280x280
-fenix8solar51mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-280x280
+# round-280x280-enduro3 // g2g
+enduro3.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-280x280-enduro3
+fenix8solar51mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-280x280-enduro3
 
 fr265s.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-360x360
 # venu2s.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-360x360-venu2s
