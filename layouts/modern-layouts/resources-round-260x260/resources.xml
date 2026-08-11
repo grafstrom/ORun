@@ -16,41 +16,41 @@
     <string id="width">260</string>
 
     <!-- X - (round watches only) - spacing between slb/Deg & sld(ft/m) and top center line -->
-    <string id="topXOffsets">10</string>
-
+    <string id="XtopOffsets">10</string>
+    
 
 
     
         <!-- Y - (round watches only) - slb/Deg & sld(ft/m) Labels -->
-    <string id="topYLabel">21</string>
+    <string id="Ylbl_GF">21</string>
     <!-- Y - (round watches only) - slb/Deg & sld(ft/m) Data -->
-    <string id="topYData">32</string>
+    <string id="Ydat_GF">32</string>
 
     <!-- Y - top horizontal line -->
-    <string id="firstY">97</string>
+    <string id="Ylinje1">97</string>
     <!-- Y - HR, Alt, Pace - Label then Data -->
-    <string id="firstYLabel">100</string>
-    <string id="firstYData">117</string>
+    <string id="Ylbl_PHT">100</string>
+    <string id="Ydat_PHT">117</string>
 
     <!-- Y - thin middle horizontal line -->
-    <string id="secondY">160</string>
+    <string id="Ylinje2">160</string>
     <!-- Y - Timer, Dist - Data then Label -->
-    <string id="secondYData">161</string>
-    <string id="secondYLabel">199</string>
+    <string id="Ydat_TS">161</string>
+    <string id="Ylbl_TS">199</string>
     
     <!-- Y - bottom horizontal line -->
-    <string id="thirdY">221</string>
+    <string id="Ylinje3">221</string>
     <!-- Y - battery percentage, time of day - Data only -->
-    <string id="thirdYData">226</string>
+    <string id="Ydat_BT">226</string>
 
 
 
     <!-- X - vertical line in top section -->
-    <string id="topCenterXAdjust">-12</string>
+    <string id="XtopCenter">-12</string>
     <!-- X - vertical line in bottom section -->
-    <string id="bottomCenterXAdjust">-20</string>
+    <string id="XbtmCenter">-20</string>
     <!-- X - battery horizontal adjustment -->
-    <string id="batteryXAdjust">-7</string>
+    <string id="XbtmBatt">-7</string>
     <!-- X - time of day horizontal adjustment -->
-    <string id="todXAdjust">7</string>
+    <string id="XbtmTod">7</string>
 </resources>

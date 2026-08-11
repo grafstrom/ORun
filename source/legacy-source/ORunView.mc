@@ -15,6 +15,7 @@ class ORunView extends Ui.DataField {
 	const devFenix6     = 6;
 	const devFenix7     = 7;
 	const devFr920      = 9;
+	const vivoactive_hr = 10;
 
     var dev = devFenix3;
 
@@ -116,48 +117,7 @@ class ORunView extends Ui.DataField {
     
     function initDevice() {
     	var dv = Ui.loadResource(Rez.Strings.device);
-        if (dv.equals("fenix7x")) {
-            dev = devFenix7;
-            firstY     = 100;
-            firstYLbl  = 101;
-            firstYDat  = 120;
-            secondY    = 170;
-            secondYLbl = 220;
-            secondYDat = 180;
-            thirdY     = 242;
-            thirdYDat  = 250;
-            calcXVals(280, -15, -15, 7, -7);
-            return;
-        }
-        else if (dv.equals("fenix7") ||
-                 dv.equals("fenix6") ||
-                 dv.equals("fenix6pro")) {
-            dev = devFenix6;
-            firstY     = 105;
-            firstYLbl  = 110;
-            firstYDat  = 124;
-            secondY    = 170;
-            secondYLbl = 206;
-            secondYDat = 172;
-            thirdY     = 228;
-            thirdYDat  = 230;
-            calcXVals(260, -15, -15, 7, -7);
-            return;
-        }
-        else if (dv.equals("fenix6xpro")) {
-            dev = devFenix6;
-            firstY     = 110;
-            firstYLbl  = 115;
-            firstYDat  = 130;
-            secondY    = 180;
-            secondYLbl = 220;
-            secondYDat = 182;
-            thirdY     = 246;
-            thirdYDat  = 248;
-            calcXVals(280, -10, -15, 7, -7);
-            return;
-        }
-        else if (dv.equals("fenix5") ||
+        if (dv.equals("fenix5") ||
                  dv.equals("fenix5x")) {
             dev = devFenix5;
             firstY     = 80;
@@ -195,6 +155,18 @@ class ORunView extends Ui.DataField {
             thirdY     = 130;
             thirdYDat  = 132;
     	    calcXVals(205, -22, -15, 40, -32);
+            return;
+    	} else if (dv.equals("vivoactive_hr")) {
+    	    dev = vivoactive_hr;
+            firstY     = 65;
+            firstYLbl  = 70;
+            firstYDat  = 90;
+            secondY    = 124;
+            secondYLbl = 155;
+            secondYDat = 128;
+            thirdY     = 180;
+            thirdYDat  = 182;
+    	    calcXVals(148, -8, -15, 18, -18);
             return;
     	}
     	else if (dv.equals("epix")) {
@@ -311,8 +283,22 @@ class ORunView extends Ui.DataField {
 			sldX2 = topcenter + 10;
 			sldY2 = 13;
 		}
-		else {
-		    // Square watches ...
+		else if (dev == vivoactive_hr) {
+			// thin portrait rectangle watch
+			slbX1 = 0;
+			slbY1 = 0;
+			slbX2 = topcenter - 9;
+			slbY2 = 13;
+			sldX1 = width - 2;
+			sldY1 = 0;
+			sldX2 = topcenter + 9;
+			sldY2 = 13;
+			topAlign1 = Gfx.TEXT_JUSTIFY_LEFT;
+			topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
+			topAlign3 = Gfx.TEXT_JUSTIFY_RIGHT;
+			topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
+		} else { // (dev == fr920xt) or other legacy square watches
+		    // Square watches
 			slbX1 = 0;
 			slbY1 = 0;
 			slbX2 = topcenter - 10;

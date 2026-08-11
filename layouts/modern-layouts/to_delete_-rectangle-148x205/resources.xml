@@ -1,29 +1,24 @@
 <resources>
     <!-- dimensions & type of device + reference device -->
-    <string id="deviceTypeHelper">semioctagon-176x176</string>
+    <string id="deviceTypeHelper">rectangle-148x205</string>
     <!-- values are checked with system during run -->
-    <string id="shape">semioctagon</string>
-    <string id="width">176</string>
+    <string id="shape">rectangle</string>
+    <string id="width">148</string>
 
     <!-- tested on 
-    descentg1
+    vivoactive_hr
     -->
 
 
-
-
-    <!-- NEED TO UPDATE -->
-
-
-    <!-- X - (round watches only) - spacing between slb/Deg & sld(ft/m) and top center line -->
-    <string id="XtopOffsets">10</string>
+            <!-- X - (round watches only) - spacing between slb/Deg & sld(ft/m) and top center line -->
+            <string id="XtopOffsets">10</string>
 
 
 
-    <!-- Y - (round watches only) - slb/Deg & sld(ft/m) Labels -->
-    <string id="Ylbl_GF">4</string>
-    <!-- Y - (round watches only) - slb/Deg & sld(ft/m) Data -->
-    <string id="Ydat_GF">37</string>
+            <!-- Y - (round watches only) - slb/Deg & sld(ft/m) Labels -->
+            <string id="Ylbl_GF">4</string>
+            <!-- Y - (round watches only) - slb/Deg & sld(ft/m) Data -->
+            <string id="Ydat_GF">37</string>
 
     <!-- Y - top horizontal line -->
     <string id="Ylinje1">80</string>
@@ -40,7 +35,7 @@
     <!-- Y - bottom horizontal line -->
     <string id="Ylinje3">200</string>
     <!-- Y - battery percentage, time of day - Data only -->
-    <string id="Ydat_BT">202</string>
+    <string id="Ydat_BT">200</string>
 
 
 

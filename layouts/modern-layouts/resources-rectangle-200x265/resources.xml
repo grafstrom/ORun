@@ -1,0 +1,53 @@
+<resources>
+    <!-- dimensions & type of device + reference device -->
+    <string id="deviceTypeHelper">rectangle-200x265</string>
+    <!-- values are checked with system during run -->
+    <string id="shape">rectangle</string>
+    <string id="width">200</string>
+
+
+    <string id="XtopCenter">-15</string> <!--    Center Line Top  -->
+    <string id="XtopOffsets">4</string>  <!-- Margin to Line Top  -->
+    
+    <string id="Ylbl_GF">2</string>      <!--  Labels Deg & SLD   -->
+    <string id="Ydat_GF">4</string>      <!--    Data Deg & SLD   -->
+
+    <string id="Ylinje1">40</string>     <!--      Top Line       -->
+    <string id="Ylbl_PHT">40</string>    <!-- Labels HR Alt Pace  --> 
+    <string id="Ydat_PHT">46</string>    <!--   Data HR Alt Pace  --> 
+
+    <string id="Ylinje2">79</string>     <!--   Mid Line (thin)   -->
+    <string id="Ydat_TS">75</string>     <!--   Data Timer & Dist -->
+    <string id="Ylbl_TS">104</string>    <!-- Labels Timer & Dist -->
+
+    <string id="Ylinje3">117</string>    <!--     Bottom Line     -->
+    <string id="Ydat_BT">118</string>    <!--   Data Batt & Tod   -->
+
+    <string id="XbtmCenter">-15</string> <!--    Center Line Btm  -->
+    <string id="XbtmBatt">6</string>     <!-- Margin to Line Batt -->
+    <string id="XbtmTod">-6</string>     <!-- Margin to Line Tod  -->
+ 
+<!--
+    <string id="XtopCenter">-15</string> <!- -    Center Line Top  - ->
+    <string id="XtopOffsets">13</string> <!- - Margin to Line Top  - ->
+    
+    <string id="Ylbl_GF">13</string>     <!- -  Labels Deg & SLD   - ->
+    <string id="Ydat_GF">35</string>     <!- -    Data Deg & SLD   - ->
+
+    <string id="Ylinje1">80</string>     <!- -      Top Line       - ->
+    <string id="Ylbl_PHT">90</string>    <!- - Labels HR Alt Pace  - -> 
+    <string id="Ydat_PHT">112</string>   <!- -   Data HR Alt Pace  - -> 
+
+    <string id="Ylinje2">158</string>    <!- -   Mid Line (thin)   - ->
+    <string id="Ydat_TS">169</string>    <!- -   Data Timer & Dist - ->
+    <string id="Ylbl_TS">214</string>    <!- - Labels Timer & Dist - ->
+
+    <string id="Ylinje3">237</string>    <!- -     Bottom Line     - ->
+    <string id="Ydat_BT">245</string>    <!- -   Data Batt & Tod   - ->
+
+    <string id="XbtmCenter">-15</string> <!- -    Center Line Btm  - ->
+    <string id="XbtmBatt">6</string>     <!- - Margin to Line Batt - ->
+    <string id="XbtmTod">-6</string>     <!- - Margin to Line Tod  - ->
+-->
+
+</resources>
