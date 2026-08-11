@@ -19,13 +19,13 @@ class ORunView extends Ui.DataField {
     // var dev = devFenix3; // mike note: default Fenix3 dimensions for UI arrangement
 
 	// more device-specific dimensions values for UI arrangement
-	var Ylinje1     		= 80;
+	var Y_____1     		= 80;
 	var Ylbl_PHT  	= 81;
 	var Ydat_PHT  	= 96;
-	var Ylinje2    		= 132;
+	var Y_____2    		= 132;
 	var Ylbl_TS 	= 164;
 	var Ydat_TS 	= 131;
-	var Ylinje3     		= 185;
+	var Y_____3     		= 185;
 	var Ydat_BT  	= 189;
 	
     var rezWidth 		= 218; // defaults but safe defaults
@@ -82,13 +82,13 @@ class ORunView extends Ui.DataField {
 	// -------------------------------------------------------------------------------------------------------------------
     function onLayout(dc) { 
 
-		Ylinje1 = Ui.loadResource(Rez.Strings.Ylinje1).toNumber();
+		Y_____1 = Ui.loadResource(Rez.Strings.Y_____1).toNumber();
 		Ylbl_PHT = Ui.loadResource(Rez.Strings.Ylbl_PHT).toNumber();
 		Ydat_PHT = Ui.loadResource(Rez.Strings.Ydat_PHT).toNumber();
-		Ylinje2 = Ui.loadResource(Rez.Strings.Ylinje2).toNumber();
+		Y_____2 = Ui.loadResource(Rez.Strings.Y_____2).toNumber();
 		Ydat_TS = Ui.loadResource(Rez.Strings.Ydat_TS).toNumber();
 		Ylbl_TS = Ui.loadResource(Rez.Strings.Ylbl_TS).toNumber();
-		Ylinje3 = Ui.loadResource(Rez.Strings.Ylinje3).toNumber();
+		Y_____3 = Ui.loadResource(Rez.Strings.Y_____3).toNumber();
 		Ydat_BT = Ui.loadResource(Rez.Strings.Ydat_BT).toNumber();
 
 		rezWidth = Ui.loadResource(Rez.Strings.width).toNumber(); //easier to use dc.getWidth(), but easier to debug/maintain if we load from resource file
@@ -107,10 +107,10 @@ class ORunView extends Ui.DataField {
 		var XbtmCenter = Ui.loadResource(Rez.Strings.XbtmCenter).toNumber();
 		var XbtmTod = Ui.loadResource(Rez.Strings.XbtmTod).toNumber(); 
 		var XbtmBatt = Ui.loadResource(Rez.Strings.XbtmBatt).toNumber();
-		topCenter = halfWitt + XtopCenter;       // X adjustment from middle of top vertical line
+		topCenter = halfWitt + XtopCenter;    // X adjustment from middle of top vertical line
 	    bottomCenter = halfWitt + XbtmCenter; // X adjustment from middle of bottom vertical line
-		todX = bottomCenter + XbtmTod;              // X adjustment from bottom vertical for time-of-day
-		battX = bottomCenter + XbtmBatt;         // X adjustment from bottom vertical for battery pct
+		todX = bottomCenter + XbtmTod;        // X adjustment from bottom vertical for time-of-day
+		battX = bottomCenter + XbtmBatt;      // X adjustment from bottom vertical for battery pct
 		
 		var shape = System.getDeviceSettings().screenShape;
 		var rezShape = Ui.loadResource(Rez.Strings.shape);
@@ -199,9 +199,9 @@ class ORunView extends Ui.DataField {
 		var rezHeight = dc.getHeight();
 		System.println("Metrics are:");
 		System.println("");
-		System.println("Ylinje1: " + (Ylinje1.toFloat()/rezHeight).format("%.3f") + " (" + Ylinje1 + ")");
-		System.println("Ylinje2: " + (Ylinje2.toFloat()/rezHeight).format("%.3f") + " (" + Ylinje2 + ")");
-		System.println("Ylinje3: " + (Ylinje3.toFloat()/rezHeight).format("%.3f") + " (" + Ylinje3 + ")");
+		System.println("Y_____1: " + (Y_____1.toFloat()/rezHeight).format("%.3f") + " (" + Y_____1 + ")");
+		System.println("Y_____2: " + (Y_____2.toFloat()/rezHeight).format("%.3f") + " (" + Y_____2 + ")");
+		System.println("Y_____3: " + (Y_____3.toFloat()/rezHeight).format("%.3f") + " (" + Y_____3 + ")");
 		System.println("");
 		System.println(" Ylbl_GF: " + (Ylbl_GF.toFloat()/rezHeight).format("%.3f") + " (" + Ylbl_GF + ")");
 		System.println(" Ydat_GF: " + (Ydat_GF.toFloat()/rezHeight).format("%.3f") + " (" + Ydat_GF + ")");
@@ -219,12 +219,12 @@ class ORunView extends Ui.DataField {
 		System.println("");
 		// System.println(" <string id=\"Ylbl_GF\">" + Ylbl_GF + "</string>");
 		// System.println(" <string id=\"Ydat_GF\">" + Ydat_GF + "</string>");
-		// System.println(" <string id=\"Ylinje1\">" + Ylinje1 + "</string>");
+		// System.println(" <string id=\"Y_____1\">" + Y_____1 + "</string>");
 		// System.println(" <string id=\"Ylbl_PHT\">" + Ylbl_PHT + "</string>");
 		// System.println(" <string id=\"Ydat_PHT\">" + Ydat_PHT + "</string>");
-		// System.println(" <string id=\"Ylinje2\">" + Ylinje2 + "</string>");
+		// System.println(" <string id=\"Y_____2\">" + Y_____2 + "</string>");
 		// System.println(" <string id=\"Ydat_TS\">" + Ydat_TS + "</string>");
-		// System.println(" <string id=\"Ylinje3\">" + Ylinje3 + "</string>");
+		// System.println(" <string id=\"Y_____3\">" + Y_____3 + "</string>");
 		// System.println(" <string id=\"Ydat_BT\">" + Ydat_BT + "</string>");
 		// System.println(" <string id=\"XtopCenter\">" + XtopCenter + "</string>");
 		// System.println(" <string id=\"XtopOffsets\">" + XtopOffsets + "</string>");
@@ -349,19 +349,19 @@ class ORunView extends Ui.DataField {
         dc.setPenWidth(3); // set foreground color linecol for printing lines, text
         
         // Draw the BOLD lines 
-        dc.drawLine( 0, Ylinje1, rezWidth, Ylinje1);         // Top horizontal 
-        dc.drawLine( topCenter, Ylinje1, topCenter, 0 ); // Top vertical split-line
-        dc.drawLine( 0, Ylinje3, rezWidth, Ylinje3);         // Bottom horizontal 
+        dc.drawLine( 0, Y_____1, rezWidth, Y_____1);         // Top horizontal 
+        dc.drawLine( topCenter, Y_____1, topCenter, 0 ); // Top vertical split-line
+        dc.drawLine( 0, Y_____3, rezWidth, Y_____3);         // Bottom horizontal 
         
         // Draw the thin middle lines 
         dc.setPenWidth(1);
-        dc.drawLine( 0, Ylinje2, rezWidth, Ylinje2 );                    // Middle horizontal 
-        dc.drawLine( middlew, Ylinje1, middlew, Ylinje2 );             // HR/Alt vertical split-line 
-        dc.drawLine( 2 * middlew, Ylinje1, 2 * middlew, Ylinje2 );     // Alt/Pace vertical split-line
+        dc.drawLine( 0, Y_____2, rezWidth, Y_____2 );                    // Middle horizontal 
+        dc.drawLine( middlew, Y_____1, middlew, Y_____2 );             // HR/Alt vertical split-line 
+        dc.drawLine( 2 * middlew, Y_____1, 2 * middlew, Y_____2 );     // Alt/Pace vertical split-line
         
-        dc.drawLine( halfWitt, Ylinje2, halfWitt, Ylinje3 );           // Timer/Dist vertical split-line
+        dc.drawLine( halfWitt, Y_____2, halfWitt, Y_____3 );           // Timer/Dist vertical split-line
         
-        dc.drawLine( bottomCenter, Ylinje3, bottomCenter, dc.getHeight() );  // Battery/Time vertical split-line
+        dc.drawLine( bottomCenter, Y_____3, bottomCenter, dc.getHeight() );  // Battery/Time vertical split-line
         dc.setColor( forecol, Gfx.COLOR_TRANSPARENT );
 		
         // ---------- ////////////////////////////////////

@@ -198,35 +198,38 @@ instincte40mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/reso
 edge520plus.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-200x265
 edge820.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-200x265
 
-# edge130.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-round-260x260
-# edge130plus.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-230x303
+## ===================== here
 
-# venusq.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x240
-# venusqm.resourcePath =                  $(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x240
 
-# edge_1000.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-round-260x260
-# edgeexplore.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400
-# oregon7xx.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400
-# rino7xx.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400
-# edgeexplore2.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400-explore2
-# gpsmap66.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400-gpsmap
-# gpsmap67.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400-gpsmap
-# gpsmap86.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400-gpsmap
+edge130.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-230x303
+edge130plus.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-230x303
 
-# edge530.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-246x322
-# edge830.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-246x322
-# edge540.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-246x322_540
-# edge840.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-246x322_540
+venusq.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x240
+venusqm.resourcePath =                  $(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x240
 
-# edge1030.resourcePath = 				$(base.resourcePath);modern-layouts/resources-rectangle-282x470
-# edge1030bontrager.resourcePath = 		$(base.resourcePath);modern-layouts/resources-rectangle-282x470
-# edge1030plus.resourcePath = 			$(base.resourcePath);modern-layouts/resources-rectangle-282x470
-# edge1040.resourcePath = 				$(base.resourcePath);modern-layouts/resources-rectangle-282x470-1040
+edge_1000.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400
+edgeexplore.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400
+oregon7xx.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400
+rino7xx.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400
+edgeexplore2.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400-explore2
+gpsmap66.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400-gpsmap
+gpsmap67.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400-gpsmap
+gpsmap86.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400-gpsmap
 
-# venusq2.resourcePath = 					$(base.resourcePath);modern-layouts/resources-rectangle-320x360
-# venusq2m.resourcePath = 				$(base.resourcePath);modern-layouts/resources-rectangle-320x360
+edge530.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-246x322
+edge830.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-246x322
+edge540.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-246x322_540
+edge840.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-246x322_540
 
-# edge1050.resourcePath = 				$(base.resourcePath);modern-layouts/resources-rectangle-480x800
-# montana7xx.resourcePath = 				$(base.resourcePath);modern-layouts/resources-rectangle-480x800-montana7
+edge1030.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-282x470
+edge1030bontrager.resourcePath = 		$(base.resourcePath);layouts/modern-layouts/resources-rectangle-282x470
+edge1030plus.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-rectangle-282x470
+edge1040.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-282x470-1040
+
+venusq2.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-rectangle-320x360
+venusq2m.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-320x360
+
+edge1050.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-480x800
+montana7xx.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-480x800-montana7
 
 

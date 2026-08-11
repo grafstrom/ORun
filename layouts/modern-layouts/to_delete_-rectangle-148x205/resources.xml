@@ -21,19 +21,19 @@
             <string id="Ydat_GF">37</string>
 
     <!-- Y - top horizontal line -->
-    <string id="Ylinje1">80</string>
+    <string id="Y_____1">80</string>
     <!-- Y - HR, Alt, Pace - Label then Data -->
     <string id="Ylbl_PHT">81</string>
     <string id="Ydat_PHT">104</string>
 
     <!-- Y - thin middle horizontal line -->
-    <string id="Ylinje2">140</string>
+    <string id="Y_____2">140</string>
     <!-- Y - Timer, Dist - Data then Label -->
     <string id="Ydat_TS">142</string>
     <string id="Ylbl_TS">172</string>
 
     <!-- Y - bottom horizontal line -->
-    <string id="Ylinje3">200</string>
+    <string id="Y_____3">200</string>
     <!-- Y - battery percentage, time of day - Data only -->
     <string id="Ydat_BT">200</string>
 

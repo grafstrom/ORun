@@ -16,42 +16,19 @@
     fenixchronos    
     -->
 
-    <!-- X - (round watches only) - spacing between slb/Deg & sld(ft/m) and top center line -->
-    <string id="XtopOffsets">7</string>
-
-
-
-    <!-- Y - (round watches only) - slb/Deg & sld(ft/m) Labels -->
-    <string id="Ylbl_GF">8</string>
-    <!-- Y - (round watches only) - slb/Deg & sld(ft/m) Data -->
-    <string id="Ydat_GF">34</string>
-
-    <!-- Y - top horizontal line -->
-    <string id="Ylinje1">73</string>
-    <!-- Y - HR, Alt, Pace - Label then Data -->
-    <string id="Ylbl_PHT">75</string>
-    <string id="Ydat_PHT">94</string>
-
-    <!-- Y - thin middle horizontal line -->
-    <string id="Ylinje2">129</string>
-    <!-- Y - Timer, Dist - Data then Label -->
-    <string id="Ydat_TS">130</string>
-    <string id="Ylbl_TS">160</string>
-
-    <!-- Y - bottom horizontal line -->
-    <string id="Ylinje3">185</string>
-    <!-- Y - battery percentage, time of day - Data only -->
-    <string id="Ydat_BT">186</string>
-
-
-
-
-    <!-- X - vertical line in top section -->
-    <string id="XtopCenter">-8</string>
-    <!-- X - vertical line in bottom section -->
-    <string id="XbtmCenter">-14</string>
-    <!-- X - battery horizontal adjustment -->
-    <string id="XbtmBatt">-4</string>
-    <!-- X - time of day horizontal adjustment -->
-    <string id="XbtmTod">4</string>
+    <string id="XtopCenter">-8</string> <!-- Center Line Top -->
+    <string id="XtopOffsets">7</string> <!-- Margin to Line Top -->
+    <string id="Ylbl_GF">8</string> <!-- Labels Deg & SLD -->
+    <string id="Ydat_GF">34</string> <!-- Data Deg & SLD -->
+    <string id="Y_____1">73</string> <!-- Top Line -->
+    <string id="Ylbl_PHT">75</string> <!-- Labels HR Alt Pace -->
+    <string id="Ydat_PHT">94</string> <!-- Data HR Alt Pace -->
+    <string id="Y_____2">129</string> <!-- Mid Line (thin) -->
+    <string id="Ydat_TS">130</string> <!-- Data Timer & Dist -->
+    <string id="Ylbl_TS">160</string> <!-- Labels Timer & Dist -->
+    <string id="Y_____3">185</string> <!-- Bottom Line -->
+    <string id="Ydat_BT">186</string> <!-- Data Batt & Tod -->
+    <string id="XbtmCenter">-14</string> <!-- Center Line Btm -->
+    <string id="XbtmBatt">-4</string> <!-- Margin to Line Batt -->
+    <string id="XbtmTod">4</string> <!-- Margin to Line Tod -->
 </resources>

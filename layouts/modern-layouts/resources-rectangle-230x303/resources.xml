@@ -41,8 +41,8 @@
     <string id="Ydat_BT">245</string>    <!--   Data Batt & Tod   -->
 
     <string id="XbtmCenter">-15</string> <!--    Center Line Btm  -->
-    <string id="XbtmBatt">8</string>     <!-- Margin to Line Batt -->
-    <string id="XbtmTod">-8</string>     <!-- Margin to Line Tod  -->
+    <string id="XbtmBatt">6</string>     <!-- Margin to Line Batt -->
+    <string id="XbtmTod">-6</string>     <!-- Margin to Line Tod  -->
 
 
 </resources>
