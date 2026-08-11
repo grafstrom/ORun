@@ -44,7 +44,7 @@
     <!-- X - vertical line in bottom section -->
     <string id="XbtmCenter">-20</string>
     <!-- X - battery horizontal adjustment -->
-    <string id="XbtmBatt">-5</string>
+    <string id="XbtmOffsets">5</string>  <!--  Margin to Line Btm -->
     <!-- X - time of day horizontal adjustment -->
     <string id="XbtmTod">5</string>
 </resources>

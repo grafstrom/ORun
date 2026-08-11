@@ -105,12 +105,13 @@ class ORunView extends Ui.DataField {
 
 	    var XtopCenter = Ui.loadResource(Rez.Strings.XtopCenter).toNumber();
 		var XbtmCenter = Ui.loadResource(Rez.Strings.XbtmCenter).toNumber();
-		var XbtmTod = Ui.loadResource(Rez.Strings.XbtmTod).toNumber(); 
-		var XbtmBatt = Ui.loadResource(Rez.Strings.XbtmBatt).toNumber();
+		// var XbtmTod = Ui.loadResource(Rez.Strings.XbtmTod).toNumber(); 
+		// var XbtmBatt = Ui.loadResource(Rez.Strings.XbtmBatt).toNumber();
+		var XbtmOffsets = Ui.loadResource(Rez.Strings.XbtmOffsets).toNumber();
 		topCenter = halfWitt + XtopCenter;    // X adjustment from middle of top vertical line
 	    bottomCenter = halfWitt + XbtmCenter; // X adjustment from middle of bottom vertical line
-		todX = bottomCenter + XbtmTod;        // X adjustment from bottom vertical for time-of-day
-		battX = bottomCenter + XbtmBatt;      // X adjustment from bottom vertical for battery pct
+		todX = bottomCenter + XbtmOffsets;        // X adjustment from bottom vertical for time-of-day
+		battX = bottomCenter - XbtmOffsets;      // X adjustment from bottom vertical for battery pct
 		
 		var shape = System.getDeviceSettings().screenShape;
 		var rezShape = Ui.loadResource(Rez.Strings.shape);
@@ -155,8 +156,8 @@ class ORunView extends Ui.DataField {
 			topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
 			bottomAlign1 = Gfx.TEXT_JUSTIFY_LEFT;
 			bottomAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
-			battX = Ui.loadResource(Rez.Strings.XbtmBatt).toNumber(); 
-			todX = rezWidth + Ui.loadResource(Rez.Strings.XbtmTod).toNumber();
+			battX = XbtmOffsets;
+			todX = rezWidth - XbtmOffsets;
 		} else if (System has :SCREEN_SHAPE_SEMI_OCTAGON){ // first confirm that watch recognizes the terminology octagonal
 			if (shape == System.SCREEN_SHAPE_SEMI_OCTAGON) {
 				if (!rezShape.equals("semioctagon")) {
@@ -214,9 +215,11 @@ class ORunView extends Ui.DataField {
 		System.println(" XtopCenter: " + (XtopCenter.toFloat()/rezWidth).format("%.3f") + " (" + XtopCenter + ")");
 		System.println("XtopOffsets: " + (XtopOffsets.toFloat()/rezWidth).format("%.3f") + " (" + XtopOffsets + ")");
 		System.println(" XbtmCenter: " + (XbtmCenter.toFloat()/rezWidth).format("%.3f") + " (" + XbtmCenter + ")");
-		System.println("   XbtmBatt: " + (XbtmBatt.toFloat()/rezWidth).format("%.3f") + " (" + XbtmBatt + ")");
-		System.println("    XbtmTod: " + (XbtmTod.toFloat()/rezWidth).format("%.3f") + " (" + XbtmTod + ")");
+		System.println("XbtmOffsets: " + (XbtmOffsets.toFloat()/rezWidth).format("%.3f") + " (" + XbtmOffsets + ")");
 		System.println("");
+		// System.println("   XbtmBatt: " + (XbtmBatt.toFloat()/rezWidth).format("%.3f") + " (" + XbtmBatt + ")");
+		// System.println("    XbtmTod: " + (XbtmTod.toFloat()/rezWidth).format("%.3f") + " (" + XbtmTod + ")");
+
 		// System.println(" <string id=\"Ylbl_GF\">" + Ylbl_GF + "</string>");
 		// System.println(" <string id=\"Ydat_GF\">" + Ydat_GF + "</string>");
 		// System.println(" <string id=\"Y_____1\">" + Y_____1 + "</string>");

@@ -18,6 +18,5 @@
     <string id="Y_____3">205</string> <!-- Bottom Line -->
     <string id="Ydat_BT">209</string> <!-- Data Batt & Tod -->
     <string id="XbtmCenter">-16</string> <!-- Center Line Btm -->
-    <string id="XbtmBatt">-6</string> <!-- Margin to Line Batt -->
-    <string id="XbtmTod">6</string> <!-- Margin to Line Tod -->
+    <string id="XbtmOffsets">6</string>  <!--  Margin to Line Btm -->
 </resources>
