@@ -35,7 +35,7 @@ class ORunCore {
             startLoca = info.currentLocation;
             startAlt = info.altitude;
             startLap = lap;
-            System.println("  compute: lap is now " + lap);
+            //System.println("  compute: lap is now " + lap);
         }
 
         if (info.altitude != null and startAlt != null) {

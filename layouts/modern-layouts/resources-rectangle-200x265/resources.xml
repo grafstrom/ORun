@@ -5,7 +5,8 @@
     <string id="shape">rectangle</string>
     <string id="width">200</string>
 
-<!--
+<!--   halfsize:
+
     <string id="XtopCenter">-15</string> <!- -    Center Line Top  - ->
     <string id="XtopOffsets">4</string>  <!- - Margin to Line Top  - ->
     <string id="Ylbl_GF">2</string>      <!- -  Labels Deg & SLD   - ->
@@ -19,9 +20,10 @@
     <string id="Y_____3">117</string>    <!- -     Bottom Line     - ->
     <string id="Ydat_BT">118</string>    <!- -   Data Batt & Tod   - ->
     <string id="XbtmCenter">-15</string> <!- -    Center Line Btm  - ->
-    <string id="XbtmOffsets">6</string>  <!- -  Margin to Line Btm - ->
- -->
+    <string id="XbtmOffsets">6</string>  <!- -  Margin to Line Btm  - ->
 
+        full size:
+ -->
     <string id="XtopCenter">-15</string> <!--    Center Line Top  -->
     <string id="XtopOffsets">13</string> <!-- Margin to Line Top  -->
     
@@ -40,6 +42,8 @@
     <string id="Ydat_BT">245</string>    <!--   Data Batt & Tod   -->
 
     <string id="XbtmCenter">-15</string> <!--    Center Line Btm  -->
-    <string id="XbtmOffsets">8</string>  <!--  Margin to Line Btm -->
-    
+    <string id="XbtmOffsets">6</string>  <!-- Margin to Line Btm  -->
+
+    <string id="testfloat">0.302</string>
+
 </resources>

@@ -81,7 +81,21 @@ class ORunView extends Ui.DataField {
 
 	// -------------------------------------------------------------------------------------------------------------------
     function onLayout(dc) { 
+		//Sys.println("-----------------------------onLayout called - poss change in LAYOUTs-------- dcWidth: " + dc.getWidth() + "    dcHeight: " + dc.getHeight());
+		// below here testing eventual responsive design for rectangle watches first
+		var dcWidth = dc.getWidth(); // mike note: I changed this back to rezWidth, which
+									 // means it's important to ensure that resources.xml 
+									 // have the correct width in it at the top! 
+		var dcHeight = dc.getHeight();
 
+		rezWidth = Ui.loadResource(Rez.Strings.width).toNumber(); //easier to use dc.getWidth(), but easier to debug/maintain if we load from resource file
+	    if (rezWidth != dc.getWidth()) {
+			Sys.println("ERROR: dc.getWidth() does not match Ui.loadResource(Rez.Strings.width).toNumber()");
+		}
+
+		// old resources.xml direct metrics processing
+		var Ylbl_GF = Ui.loadResource(Rez.Strings.Ylbl_GF).toNumber();
+		var Ydat_GF = Ui.loadResource(Rez.Strings.Ydat_GF).toNumber();
 		Y_____1 = Ui.loadResource(Rez.Strings.Y_____1).toNumber();
 		Ylbl_PHT = Ui.loadResource(Rez.Strings.Ylbl_PHT).toNumber();
 		Ydat_PHT = Ui.loadResource(Rez.Strings.Ydat_PHT).toNumber();
@@ -90,11 +104,33 @@ class ORunView extends Ui.DataField {
 		Ylbl_TS = Ui.loadResource(Rez.Strings.Ylbl_TS).toNumber();
 		Y_____3 = Ui.loadResource(Rez.Strings.Y_____3).toNumber();
 		Ydat_BT = Ui.loadResource(Rez.Strings.Ydat_BT).toNumber();
+		var XtopCenter = Ui.loadResource(Rez.Strings.XtopCenter).toNumber();
+		var XtopOffsets = Ui.loadResource(Rez.Strings.XtopOffsets).toNumber();
+		var XbtmCenter = Ui.loadResource(Rez.Strings.XbtmCenter).toNumber();
+		var XbtmOffsets = Ui.loadResource(Rez.Strings.XbtmOffsets).toNumber();
 
-		rezWidth = Ui.loadResource(Rez.Strings.width).toNumber(); //easier to use dc.getWidth(), but easier to debug/maintain if we load from resource file
-	    if (rezWidth != dc.getWidth()) {
-			Sys.println("ERROR: dc.getWidth() does not match Ui.loadResource(Rez.Strings.width).toNumber()");
-		}
+		// THIS WORKS!!!!
+		// var testFloat = (dcHeight * Ui.loadResource(Rez.Strings.testfloat).toFloat()).toNumber(); 
+		// System.println(" ***testing testFloat Y1: " + testFloat);
+
+		// test new resources.xml metrics processing
+		// var Ylbl_GF = (rezWidth * Ui.loadResource(Rez.Strings.Ylbl_GF).toFloat()).toNumber();
+		// var Ydat_GF = (rezWidth * Ui.loadResource(Rez.Strings.Ydat_GF).toFloat()).toNumber();
+		// Y_____1 = (dcHeight * Ui.loadResource(Rez.Strings.Y_____1).toFloat()).toNumber();
+		// Ylbl_PHT = (dcHeight * Ui.loadResource(Rez.Strings.Ylbl_PHT).toFloat()).toNumber();
+		// Ydat_PHT = (dcHeight * Ui.loadResource(Rez.Strings.Ydat_PHT).toFloat()).toNumber();
+		// Y_____2 = (dcHeight * Ui.loadResource(Rez.Strings.Y_____2).toFloat()).toNumber();
+		// Ydat_TS = (dcHeight * Ui.loadResource(Rez.Strings.Ydat_TS).toFloat()).toNumber();
+		// Ylbl_TS = (dcHeight * Ui.loadResource(Rez.Strings.Ylbl_TS).toFloat()).toNumber();
+		// Y_____3 = (dcHeight * Ui.loadResource(Rez.Strings.Y_____3).toFloat()).toNumber();
+		// Ydat_BT = (dcHeight * Ui.loadResource(Rez.Strings.Ydat_BT).toFloat()).toNumber();
+		// var XtopCenter = (rezWidth * Ui.loadResource(Rez.Strings.XtopCenter).toFloat()).toNumber();
+		// var XtopOffsets = (rezWidth * Ui.loadResource(Rez.Strings.XtopOffsets).toFloat()).toNumber();
+		// var XbtmCenter = (rezWidth * Ui.loadResource(Rez.Strings.XbtmCenter).toFloat()).toNumber();
+		// var XbtmOffsets = (rezWidth * Ui.loadResource(Rez.Strings.XbtmOffsets).toFloat()).toNumber();
+
+
+
 		halfWitt = rezWidth / 2;
 		middlew = rezWidth / 3;
 		halfMiddleWidth = middlew / 2;
@@ -102,12 +138,7 @@ class ORunView extends Ui.DataField {
 		tidX = (halfWitt / 2) + 5;
 		distX = (3 * halfWitt / 2) - 5;
 		paceX = 2 * middlew + halfMiddleWidth;
-
-	    var XtopCenter = Ui.loadResource(Rez.Strings.XtopCenter).toNumber();
-		var XbtmCenter = Ui.loadResource(Rez.Strings.XbtmCenter).toNumber();
-		// var XbtmTod = Ui.loadResource(Rez.Strings.XbtmTod).toNumber(); 
-		// var XbtmBatt = Ui.loadResource(Rez.Strings.XbtmBatt).toNumber();
-		var XbtmOffsets = Ui.loadResource(Rez.Strings.XbtmOffsets).toNumber();
+		
 		topCenter = halfWitt + XtopCenter;    // X adjustment from middle of top vertical line
 	    bottomCenter = halfWitt + XbtmCenter; // X adjustment from middle of bottom vertical line
 		todX = bottomCenter + XbtmOffsets;        // X adjustment from bottom vertical for time-of-day
@@ -115,15 +146,12 @@ class ORunView extends Ui.DataField {
 		
 		var shape = System.getDeviceSettings().screenShape;
 		var rezShape = Ui.loadResource(Rez.Strings.shape);
-		System.println("rezShape detected as " + rezShape + " with dimensions W_" + rezWidth + " x H_" + dc.getHeight());
+		//System.println("rezShape detected as " + rezShape + " with dimensions rez-> W_" + rezWidth + " x H_" + dcHeight + " <-dc");
 		if ((shape == System.SCREEN_SHAPE_RECTANGLE) && (!rezShape.equals("rectangle"))) {
 			Sys.println("ERROR: System.getDeviceSettings().screenShape does not match Ui.loadResource(Rez.Strings.shape)");
 		}
 		
 		// default for round layout  (rezShape == System.SCREEN_SHAPE_ROUND)
-		var XtopOffsets = Ui.loadResource(Rez.Strings.XtopOffsets).toNumber();
-		var Ylbl_GF = Ui.loadResource(Rez.Strings.Ylbl_GF).toNumber();
-		var Ydat_GF = Ui.loadResource(Rez.Strings.Ydat_GF).toNumber();
 		slbX1 = topCenter - XtopOffsets;
 		slbY1 = Ylbl_GF;
 		slbX2 = topCenter - XtopOffsets;
@@ -197,45 +225,71 @@ class ORunView extends Ui.DataField {
 		
 		// using the below function we can see patterns to ui, develop a simpler algorithm 
 		// for adjusting UI metrics, rather than assigning each location uniquely per device.
-		var rezHeight = dc.getHeight();
-		System.println("Metrics are:");
-		System.println("");
-		System.println("Y_____1: " + (Y_____1.toFloat()/rezHeight).format("%.3f") + " (" + Y_____1 + ")");
-		System.println("Y_____2: " + (Y_____2.toFloat()/rezHeight).format("%.3f") + " (" + Y_____2 + ")");
-		System.println("Y_____3: " + (Y_____3.toFloat()/rezHeight).format("%.3f") + " (" + Y_____3 + ")");
-		System.println("");
-		System.println(" Ylbl_GF: " + (Ylbl_GF.toFloat()/rezHeight).format("%.3f") + " (" + Ylbl_GF + ")");
-		System.println(" Ydat_GF: " + (Ydat_GF.toFloat()/rezHeight).format("%.3f") + " (" + Ydat_GF + ")");
-		System.println("Ylbl_PHT: " + (Ylbl_PHT.toFloat()/rezHeight).format("%.3f") + " (" + Ylbl_PHT + ")");
-		System.println("Ydat_PHT: " + (Ydat_PHT.toFloat()/rezHeight).format("%.3f") + " (" + Ydat_PHT + ")");
-		System.println(" Ydat_TS: " + (Ydat_TS.toFloat()/rezHeight).format("%.3f") + " (" + Ydat_TS + ")");
-		System.println(" Ylbl_TS: " + (Ylbl_TS.toFloat()/rezHeight).format("%.3f") + " (" + Ylbl_TS + ")");
-		System.println(" Ydat_BT: " + (Ydat_BT.toFloat()/rezHeight).format("%.3f") + " (" + Ydat_BT + ")");
-		System.println("");
+		var device = Ui.loadResource(Rez.Strings.deviceTypeHelper);
+		System.println("============================================================ " + getModelIdentifier());
+		System.println("Device: " + device + "   (part number " + getModelIdentifier() + ")     (dcHeight:" + dc.getHeight() + " dcWidth:" + dc.getWidth() + ")");
+		System.println("---------------------legible metrics------------------------");
 		System.println(" XtopCenter: " + (XtopCenter.toFloat()/rezWidth).format("%.3f") + " (" + XtopCenter + ")");
 		System.println("XtopOffsets: " + (XtopOffsets.toFloat()/rezWidth).format("%.3f") + " (" + XtopOffsets + ")");
+		System.println("");
+		System.println("    Ylbl_GF: " + (Ylbl_GF.toFloat()/dcHeight).format("%.3f") + " (" + Ylbl_GF + ")");
+		System.println("    Ydat_GF: " + (Ydat_GF.toFloat()/dcHeight).format("%.3f") + " (" + Ydat_GF + ")");
+		System.println("");
+		System.println("    Y_____1: " + (Y_____1.toFloat()/dcHeight).format("%.3f") + " (" + Y_____1 + ")");
+		System.println("   Ylbl_PHT: " + (Ylbl_PHT.toFloat()/dcHeight).format("%.3f") + " (" + Ylbl_PHT + ")");
+		System.println("   Ydat_PHT: " + (Ydat_PHT.toFloat()/dcHeight).format("%.3f") + " (" + Ydat_PHT + ")");
+		System.println("");
+		System.println("    Y_____2: " + (Y_____2.toFloat()/dcHeight).format("%.3f") + " (" + Y_____2 + ")");
+		System.println("    Ydat_TS: " + (Ydat_TS.toFloat()/dcHeight).format("%.3f") + " (" + Ydat_TS + ")");
+		System.println("    Ylbl_TS: " + (Ylbl_TS.toFloat()/dcHeight).format("%.3f") + " (" + Ylbl_TS + ")");
+		System.println("");
+		System.println("    Y_____3: " + (Y_____3.toFloat()/dcHeight).format("%.3f") + " (" + Y_____3 + ")");
+		System.println("    Ydat_BT: " + (Ydat_BT.toFloat()/dcHeight).format("%.3f") + " (" + Ydat_BT + ")");
+		System.println("");
 		System.println(" XbtmCenter: " + (XbtmCenter.toFloat()/rezWidth).format("%.3f") + " (" + XbtmCenter + ")");
 		System.println("XbtmOffsets: " + (XbtmOffsets.toFloat()/rezWidth).format("%.3f") + " (" + XbtmOffsets + ")");
+		System.println("---------------------- X M L metrics ----------------------");
+		System.println("<resources>");
+		System.println("    <!-- dimensions & type of device + reference device --> ");
+		System.println("    <string id=\"deviceTypeHelper\">" + device + "</string>");
+		System.println("    <!-- values are checked with system during run -->");
+		System.println("    <string id=\"shape\">" + rezShape + "</string>");
+		System.println("    <string id=\"width\">" + rezWidth + "</string>");
 		System.println("");
-		// System.println("   XbtmBatt: " + (XbtmBatt.toFloat()/rezWidth).format("%.3f") + " (" + XbtmBatt + ")");
-		// System.println("    XbtmTod: " + (XbtmTod.toFloat()/rezWidth).format("%.3f") + " (" + XbtmTod + ")");
-
-		// System.println(" <string id=\"Ylbl_GF\">" + Ylbl_GF + "</string>");
-		// System.println(" <string id=\"Ydat_GF\">" + Ydat_GF + "</string>");
-		// System.println(" <string id=\"Y_____1\">" + Y_____1 + "</string>");
-		// System.println(" <string id=\"Ylbl_PHT\">" + Ylbl_PHT + "</string>");
-		// System.println(" <string id=\"Ydat_PHT\">" + Ydat_PHT + "</string>");
-		// System.println(" <string id=\"Y_____2\">" + Y_____2 + "</string>");
-		// System.println(" <string id=\"Ydat_TS\">" + Ydat_TS + "</string>");
-		// System.println(" <string id=\"Y_____3\">" + Y_____3 + "</string>");
-		// System.println(" <string id=\"Ydat_BT\">" + Ydat_BT + "</string>");
-		// System.println(" <string id=\"XtopCenter\">" + XtopCenter + "</string>");
-		// System.println(" <string id=\"XtopOffsets\">" + XtopOffsets + "</string>");
-		// System.println(" <string id=\"XbtmCenter\">" + XbtmCenter + "</string>");
-		// System.println(" <string id=\"XbtmBatt\">" + XbtmBatt + "</string>");
-		// System.println(" <string id=\"XbtmTod\">" + XbtmTod + "</string>");
+		System.println("    <string id=\"XtopCenter\">" + (XtopCenter.toFloat()/rezWidth).format("%.3f") + "</string>  <!--    Center Line Top  -->");
+		System.println("    <string id=\"XtopOffsets\">" + (XtopOffsets.toFloat()/rezWidth).format("%.3f") + "</string> <!-- Margin to Line Top  -->");
+		System.println("");
+		System.println("    <string id=\"Ylbl_GF\">" + (Y_____1.toFloat()/dcHeight).format("%.3f") + "</string>     <!--  Labels Deg & SLD   -->");
+		System.println("    <string id=\"Ydat_GF\">" + (Ydat_GF.toFloat()/dcHeight).format("%.3f") + "</string>     <!--    Data Deg & SLD   -->");
+		System.println("");
+		System.println("    <string id=\"Y_____1\">" + (Y_____1.toFloat()/dcHeight).format("%.3f") + "</string>     <!--      Top Line       -->");
+		System.println("    <string id=\"Ylbl_PHT\">" + (Ylbl_PHT.toFloat()/dcHeight).format("%.3f") + "</string>    <!-- Labels HR Alt Pace  -->");
+		System.println("    <string id=\"Ydat_PHT\">" + (Ydat_PHT.toFloat()/dcHeight).format("%.3f") + "</string>    <!--   Data HR Alt Pace  -->");
+		System.println("");
+		System.println("    <string id=\"Y_____2\">" + (Y_____2.toFloat()/dcHeight).format("%.3f") + "</string>     <!--   Mid Line (thin)   -->");
+		System.println("    <string id=\"Ydat_TS\">" + (Ydat_TS.toFloat()/dcHeight).format("%.3f") + "</string>     <!--   Data Timer & Dist -->");
+		System.println("    <string id=\"Ylbl_TS\">" + (Ylbl_TS.toFloat()/dcHeight).format("%.3f") + "</string>     <!-- Labels Timer & Dist -->");
+		System.println("");
+		System.println("    <string id=\"Y_____3\">" + (Y_____3.toFloat()/dcHeight).format("%.3f") + "</string>     <!--     Bottom Line     -->");
+		System.println("    <string id=\"Ydat_BT\">" + (Ydat_BT.toFloat()/dcHeight).format("%.3f") + "</string>     <!--   Data Batt & Tod   -->");
+		System.println("");
+		System.println("    <string id=\"XbtmCenter\">" + (XbtmCenter.toFloat()/rezWidth).format("%.3f") + "</string> <!--    Center Line Btm  -->");
+		System.println("    <string id=\"XbtmOffsets\">" + (XbtmOffsets.toFloat()/rezWidth).format("%.3f") + "</string> <!-- Margin to Line Btm  -->");
+		System.println("");
+		System.println("</resources>\n\n");
+		System.print("============================================================ ");
+		System.println(getModelIdentifier() + "  device tested: XXXXXX");
+				
 		
     }
+	// -------------------------------------------------------------------------------------------------------------------
+	function getModelIdentifier() {
+		var settings = System.getDeviceSettings();
+		if (settings has :partNumber && settings.partNumber != null) {
+			return settings.partNumber;
+		}
+		return "Unknown";
+	}	
 	// -------------------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------------------------------------
 	// after this is business logic, less focused on device-specific display metrics
