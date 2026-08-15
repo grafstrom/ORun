@@ -4,26 +4,43 @@
     <!-- values are checked with system during run -->
     <string id="shape">rectangle</string>
     <string id="width">200</string>
+    <string id="height">265</string>
 
-<!--   halfsize:
+    <string id="xt0Mid">5.5</string>   <!-- char xt0 mid-height so I can place AND SCALE UI using floats -->
+    <string id="lg4Mid">18.0</string>   <!-- char lg4 mid-height so I can place AND SCALE UI using floats -->
+    <string id="md6Mid">19.5</string>   <!-- char md6 mid-height so I can place AND SCALE UI using floats -->
 
-    <string id="XtopCenter">-15</string> <!- -    Center Line Top  - ->
-    <string id="XtopOffsets">4</string>  <!- - Margin to Line Top  - ->
-    <string id="Ylbl_GF">2</string>      <!- -  Labels Deg & SLD   - ->
-    <string id="Ydat_GF">4</string>      <!- -    Data Deg & SLD   - ->
-    <string id="Y_____1">40</string>     <!- -      Top Line       - ->
-    <string id="Ylbl_PHT">40</string>    <!- - Labels HR Alt Pace  - -> 
-    <string id="Ydat_PHT">46</string>    <!- -   Data HR Alt Pace  - -> 
-    <string id="Y_____2">79</string>     <!- -   Mid Line (thin)   - ->
-    <string id="Ydat_TS">75</string>     <!- -   Data Timer & Dist - ->
-    <string id="Ylbl_TS">104</string>    <!- - Labels Timer & Dist - ->
-    <string id="Y_____3">117</string>    <!- -     Bottom Line     - ->
-    <string id="Ydat_BT">118</string>    <!- -   Data Batt & Tod   - ->
-    <string id="XbtmCenter">-15</string> <!- -    Center Line Btm  - ->
-    <string id="XbtmOffsets">6</string>  <!- -  Margin to Line Btm  - ->
+    <string id="xt0Acc">9.360</string>      <!-- <- accurateHeight of FONT_XTINY, whereas getFontHeight()= 12 -->
+    <string id="lg4Acc">28.080</string>      <!-- <- accurateHeight of FONT_LARGE, whereas getFontHeight()= 36 -->
+    <string id="md6Acc">30.420</string>      <!-- <- accurateHeight of FONT_NUMBER_MEDIUM, whereas getFontHeight()= 39 -->
 
-        full size:
- -->
+<!-- tested on edge520plus, edge820 -->
+
+    <!-- attempt new percentage point for mid-points; these figures include calculations of acc/mid printed above -->
+    <string id="oXtopCenter">-0.075</string>  <!--    Center Line Top  -->
+    <string id="oXtopOffsets">0.065</string> <!-- Margin to Line Top  -->
+
+    <string id="oYlbl_GF">0.070</string>     <!--  Labels Deg & SLD   -->
+    <string id="oYdat_GF">0.206</string>     <!--    Data Deg & SLD   -->
+
+    <string id="oY_____1">0.302</string>     <!--      Top Line       -->
+    <string id="oYlbl_PHT">0.360</string>    <!-- Labels HR Alt Pace  -->
+    <string id="oYdat_PHT">0.491</string>    <!--   Data HR Alt Pace  -->
+
+    <string id="oY_____2">0.596</string>     <!--   Mid Line (thin)   -->
+    <string id="oYdat_TS">0.706</string>     <!--   Data Timer & Dist -->
+    <string id="oYlbl_TS">0.828</string>     <!-- Labels Timer & Dist -->
+
+    <string id="oY_____3">0.894</string>     <!--     Bottom Line     -->
+    <string id="oYdat_BT">0.945</string>     <!--   Data Batt & Tod   -->
+
+    <string id="oXbtmCenter">-0.075</string> <!--    Center Line Btm  -->
+    <string id="oXbtmOffsets">0.030</string> <!-- Margin to Line Btm  -->
+
+
+
+
+<!-- full size -->
     <string id="XtopCenter">-15</string> <!--    Center Line Top  -->
     <string id="XtopOffsets">13</string> <!-- Margin to Line Top  -->
     
@@ -43,7 +60,25 @@
 
     <string id="XbtmCenter">-15</string> <!--    Center Line Btm  -->
     <string id="XbtmOffsets">6</string>  <!-- Margin to Line Btm  -->
+    
+    
 
-    <string id="testfloat">0.302</string>
+    
+<!--   halfsize: 
+    <string id="XtopCenter">-15</string> <!- -    Center Line Top  - ->
+    <string id="XtopOffsets">4</string>  <!- - Margin to Line Top  - ->
+    <string id="Ylbl_GF">2</string>      <!- -  Labels Deg & SLD   - ->
+    <string id="Ydat_GF">8</string>      <!- -    Data Deg & SLD   - ->
+    <string id="Y_____1">40</string>     <!- -      Top Line       - ->
+    <string id="Ylbl_PHT">40</string>    <!- - Labels HR Alt Pace  - -> 
+    <string id="Ydat_PHT">46</string>    <!- -   Data HR Alt Pace  - -> 
+    <string id="Y_____2">79</string>     <!- -   Mid Line (thin)   - ->
+    <string id="Ydat_TS">75</string>     <!- -   Data Timer & Dist - ->
+    <string id="Ylbl_TS">104</string>    <!- - Labels Timer & Dist - ->
+    <string id="Y_____3">117</string>    <!- -     Bottom Line     - ->
+    <string id="Ydat_BT">118</string>    <!- -   Data Batt & Tod   - ->
+    <string id="XbtmCenter">-15</string> <!- -    Center Line Btm  - ->
+    <string id="XbtmOffsets">6</string>  <!- -  Margin to Line Btm  - ->
+ -->
 
 </resources>

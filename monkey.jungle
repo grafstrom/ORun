@@ -204,8 +204,8 @@ edge820.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resou
 edge130.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-230x303
 edge130plus.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-230x303
 
-venusq.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x240
-venusqm.resourcePath =                  $(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x240
+venusq.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-220x240
+venusqm.resourcePath =                  $(base.resourcePath);layouts/modern-layouts/resources-rectangle-220x240
 
 edge_1000.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400
 edgeexplore.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400

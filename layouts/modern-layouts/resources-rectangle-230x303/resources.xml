@@ -1,31 +1,32 @@
 <resources>
     <!-- dimensions & type of device + reference device -->
-    <string id="deviceTypeHelper">rectangle-200x265</string>
+    <string id="deviceTypeHelper">rectangle-230x303</string>
     <!-- values are checked with system during run -->
     <string id="shape">rectangle</string>
-    <string id="width">200</string>
+    <string id="width">230</string>
 
-
-
-
-    <string id="XtopCenter">-15</string> <!--    Center Line Top  -->
-    <string id="XtopOffsets">13</string> <!-- Margin to Line Top  -->
+    <!-- tested on Edge130, Edge130plus, 
     
-    <string id="Ylbl_GF">13</string>     <!--  Labels Deg & SLD   -->
-    <string id="Ydat_GF">35</string>     <!--    Data Deg & SLD   -->
+    BLACK AND WHITE device, meaning cannot display RED or battery colors...? -->
 
-    <string id="Y_____1">80</string>     <!--      Top Line       -->
-    <string id="Ylbl_PHT">90</string>    <!-- Labels HR Alt Pace  --> 
-    <string id="Ydat_PHT">112</string>   <!--   Data HR Alt Pace  --> 
+    <string id="XtopCenter">-5</string>  <!--    Center Line Top  -->
+    <string id="XtopOffsets">10</string> <!-- Margin to Line Top  -->
+    
+    <string id="Ylbl_GF">6</string>      <!--  Labels Deg & SLD   -->
+    <string id="Ydat_GF">31</string>     <!--    Data Deg & SLD   -->
 
-    <string id="Y_____2">158</string>    <!--   Mid Line (thin)   -->
-    <string id="Ydat_TS">169</string>    <!--   Data Timer & Dist -->
-    <string id="Ylbl_TS">214</string>    <!-- Labels Timer & Dist -->
+    <string id="Y_____1">88</string>     <!--      Top Line       -->
+    <string id="Ylbl_PHT">100</string>   <!-- Labels HR Alt Pace  --> 
+    <string id="Ydat_PHT">133</string>   <!--   Data HR Alt Pace  --> 
 
-    <string id="Y_____3">237</string>    <!--     Bottom Line     -->
-    <string id="Ydat_BT">245</string>    <!--   Data Batt & Tod   -->
+    <string id="Y_____2">179</string>    <!--   Mid Line (thin)   -->
+    <string id="Ydat_TS">189</string>    <!--   Data Timer & Dist -->
+    <string id="Ylbl_TS">227</string>    <!-- Labels Timer & Dist -->
+
+    <string id="Y_____3">264</string>    <!--     Bottom Line     -->
+    <string id="Ydat_BT">270</string>    <!--   Data Batt & Tod   -->
 
     <string id="XbtmCenter">-15</string> <!--    Center Line Btm  -->
-    <string id="XbtmOffsets">6</string>  <!-- Margin to Line Btm  -->
+    <string id="XbtmOffsets">10</string>  <!-- Margin to Line Btm  -->
 
 </resources>

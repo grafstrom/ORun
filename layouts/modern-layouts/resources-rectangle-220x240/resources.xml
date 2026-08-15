@@ -1,0 +1,30 @@
+<resources>
+    <!-- dimensions & type of device + reference device -->
+    <string id="deviceTypeHelper">rectangle-220x240</string>
+    <!-- values are checked with system during run -->
+    <string id="shape">rectangle</string>
+    <string id="width">220</string>
+
+    <!-- tested on venusq and venusqm -->
+
+
+    <string id="XtopCenter">-15</string> <!--    Center Line Top  -->
+    <string id="XtopOffsets">10</string> <!-- Margin to Line Top  -->
+    
+    <string id="Ylbl_GF">8</string>     <!--  Labels Deg & SLD   -->
+    <string id="Ydat_GF">34</string>     <!--    Data Deg & SLD   -->
+
+    <string id="Y_____1">78</string>     <!--      Top Line       -->
+    <string id="Ylbl_PHT">84</string>    <!-- Labels HR Alt Pace  --> 
+    <string id="Ydat_PHT">110</string>   <!--   Data HR Alt Pace  --> 
+
+    <string id="Y_____2">145</string>    <!--   Mid Line (thin)   -->
+    <string id="Ydat_TS">148</string>    <!--   Data Timer & Dist -->
+    <string id="Ylbl_TS">177</string>    <!-- Labels Timer & Dist -->
+
+    <string id="Y_____3">208</string>    <!--     Bottom Line     -->
+    <string id="Ydat_BT">210</string>    <!--   Data Batt & Tod   -->
+
+    <string id="XbtmCenter">-30</string> <!--    Center Line Btm  -->
+    <string id="XbtmOffsets">10</string>  <!-- Margin to Line Btm  -->
+</resources>
