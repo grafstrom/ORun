@@ -20,8 +20,8 @@
     <string id="oXtopCenter">-0.075</string>  <!--    Center Line Top  -->
     <string id="oXtopOffsets">0.065</string> <!-- Margin to Line Top  -->
 
-    <string id="oYlbl_GF">0.070</string>     <!--  Labels Deg & SLD   -->
-    <string id="oYdat_GF">0.206</string>     <!--    Data Deg & SLD   -->
+    <string id="oYlbl_GF">0.050</string>     <!--  Labels Deg & SLD   -->
+    <string id="oYdat_GF">0.196</string>     <!--    Data Deg & SLD   -->
 
     <string id="oY_____1">0.302</string>     <!--      Top Line       -->
     <string id="oYlbl_PHT">0.360</string>    <!-- Labels HR Alt Pace  -->

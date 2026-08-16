@@ -467,8 +467,8 @@ class ORunView extends Ui.DataField {
 			topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
 			bottomAlign1 = Gfx.TEXT_JUSTIFY_LEFT;
 			bottomAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
-			battX = (XbtmOffsets * rezWidth);
-			todX = rezWidth - (XbtmOffsets * rezWidth);
+			battX = (XbtmOffsets);
+			todX = rezWidth - (XbtmOffsets);
 		} else if (System has :SCREEN_SHAPE_SEMI_OCTAGON){ // first confirm that watch recognizes the terminology octagonal
 			if (shape == System.SCREEN_SHAPE_SEMI_OCTAGON) {
 				if (!rezShape.equals("semioctagon")) {
@@ -780,13 +780,13 @@ class ORunView extends Ui.DataField {
         setBatteryColor(dc, batt);
         dcdrawText( dc, battX, oYdat_BT, Gfx.FONT_XTINY, batt + "%", bottomAlign1); // Gfx.TEXT_JUSTIFY_RIGHT);
 
-		drawMidLines(dc, oYlbl_GF); 
-		drawMidLines(dc, oYdat_GF);
-		drawMidLines(dc, oYlbl_PHT);
-		drawMidLines(dc, oYdat_PHT);
-		drawMidLines(dc, oYdat_TS);
-		drawMidLines(dc, oYlbl_TS);
-		drawMidLines(dc, oYdat_BT);
+		// drawMidLines(dc, oYlbl_GF); 
+		// drawMidLines(dc, oYdat_GF);
+		// drawMidLines(dc, oYlbl_PHT);
+		// drawMidLines(dc, oYdat_PHT);
+		// drawMidLines(dc, oYdat_TS);
+		// drawMidLines(dc, oYlbl_TS);
+		// drawMidLines(dc, oYdat_BT);
 
 		// mike note: for testing memory
 		System.println(memstr());    
