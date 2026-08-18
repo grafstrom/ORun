@@ -7,35 +7,64 @@ using Toybox.Graphics as Gfx;
 
 class ORunView extends Ui.DataField {
 
-	// mike note: following are UI settings to work with various dimensions of Garmin device - possibly better to use barrels and put these variables in separate device-specific file
-	// const devSemiRound  = 1;
-	// const devVivoactive = 2;
-	// const devFenix3     = 3;
-	// const devEpix       = 4;
-	// const devFenix5     = 5;
-	// const devFenix6     = 6;
-	// const devFenix7     = 7;
-	// const devFr920      = 9;
-    // var dev = devFenix3; // mike note: default Fenix3 dimensions for UI arrangement
 
-	// more device-specific dimensions values for UI arrangement
-	var Y_____1     		= 80;
-	var Ylbl_PHT  	= 81;
-	var Ydat_PHT  	= 96;
-	var Y_____2    		= 132;
-	var Ylbl_TS 	= 164;
-	var Ydat_TS 	= 131;
-	var Y_____3     		= 185;
-	var Ydat_BT  	= 189;
+	// pixel Values EITHER calculated backwards from ratio values or loaded direct from resources.xml
+	var XtopCenter;
+	var XtopOffsets;
+	var Ylbl_GF;
+	var Ydat_GF;
+	var Y_____1;
+	var Ylbl_PHT;
+	var Ydat_PHT;
+	var Y_____2;
+	var Ylbl_TS;
+	var Ydat_TS;
+	var Y_____3;
+	var Ydat_BT;
+	var XbtmCenter;
+	var XbtmOffsets;
 
-    var rezWidth 		= 218; // defaults but safe defaults
+	// ratio values EITHER LOADED FROM RESOURCES OR CALCULATED FROM NON-RATIO VALUES
+	var oXtopCenter;
+	var oXtopOffsets;
+	var oYlbl_GF; 
+	var oYdat_GF;
+	var oY_____1;
+	var oYlbl_PHT;
+	var oYdat_PHT;
+	var oY_____2;
+	var oYdat_TS;
+	var oYlbl_TS;
+	var oY_____3;
+	var oYdat_BT;
+	var oXbtmCenter;
+	var oXbtmOffsets;
+
+	// mid-point offsets for xTiny, large and medium fonts, different per device
+	var xt0Mid;
+	var lg4Mid;
+	var md6Mid;
+
+	// mid-point values
+	var mYlbl_GF; 
+	var mYdat_GF;
+	var mYlbl_PHT;
+	var mYdat_PHT;
+	var mYdat_TS;
+	var mYlbl_TS;
+	var mYdat_BT;
+	var mXtopCenter;
+	var mXtopOffsets;
+	var mXbtmCenter;
+	var mXbtmOffsets;
+
+    var rezWidth;
     var halfWitt;
 	var middlew;
 	var halfMiddleWidth;
     var topCenter;
     var bottomCenter;
-	
-	
+		
 	var slbX1;
 	var slbX2;
 	var slbY1;
@@ -58,11 +87,6 @@ class ORunView extends Ui.DataField {
 	var todX;
 	var battX;
 
-	var xt0Mid;
-	var lg4Mid;
-	var md6Mid;
-		
-
 	// mike note: ----------------------------- after this line variables are used for core functionality, NOT DEVICE SPECIFIC
 
 	// mike note: other view variables - colors
@@ -70,7 +94,7 @@ class ORunView extends Ui.DataField {
 	var forecol;
 	var linecol;
 
-	// mike note: 
+	// mike note: label text for drawtexts..
 	var distLabel;
 	var paceLabel;
 	var slbLabel;
@@ -84,156 +108,6 @@ class ORunView extends Ui.DataField {
 	var unitConv;
 	var core;
 	
-	var mYlbl_GF; 
-	var mYdat_GF;
-	var mYlbl_PHT;
-	var mYdat_PHT;
-	var mYdat_TS;
-	var mYlbl_TS;
-	var mYdat_BT;
-
-	var oY_____1     		= 80;
-	var oY_____2    		= 132;
-	var oY_____3     		= 185;
-
-	var oYlbl_GF; 
-	var oYdat_GF;
-	var oYlbl_PHT;
-	var oYdat_PHT;
-	var oYdat_TS;
-	var oYlbl_TS;
-	var oYdat_BT;
-	// -------------------------------------------------------------------------------------------------------------------
-	function drawMidLines(dc, y) {
-		dc.setColor( Gfx.COLOR_GREEN, Gfx.COLOR_TRANSPARENT );
-	    dc.setPenWidth(1); 
-		dc.drawLine( 0, y, dc.getWidth(), y );
-		dc.setColor( Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT );
-	}
-	// -------------------------------------------------------------------------------------------------------------------
-    function dcdrawText(dc, x, y, font, text, justification){
-		
-		// attempt to undo mid for each text location... 
-		var undoMid = 0;
-		if (font == Gfx.FONT_XTINY) {
-			undoMid = xt0Mid;
-		} else if (font == Gfx.FONT_LARGE) {
-			undoMid = lg4Mid;
-		} else if (font == Gfx.FONT_NUMBER_MEDIUM) {
-			undoMid = md6Mid;
-		}
-		
-		// print text
-		dc.drawText(x, y - undoMid, font, text, justification);
-
-		if ( false ) { // if true, shows text outlines in yellow for debug purposes
-
-			// change to highlight red for justification
-			dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
-		    dc.setPenWidth(3); 
-		
-			// get dimensions array [width, height] and calculate justification
-    		var size = dc.getTextDimensions(text, font);
-			var justifiedX = x;
-			if (justification == Gfx.TEXT_JUSTIFY_LEFT) {
-				dc.drawLine( x, y, x, y + size[1] );
-			} else if (justification == Gfx.TEXT_JUSTIFY_CENTER) {
-				justifiedX = x - (size[0]/2);
-				dc.drawLine( x, y, x, y + size[1] );
-			} else if (justification == Gfx.TEXT_JUSTIFY_RIGHT) {
-				justifiedX = x - size[0];
-				dc.drawLine( x, y, x, y + size[1] );
-			}
-
-			// change to highlight color, yellow
-			dc.setColor( Gfx.COLOR_YELLOW, Gfx.COLOR_TRANSPARENT );
-		    dc.setPenWidth(1); 
-
-			// need to use special procedure to determine more accurate font height boxes: (steps 1-4)
-			
-			// 1. get the raw unadjusted text dimensions
-			var rawWidth = size[0];
-			var rawHeight = size[1];
-
-			// 2. determine closer estimate of font height using your heuristic
-			var ascent = Gfx.getFontAscent(font);
-			var descent = Gfx.getFontDescent(font);
-			var accurateHeight = ascent; 
-			if (descent != 0) {
-				// True visual height calculation
-				accurateHeight = (ascent + descent) * 0.78; 		
-			}
-
-			// 3. calculate the Y-position correction. We subtract the accurate height 
-			// from the raw block height to find the leftover padding space. Splitting 
-			// this remainder by 2 centers the bounding box vertically over the glyphs.
-			var totalPadding = rawHeight - accurateHeight;
-			var visualY = y + (totalPadding / 2);
-
-			// 4. use 'justifiedX' and 'rawWidth' for horizontal data, and the adjusted 'visualY' and 'accurateHeight' for vertical data.
-			dc.drawRectangle(justifiedX, visualY, rawWidth, accurateHeight);
-
-			// debug purposes show accurateHeight of font
-			//System.println("     ** accurateHeight of font '" + font + "' is " + accurateHeight);
-
-			// change color to forecol
-			dc.setColor( forecol, Gfx.COLOR_TRANSPARENT );
-		}
-	}
-	// -------------------------------------------------------------------------------------------------------------------
-    function logFontMetrics(dc){
-		var fonts = [ // if additional fonts added
-			Gfx.FONT_XTINY,
-			Gfx.FONT_LARGE,
-			Gfx.FONT_NUMBER_MEDIUM
-		];
-		var fontnames = [ // need to add additional font names here
-			"xt0Acc", // "FONT_XTINY",
-			"lg4Acc", // "FONT_LARGE",
-			"md6Acc",  // "FONT_NUMBER_MEDIUM"
-			"FONT_XTINY",
-			"FONT_LARGE",
-			"FONT_NUMBER_MEDIUM"
-			];
-
-		for (var i = 0; i < fonts.size(); i++) {
-			var font = fonts[i];
-			
-			// get raw system heights
-			var rawHeight = dc.getFontHeight(font);
-			var ascent = Gfx.getFontAscent(font);
-			var descent = Gfx.getFontDescent(font);
-			
-			// calculate closer visual estimate
-			var accurateHeight = ascent; 
-			if (descent != 0) {
-				accurateHeight = (ascent + descent) * 0.78; 		
-			}
-
-			// print metrics directly to the console
-			//System.println(fontnames[i] + " is " + accurateHeight.format("%.2f") + " pixels tall.");
-			System.println("    <string id=\"" + fontnames[i] + "\">" + accurateHeight.format("%.3f") + "</string>      <!-- <- accurateHeight of " + fontnames[i+3] + ", whereas getFontHeight()= " + rawHeight + " -->");
-		}
-
-		// // Fetch raw layout height for this specific numeric string
-		// var dimensions = dc.getTextDimensions(testString, font);
-		// var rawHeight = dimensions[1]; 
-
-		// // Extract internal typography baselines
-		// var ascent = Gfx.getFontAscent(font);
-		// var descent = Gfx.getFontDescent(font);
-		
-		// // Calculate your visual heuristic height
-		// var accurateHeight = ascent; 
-		// if (descent != 0) {
-		// 	accurateHeight = (ascent + descent) * 0.78; 		
-		// }
-
-		// // Print comparative results side-by-side
-		// System.println("Font Index [" + i + "] (ID: " + font + "):");
-		// System.String("  -> TextDimensions Height: " + rawHeight + " px");
-		// System.println("  -> Accurate Height Estimate: " + accurateHeight + " px");
-	}
 	// -------------------------------------------------------------------------------------------------------------------
 	function onLayout(dc) { 
 		//Sys.println("-----------------------------onLayout called - poss change in LAYOUTs-------- dcWidth: " + dc.getWidth() + "    dcHeight: " + dc.getHeight());
@@ -250,7 +124,7 @@ class ORunView extends Ui.DataField {
 		var dcHeight = dc.getHeight();
 
 		// handle width
-		var dcWidth = dc.getWidth(); // mike note: I changed this back to rezWidth, which
+		//var dcWidth = dc.getWidth(); // mike note: I changed this back to rezWidth, which
 									 // means it's important to ensure that resources.xml 
 									 // have the correct width in it at the top! 
 		rezWidth = Ui.loadResource(Rez.Strings.width).toNumber(); //easier to use dc.getWidth(), but easier to debug/maintain if we load from resource file
@@ -258,107 +132,98 @@ class ORunView extends Ui.DataField {
 			Sys.println("ERROR: dc.getWidth() does not match Ui.loadResource(Rez.Strings.width).toNumber()");
 		}
 
-		// old resources.xml direct metrics processing
-		var Ylbl_GF = Ui.loadResource(Rez.Strings.Ylbl_GF).toNumber();
-		var Ydat_GF = Ui.loadResource(Rez.Strings.Ydat_GF).toNumber();
-			Y_____1 = Ui.loadResource(Rez.Strings.Y_____1).toNumber();
-		Ylbl_PHT = Ui.loadResource(Rez.Strings.Ylbl_PHT).toNumber();
-		Ydat_PHT = Ui.loadResource(Rez.Strings.Ydat_PHT).toNumber();
-			Y_____2 = Ui.loadResource(Rez.Strings.Y_____2).toNumber();
-		Ydat_TS = Ui.loadResource(Rez.Strings.Ydat_TS).toNumber();
-		Ylbl_TS = Ui.loadResource(Rez.Strings.Ylbl_TS).toNumber();
-			Y_____3 = Ui.loadResource(Rez.Strings.Y_____3).toNumber();
-		Ydat_BT = Ui.loadResource(Rez.Strings.Ydat_BT).toNumber();
-		
-		var XtopCenter = Ui.loadResource(Rez.Strings.XtopCenter).toFloat();//toNumber();
-		var XtopOffsets = Ui.loadResource(Rez.Strings.XtopOffsets).toFloat();//toNumber();
-		var XbtmCenter = Ui.loadResource(Rez.Strings.XbtmCenter).toFloat();//toNumber();
-		var XbtmOffsets = Ui.loadResource(Rez.Strings.XbtmOffsets).toFloat();//toNumber();
 
-		// load accurateHeight of fonts from resources
-		var xt0Acc = Ui.loadResource(Rez.Strings.xt0Acc).toFloat();//toNumber();
-		var lg4Acc = Ui.loadResource(Rez.Strings.lg4Acc).toFloat();//toNumber();
-		var md6Acc = Ui.loadResource(Rez.Strings.md6Acc).toFloat();//toNumber();
+		// accurateHeight computed live (ascent+descent heuristic), no per-profile resource needed
+		var xt0Acc = Gfx.getFontAscent(Gfx.FONT_XTINY);
+		if (Gfx.getFontDescent(Gfx.FONT_XTINY) != 0) {
+			xt0Acc = (Gfx.getFontAscent(Gfx.FONT_XTINY) + Gfx.getFontDescent(Gfx.FONT_XTINY)) * 0.78;
+		}
+		var lg4Acc = Gfx.getFontAscent(Gfx.FONT_LARGE);
+		if (Gfx.getFontDescent(Gfx.FONT_LARGE) != 0) {
+			lg4Acc = (Gfx.getFontAscent(Gfx.FONT_LARGE) + Gfx.getFontDescent(Gfx.FONT_LARGE)) * 0.78;
+		}
+		var md6Acc = Gfx.getFontAscent(Gfx.FONT_NUMBER_MEDIUM);
+		if (Gfx.getFontDescent(Gfx.FONT_NUMBER_MEDIUM) != 0) {
+			md6Acc = (Gfx.getFontAscent(Gfx.FONT_NUMBER_MEDIUM) + Gfx.getFontDescent(Gfx.FONT_NUMBER_MEDIUM)) * 0.78;
+		}
 		
 		// 3. Find where the visual top of the numbers actually starts inside the raw block
 		//var TopPadding = (getFontHeight - accurateHeight) / 2;
 		var xt0TopPadding = ((dc.getFontHeight(Gfx.FONT_XTINY) - xt0Acc) / 2.0).toFloat(); // 
 		var lg4TopPadding = ((dc.getFontHeight(Gfx.FONT_LARGE) - lg4Acc) / 2.0).toFloat(); // 
 		var md6TopPadding = ((dc.getFontHeight(Gfx.FONT_NUMBER_MEDIUM) - md6Acc) / 2.0).toFloat(); // 
-		System.println("   TopPaddings are xt0TopPadding_" + xt0TopPadding.format("%.1f") + ", lg4TopPadding_" + lg4TopPadding.format("%.1f") + ", md6TopPadding_" + md6TopPadding.format("%.1f"));
+		//System.println("   TopPaddings are xt0TopPadding_" + xt0TopPadding.format("%.1f") + ", lg4TopPadding_" + lg4TopPadding.format("%.1f") + ", md6TopPadding_" + md6TopPadding.format("%.1f"));
 
 		xt0Mid = xt0TopPadding + (xt0Acc/2).toFloat(); // 
 		lg4Mid = lg4TopPadding + (lg4Acc/2).toFloat(); // 
 		md6Mid = md6TopPadding + (md6Acc/2).toFloat(); // 
-		System.println("   Mids are xt0Mid_" + xt0Mid.format("%.1f") + ", lg4Mid_" + lg4Mid.format("%.1f") + ", md6Mid_" + md6Mid.format("%.1f") + " // add to get center line for each: ");
-
-		// 4. Calculate the center line: Start position + Top Padding + Half of the accurateHeight
-		mYlbl_GF  = Ylbl_GF  + xt0Mid; 
-		mYdat_GF  = Ydat_GF  + md6Mid;
-		mYlbl_PHT = Ylbl_PHT + xt0Mid;
-		mYdat_PHT = Ydat_PHT + lg4Mid;
-		mYdat_TS  = Ydat_TS  + lg4Mid;
-		mYlbl_TS  = Ylbl_TS  + xt0Mid;
-		mYdat_BT  = Ydat_BT  + xt0Mid;
-
-		var rezHeight = Ui.loadResource(Rez.Strings.height).toNumber(); 
-		var device = Ui.loadResource(Rez.Strings.deviceTypeHelper);
-
-		System.println("============================================================ " + getModelIdentifier());
-		System.println("Device: " + device + "   (part number " + getModelIdentifier() + ")     (dcHeight:" + dc.getHeight() + " dcWidth:" + dc.getWidth() + ")");
+		//System.println("   Mids are xt0Mid_" + xt0Mid.format("%.1f") + ", lg4Mid_" + lg4Mid.format("%.1f") + ", md6Mid_" + md6Mid.format("%.1f") + " // add to get center line for each: ");
+		var rezHeight = dcHeight; // default for round watches, no adjustment of metrics based on switching layouts from 1-2 datafields is allowed
 
 
-		System.println("--------------- properly calculated pixels for midpoints... --------------------");
-		System.println("mYlbl_GF = " + mYlbl_GF.format("%.1f")  + " /" + rezHeight + "= " + (mYlbl_GF/rezHeight).format("%.03f")); 
-		System.println("mYdat_GF = " + mYdat_GF.format("%.1f")  + " /" + rezHeight + "= " + (mYdat_GF/rezHeight).format("%.03f"));
-		System.println("mYlbl_PHT= " + mYlbl_PHT.format("%.1f") + " /" + rezHeight + "= " + (mYlbl_PHT/rezHeight).format("%.03f"));
-		System.println("mYdat_PHT= " + mYdat_PHT.format("%.1f") + " /" + rezHeight + "= " + (mYdat_PHT/rezHeight).format("%.03f"));
-		System.println("mYdat_TS = " + mYdat_TS.format("%.1f")  + " /" + rezHeight + "= " + (mYdat_TS/rezHeight).format("%.03f"));
-		System.println("mYlbl_TS = " + mYlbl_TS.format("%.1f")  + " /" + rezHeight + "= " + (mYlbl_TS/rezHeight).format("%.03f"));
-		System.println("mYdat_BT = " + mYdat_BT.format("%.1f")  + " /" + rezHeight + "= " + (mYdat_BT/rezHeight).format("%.03f"));
-		System.println("--------------- properly calculated ratios for midpoints... --------------------");
+		
 
-		System.println("    <string id=\"oYlbl_GF\">" + (mYlbl_GF.toFloat()/dcHeight).format("%.3f") + "</string>     <!--  Labels Deg & SLD   -->");
-		System.println("    <string id=\"oYdat_GF\">" + (mYdat_GF.toFloat()/dcHeight).format("%.3f") + "</string>     <!--    Data Deg & SLD   -->");
-		System.println("");
-		System.println("    <string id=\"oY_____1\">" + (Y_____1.toFloat()/dcHeight).format("%.3f") + "</string>     <!--      Top Line       -->");
-		System.println("    <string id=\"oYlbl_PHT\">" + (mYlbl_PHT.toFloat()/dcHeight).format("%.3f") + "</string>    <!-- Labels HR Alt Pace  -->");
-		System.println("    <string id=\"oYdat_PHT\">" + (mYdat_PHT.toFloat()/dcHeight).format("%.3f") + "</string>    <!--   Data HR Alt Pace  -->");
-		System.println("");
-		System.println("    <string id=\"oY_____2\">" + (Y_____2.toFloat()/dcHeight).format("%.3f") + "</string>     <!--   Mid Line (thin)   -->");
-		System.println("    <string id=\"oYdat_TS\">" + (mYdat_TS.toFloat()/dcHeight).format("%.3f") + "</string>     <!--   Data Timer & Dist -->");
-		System.println("    <string id=\"oYlbl_TS\">" + (mYlbl_TS.toFloat()/dcHeight).format("%.3f") + "</string>     <!-- Labels Timer & Dist -->");
-		System.println("");
-		System.println("    <string id=\"oY_____3\">" + (Y_____3.toFloat()/dcHeight).format("%.3f") + "</string>     <!--     Bottom Line     -->");
-		System.println("    <string id=\"oYdat_BT\">" + (mYdat_BT.toFloat()/dcHeight).format("%.3f") + "</string>     <!--   Data Batt & Tod   -->");
+		var runFromRatios = Ui.loadResource(Rez.Strings.RunFromRatios).equals("true");
+		//System.println("runFromRatios is " + runFromRatios);
+		if (!runFromRatios) { //shape != System.SCREEN_SHAPE_RECTANGLE) { 
+			// old resources.xml direct metrics processing
+			Ylbl_GF = Ui.loadResource(Rez.Strings.Ylbl_GF).toNumber();
+			Ydat_GF = Ui.loadResource(Rez.Strings.Ydat_GF).toNumber();
+				Y_____1 = Ui.loadResource(Rez.Strings.Y_____1).toNumber();
+			Ylbl_PHT = Ui.loadResource(Rez.Strings.Ylbl_PHT).toNumber();
+			Ydat_PHT = Ui.loadResource(Rez.Strings.Ydat_PHT).toNumber();
+				Y_____2 = Ui.loadResource(Rez.Strings.Y_____2).toNumber();
+			Ydat_TS = Ui.loadResource(Rez.Strings.Ydat_TS).toNumber();
+			Ylbl_TS = Ui.loadResource(Rez.Strings.Ylbl_TS).toNumber();
+				Y_____3 = Ui.loadResource(Rez.Strings.Y_____3).toNumber();
+			Ydat_BT = Ui.loadResource(Rez.Strings.Ydat_BT).toNumber();
+			
+			XtopCenter = Ui.loadResource(Rez.Strings.XtopCenter).toNumber();//toNumber();
+			XtopOffsets = Ui.loadResource(Rez.Strings.XtopOffsets).toNumber();//toNumber();
+			XbtmCenter = Ui.loadResource(Rez.Strings.XbtmCenter).toNumber();//toNumber();
+			XbtmOffsets = Ui.loadResource(Rez.Strings.XbtmOffsets).toNumber();//toNumber();
+
+			
+			// 4. Calculate the center line: Start position + Top Padding + Half of the accurateHeight
+			mYlbl_GF  = Ylbl_GF  + xt0Mid; 
+			mYdat_GF  = Ydat_GF  + md6Mid;
+			mYlbl_PHT = Ylbl_PHT + xt0Mid;
+			mYdat_PHT = Ydat_PHT + lg4Mid;
+			mYdat_TS  = Ydat_TS  + lg4Mid;
+			mYlbl_TS  = Ylbl_TS  + xt0Mid;
+			mYdat_BT  = Ydat_BT  + xt0Mid;
+
+			// sample desired output
+			//System.println("    <string id=\"oYlbl_GF\">" + (mYlbl_GF.toFloat()/dcHeight).format("%.3f") + "</string>     <!--  Labels Deg & SLD     ( pixels_" + Ylbl_GF + " + xt0Mid_" + xt0Mid + " )_" + mYlbl_GF.format("%.1f") + " / h_" + rezHeight + " = " + mYlbl_GF.toFloat()/dcHeight.format("%.3f") + "-->");
+
+			// round/semi-octagon default: no ratio resources yet, use midpoint-adjusted pixels directly
+			oY_____1 = Y_____1;
+			oY_____2 = Y_____2;
+			oY_____3 = Y_____3;
+			oYlbl_GF = mYlbl_GF;
+			oYdat_GF = mYdat_GF;
+			oYlbl_PHT = mYlbl_PHT;
+			oYdat_PHT = mYdat_PHT;
+			oYdat_TS = mYdat_TS;
+			oYlbl_TS = mYlbl_TS;
+			oYdat_BT = mYdat_BT;
+
+			oXtopCenter = XtopCenter.toFloat(); // no adjustment because no "mid point" for this text - these are the x values
+			oXtopOffsets = XtopOffsets.toFloat();
+			oXbtmCenter = XbtmCenter.toFloat();
+			oXbtmOffsets = XbtmOffsets.toFloat();
+		} else { // if runFromRatios
+			
+			rezHeight = dc.getHeight(); //Ui.loadResource(Rez.Strings.height).toNumber(); 
+			if (shape == System.SCREEN_SHAPE_RECTANGLE) {
+				dcHeight = dc.getHeight(); // only rectangle devices are allowed to adjust height of positioning based on user switching to different layout, i.e., 1-2 datafields
+			}
 
 
-		// THIS WORKS!!!!
-		// var testFloat = (dcHeight * Ui.loadResource(Rez.Strings.testfloat).toFloat()).toNumber(); 
-		// System.println(" ***testing testFloat Y1: " + testFloat);
-
-		// test new resources.xml metrics processing
-		// var Ylbl_GF = (rezWidth * Ui.loadResource(Rez.Strings.Ylbl_GF).toFloat()).toNumber();
-		// var Ydat_GF = (rezWidth * Ui.loadResource(Rez.Strings.Ydat_GF).toFloat()).toNumber();
-		// Y_____1 = (dcHeight * Ui.loadResource(Rez.Strings.Y_____1).toFloat()).toNumber();
-		// Ylbl_PHT = (dcHeight * Ui.loadResource(Rez.Strings.Ylbl_PHT).toFloat()).toNumber();
-		// Ydat_PHT = (dcHeight * Ui.loadResource(Rez.Strings.Ydat_PHT).toFloat()).toNumber();
-		// Y_____2 = (dcHeight * Ui.loadResource(Rez.Strings.Y_____2).toFloat()).toNumber();
-		// Ydat_TS = (dcHeight * Ui.loadResource(Rez.Strings.Ydat_TS).toFloat()).toNumber();
-		// Ylbl_TS = (dcHeight * Ui.loadResource(Rez.Strings.Ylbl_TS).toFloat()).toNumber();
-		// Y_____3 = (dcHeight * Ui.loadResource(Rez.Strings.Y_____3).toFloat()).toNumber();
-		// Ydat_BT = (dcHeight * Ui.loadResource(Rez.Strings.Ydat_BT).toFloat()).toNumber();
-		// var XtopCenter = (rezWidth * Ui.loadResource(Rez.Strings.XtopCenter).toFloat()).toNumber();
-		// var XtopOffsets = (rezWidth * Ui.loadResource(Rez.Strings.XtopOffsets).toFloat()).toNumber();
-		// var XbtmCenter = (rezWidth * Ui.loadResource(Rez.Strings.XbtmCenter).toFloat()).toNumber();
-		// var XbtmOffsets = (rezWidth * Ui.loadResource(Rez.Strings.XbtmOffsets).toFloat()).toNumber();
-
-
-		var oXtopCenter = Ui.loadResource(Rez.Strings.oXtopCenter).toFloat();//toNumber();
-		var oXtopOffsets = Ui.loadResource(Rez.Strings.oXtopOffsets).toFloat();//toNumber();
-		var oXbtmCenter = Ui.loadResource(Rez.Strings.oXbtmCenter).toFloat();//toNumber();
-		var oXbtmOffsets = Ui.loadResource(Rez.Strings.oXbtmOffsets).toFloat();//toNumber();
-		if (shape == System.SCREEN_SHAPE_RECTANGLE) {
+			oXtopCenter = Ui.loadResource(Rez.Strings.oXtopCenter).toFloat();
+			oXtopOffsets = Ui.loadResource(Rez.Strings.oXtopOffsets).toFloat();
+			oXbtmCenter = Ui.loadResource(Rez.Strings.oXbtmCenter).toFloat();
+			oXbtmOffsets = Ui.loadResource(Rez.Strings.oXbtmOffsets).toFloat();
 			oYlbl_GF = (dcHeight * Ui.loadResource(Rez.Strings.oYlbl_GF).toFloat());
 			oYdat_GF = (dcHeight * Ui.loadResource(Rez.Strings.oYdat_GF).toFloat());
 			oY_____1 = (dcHeight * Ui.loadResource(Rez.Strings.oY_____1).toFloat());
@@ -369,39 +234,32 @@ class ORunView extends Ui.DataField {
 			oYlbl_TS = (dcHeight * Ui.loadResource(Rez.Strings.oYlbl_TS).toFloat());
 			oY_____3 = (dcHeight * Ui.loadResource(Rez.Strings.oY_____3).toFloat());
 			oYdat_BT = (dcHeight * Ui.loadResource(Rez.Strings.oYdat_BT).toFloat());
-		}
 
 
-		// handle height - special for rectangular cases...  (handle after we've initially read metrics from resources)
-		
-		if (shape == System.SCREEN_SHAPE_RECTANGLE) {
-		
-			if ((rezHeight/2 + 1 >= dcHeight) && (rezHeight/2 - 1 <= dcHeight)) { // if rectangular TWO-datafield layout
-			
-				System.println("   two-datafield layout detected. no changes applied");			  // divide y metrics by two
-				// oYlbl_GF /= 2;
-				// oYdat_GF /= 2;
-				// oY_____1 /= 2;
-				// oYlbl_PHT /= 2;
-				// oYdat_PHT /= 2;
-				// oY_____2 /= 2;
-				// oYdat_TS /= 2;
-				// oYlbl_TS /= 2;
-				// oY_____3 /= 2;
-				// oYdat_BT /= 2;
-			} else {
-				System.println("    not two-datafield layout detected");
-				// oYlbl_GF *= 2;
-				// oYdat_GF *= 2;
-				// oY_____1 *= 2;
-				// oYlbl_PHT *= 2;
-				// oYdat_PHT *= 2;
-				// oY_____2 *= 2;
-				// oYdat_TS *= 2;
-				// oYlbl_TS *= 2;
-				// oY_____3 *= 2;
-				// oYdat_BT *= 2;
-			}
+			XtopCenter = (oXtopCenter * rezWidth).toNumber(); //these are the pixel values, calculated from ratios in resources
+			XtopOffsets = (oXtopOffsets * rezWidth).toNumber();
+			XbtmCenter = (oXbtmCenter * rezWidth).toNumber();
+			XbtmOffsets = (oXbtmOffsets * rezWidth).toNumber();
+
+
+			mYlbl_GF = oYlbl_GF;
+			mYdat_GF = oYdat_GF;
+			mYlbl_PHT = oYlbl_PHT;
+			mYdat_PHT = oYdat_PHT;
+			mYdat_TS = oYdat_TS;
+			mYlbl_TS = oYlbl_TS;
+			mYdat_BT = oYdat_BT;
+			Y_____1 = oY_____1.toNumber();
+			Y_____2 = oY_____2.toNumber();
+			Y_____3 = oY_____3.toNumber();
+
+			Ylbl_GF  = (mYlbl_GF  - xt0Mid).toNumber(); 
+			Ydat_GF  = (mYdat_GF  - md6Mid).toNumber();
+			Ylbl_PHT = (mYlbl_PHT - xt0Mid).toNumber();
+			Ydat_PHT = (mYdat_PHT - lg4Mid).toNumber();
+			Ydat_TS  = (mYdat_TS  - lg4Mid).toNumber();
+			Ylbl_TS  = (mYlbl_TS  - xt0Mid).toNumber();
+			Ydat_BT  = (mYdat_BT  - xt0Mid).toNumber();
 		}
 
 
@@ -415,159 +273,182 @@ class ORunView extends Ui.DataField {
 		distX = (3 * halfWitt / 2) - 5;
 		paceX = 2 * middlew + halfMiddleWidth;
 		
+		var deviceme = Ui.loadResource(Rez.Strings.device);
 
-		
-		topCenter = halfWitt + XtopCenter;    // X adjustment from middle of top vertical line
-	    bottomCenter = halfWitt + XbtmCenter; // X adjustment from middle of bottom vertical line
-		todX = bottomCenter + XbtmOffsets;        // X adjustment from bottom vertical for time-of-day
-		battX = bottomCenter - XbtmOffsets;      // X adjustment from bottom vertical for battery pct
-		
-		
-		
-		// default for round layout  (rezShape == System.SCREEN_SHAPE_ROUND)
-		slbX1 = topCenter - XtopOffsets;
-		slbY1 = Ylbl_GF;
-		slbX2 = topCenter - XtopOffsets;
-		slbY2 = Ydat_GF;
-		sldX1 = topCenter + XtopOffsets;
-		sldY1 = Ylbl_GF;
-		sldX2 = topCenter + XtopOffsets;
-		sldY2 = Ydat_GF;
-		// default align for round layout  (rezShape == System.SCREEN_SHAPE_ROUND)
-		topAlign1 = Gfx.TEXT_JUSTIFY_RIGHT;
-		topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
-		topAlign3 = Gfx.TEXT_JUSTIFY_LEFT;
-		topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
-		bottomAlign1 = Gfx.TEXT_JUSTIFY_RIGHT;
-		bottomAlign2 = Gfx.TEXT_JUSTIFY_LEFT;
+		if (!runFromRatios) { //shape != System.SCREEN_SHAPE_RECTANGLE) { 
+			//System.println("not running from ratios - Device:" + deviceme + "     (dcHeight:" + dc.getHeight() + " dcWidth:" + dc.getWidth() + ") ");
 
-		// alter if rectangle layout...
-		if (shape == System.SCREEN_SHAPE_RECTANGLE) {
+			// contains code that previously applied only to round watches
 
+			topCenter = halfWitt + XtopCenter;    // X adjustment from middle of top vertical line
+			bottomCenter = halfWitt + XbtmCenter; // X adjustment from middle of bottom vertical line
+			todX = bottomCenter + XbtmOffsets;        // X adjustment from bottom vertical for time-of-day
+			battX = bottomCenter - XbtmOffsets;      // X adjustment from bottom vertical for battery pct
+		
+			// default for round layout  (rezShape == System.SCREEN_SHAPE_ROUND)
+			slbX1 = topCenter - XtopOffsets;
+			slbY1 = mYlbl_GF;
+			slbX2 = topCenter - XtopOffsets;
+			slbY2 = mYdat_GF;
+			sldX1 = topCenter + XtopOffsets;
+			sldY1 = mYlbl_GF;
+			sldX2 = topCenter + XtopOffsets;
+			sldY2 = mYdat_GF;
+
+			// default align for round layout  (rezShape == System.SCREEN_SHAPE_ROUND)
+			topAlign1 = Gfx.TEXT_JUSTIFY_RIGHT;
+			topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
+			topAlign3 = Gfx.TEXT_JUSTIFY_LEFT;
+			topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
+			bottomAlign1 = Gfx.TEXT_JUSTIFY_RIGHT;
+			bottomAlign2 = Gfx.TEXT_JUSTIFY_LEFT;
+
+			if (System has :SCREEN_SHAPE_SEMI_OCTAGON){ // first confirm that watch recognizes the terminology octagonal
+				// if (shape == System.SCREEN_SHAPE_SEMI_OCTAGON) {
+				// 	if (!rezShape.equals("semioctagon")) {
+				// 		Sys.println("ERROR: System.getDeviceSettings().screenShape does not match Ui.loadResource(Rez.Strings.shape)");
+				// 	}
+				// 	// get dimensions, center of small circular screen at top right
+				// 	var subscreenInfo = WatchUi.getSubscreen();
+				// 	var x, y, width, height, centerX, centerY;
+
+				// 	if (subscreenInfo != null) {
+				// 		x = subscreenInfo.x;
+				// 		y = subscreenInfo.y;
+				// 		width = subscreenInfo.width;
+				// 		height = subscreenInfo.height;
+				// 		// Calculate center coordinates for printing text
+				// 		centerX = x + (width / 2);
+				// 		centerY = y + (height / 2);
+				// 	}
+					
+				// 	// slb/bearing from lap/start		 
+				// 	slbX1 = topCenter + XtopOffsets; // Switch add/subtract so bearing appears in the smaller circle, raise
+				// 	slbY1 = mYlbl_GF;
+				// 	slbX2 = topCenter + XtopOffsets;
+				// 	slbY2 = mYdat_GF; // - 20; // so bearing appears raised... 20 pixels higher than dist on left side..
+
+				// 	// sld/distance from lap/start
+				// 	sldX1 = topCenter - XtopOffsets;
+				// 	sldY1 = mYlbl_GF;
+				// 	sldX2 = topCenter - XtopOffsets;
+				// 	sldY2 = mYdat_GF;
+				// } 
+			}
+		} else { // if (runFromRatios)
+		
 			topCenter = halfWitt + (oXtopCenter * rezWidth);    // X adjustment from middle of top vertical line
 	    	bottomCenter = halfWitt + (oXbtmCenter * rezWidth); // X adjustment from middle of bottom vertical line
-			todX = bottomCenter + (oXbtmOffsets);        // X adjustment from bottom vertical for time-of-day
-			battX = bottomCenter - (oXbtmOffsets);      // X adjustment from bottom vertical for battery pct
 
-			
-			slbX1 = (oXbtmOffsets * rezWidth);  // use SAME as BOTTOM offset for slb label from side (no longer center justified)
-			slbX2 = topCenter - (oXtopOffsets * rezWidth);
-			sldX1 = rezWidth - 2 - (oXbtmOffsets * rezWidth);   // use SAME as BOTTOM offset for slb label from side (no longer center justified)
-			sldX2 = topCenter + (oXtopOffsets * rezWidth);
+			slbX2 = topCenter - (oXtopOffsets * rezWidth); // dat is still center-justified for all devices
+			sldX2 = topCenter + (oXtopOffsets * rezWidth); // dat is still center-justified for all devices
 
 			slbY1 = oYlbl_GF;
 			slbY2 = oYdat_GF;
 			sldY1 = oYlbl_GF;
 			sldY2 = oYdat_GF;
 
-			
-			topAlign1 = Gfx.TEXT_JUSTIFY_LEFT;
-			topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
-			topAlign3 = Gfx.TEXT_JUSTIFY_RIGHT;
-			topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
-			bottomAlign1 = Gfx.TEXT_JUSTIFY_LEFT;
-			bottomAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
-			battX = (XbtmOffsets);
-			todX = rezWidth - (XbtmOffsets);
-		} else if (System has :SCREEN_SHAPE_SEMI_OCTAGON){ // first confirm that watch recognizes the terminology octagonal
-			if (shape == System.SCREEN_SHAPE_SEMI_OCTAGON) {
-				if (!rezShape.equals("semioctagon")) {
-					Sys.println("ERROR: System.getDeviceSettings().screenShape does not match Ui.loadResource(Rez.Strings.shape)");
-				}
-				// get dimensions, center of small circular screen at top right
-			    var subscreenInfo = WatchUi.getSubscreen();
-				var x, y, width, height, centerX, centerY;
-
-				if (subscreenInfo != null) {
-					x = subscreenInfo.x;
-					y = subscreenInfo.y;
-					width = subscreenInfo.width;
-					height = subscreenInfo.height;
-					// Calculate center coordinates for printing text
-					centerX = x + (width / 2);
-					centerY = y + (height / 2);
-				}
-				
-
-
-				// slb/bearing from lap/start		 
-				slbX1 = topCenter + XtopOffsets; // Switch add/subtract so bearing appears in the smaller circle, raise
-				slbY1 = Ylbl_GF;
-				slbX2 = topCenter + XtopOffsets;
-				slbY2 = Ydat_GF; // - 20; // so bearing appears raised... 20 pixels higher than dist on left side..
-
-				// sld/distance from lap/start
-				sldX1 = topCenter - XtopOffsets;
-				sldY1 = Ylbl_GF;
-				sldX2 = topCenter - XtopOffsets;
-				sldY2 = Ydat_GF;
-			} 
-		// } else { // useful if we had a standalone if statement for semioctagonal screen...
-		// 	Sys.println("ERROR: Loaded semioctagonal source but device does not recognize System.SCREEN_SHAPE_SEMI_OCTAGON");
-		}
+			// handle top label (slb, sld), and bottom data (batt, tod) margin and justification
+			if (shape == System.SCREEN_SHAPE_RECTANGLE) { 
+				// on rectangle devices, tld and tlb (at top), and batt & tod (at bottom) are SIDE-EDGE-justified
+				slbX1 = (oXbtmOffsets * rezWidth); 					// use SAME as BOTTOM offset distance for slb label
+				sldX1 = rezWidth - 2 - (oXbtmOffsets * rezWidth);   // use SAME as BOTTOM offset distance for slD label
+				battX = (oXbtmOffsets * rezWidth);
+				todX  = rezWidth - 2 - (oXbtmOffsets * rezWidth);
+				// on rectangle devices, tld and tlb (at top), and batt & tod (at bottom) are SIDE-EDGE-justified
+				topAlign1 = Gfx.TEXT_JUSTIFY_LEFT;
+				topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
+				topAlign3 = Gfx.TEXT_JUSTIFY_RIGHT;
+				topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
+				bottomAlign1 = Gfx.TEXT_JUSTIFY_LEFT;
+				bottomAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
+			} else { 
+				//System.println(" not rectangular... ");
+				// on round devices, tld and tlb (at top), and batt & tod (at bottom) are CENTER-justified
+				slbX1 = topCenter - (oXtopOffsets * rezWidth);
+				sldX1 = topCenter + (oXtopOffsets * rezWidth);
+				battX = bottomCenter - (oXbtmOffsets * rezWidth);
+				todX  = bottomCenter + (oXbtmOffsets * rezWidth);
+				// on round devices, tld and tlb (at top), and batt & tod (at bottom) are CENTER-justified
+				topAlign1 = Gfx.TEXT_JUSTIFY_RIGHT;
+				topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
+				topAlign3 = Gfx.TEXT_JUSTIFY_LEFT;
+				topAlign4 = Gfx.TEXT_JUSTIFY_LEFT;
+				bottomAlign1 = Gfx.TEXT_JUSTIFY_RIGHT;
+				bottomAlign2 = Gfx.TEXT_JUSTIFY_LEFT;
+			}
+		} 
 		
-		// using the below function we can see patterns to ui, develop a simpler algorithm 
-		// for adjusting UI metrics, rather than assigning each location uniquely per device.
+		// System.print("..");
+		// if (mYlbl_GF instanceof Lang.Float) {
+		// 	System.println("mYlbl_GF is float"); 
+		// } else if (mYlbl_GF instanceof Lang.Number) {
+		// 	System.println("mYlbl_GF is number");
+		// }
+		// System.print("...");
+		// if (Ylbl_GF instanceof Lang.Float) {
+		// 	System.println("Ylbl_GF is float"); 
+		// } else if (Ylbl_GF instanceof Lang.Number) {
+		// 	System.println("Ylbl_GF is number");
+		// }
+		// System.print("....");
+		// if ((xt0Mid.toFloat()/rezWidth) instanceof Lang.Float) {
+		// 	System.println("(xt0Mid.toFloat()/rezWidth) is float"); 
+		// } else if ((xt0Mid.toFloat()/rezWidth) instanceof Lang.Number) {
+		// 	System.println("(xt0Mid.toFloat()/rezWidth) is number");
+		// }
+		// System.print(".....");
+		// if ((XtopCenter.toFloat()/rezWidth) instanceof Lang.Float) {
+		// 	System.println("(XtopCenter.toFloat()/rezWidth) is float");
+		// } else if ((XtopCenter.toFloat()/rezWidth) instanceof Lang.Number) {
+		// 	System.println("(XtopCenter.toFloat()/rezWidth) is number");
+		// }		
+
+
+		// debug printlns for producing ratio output for resources.xml files
 		System.println("");
-		System.println("---------------------legible metrics------------------------");
-		System.println(" XtopCenter: " + (XtopCenter.toFloat()/rezWidth).format("%.3f") + " (" + XtopCenter + ")");
-		System.println("XtopOffsets: " + (XtopOffsets.toFloat()/rezWidth).format("%.3f") + " (" + XtopOffsets + ")");
+		var device = Ui.loadResource(Rez.Strings.device);
+		System.println("<!-- ============================================================ " + getModelIdentifier() + " -->");
+		System.println("<!-- Device:" + device + "   (part number " + getModelIdentifier() + ")     (dcHeight:" + dc.getHeight() + " dcWidth:" + dc.getWidth() + ")   -->");
+		System.println("<!-- Tested On: ");
 		System.println("");
-		System.println("    Ylbl_GF: " + (Ylbl_GF.toFloat()/dcHeight).format("%.3f") + " (" + Ylbl_GF + ")");
-		System.println("    Ydat_GF: " + (Ydat_GF.toFloat()/dcHeight).format("%.3f") + " (" + Ydat_GF + ")");
-		System.println("");
-		System.println("    Y_____1: " + (Y_____1.toFloat()/dcHeight).format("%.3f") + " (" + Y_____1 + ")");
-		System.println("   Ylbl_PHT: " + (Ylbl_PHT.toFloat()/dcHeight).format("%.3f") + " (" + Ylbl_PHT + ")");
-		System.println("   Ydat_PHT: " + (Ydat_PHT.toFloat()/dcHeight).format("%.3f") + " (" + Ydat_PHT + ")");
-		System.println("");
-		System.println("    Y_____2: " + (Y_____2.toFloat()/dcHeight).format("%.3f") + " (" + Y_____2 + ")");
-		System.println("    Ydat_TS: " + (Ydat_TS.toFloat()/dcHeight).format("%.3f") + " (" + Ydat_TS + ")");
-		System.println("    Ylbl_TS: " + (Ylbl_TS.toFloat()/dcHeight).format("%.3f") + " (" + Ylbl_TS + ")");
-		System.println("");
-		System.println("    Y_____3: " + (Y_____3.toFloat()/dcHeight).format("%.3f") + " (" + Y_____3 + ")");
-		System.println("    Ydat_BT: " + (Ydat_BT.toFloat()/dcHeight).format("%.3f") + " (" + Ydat_BT + ")");
-		System.println("");
-		System.println(" XbtmCenter: " + (XbtmCenter.toFloat()/rezWidth).format("%.3f") + " (" + XbtmCenter + ")");
-		System.println("XbtmOffsets: " + (XbtmOffsets.toFloat()/rezWidth).format("%.3f") + " (" + XbtmOffsets + ")");
-		System.println("---------------------- X M L metrics ----------------------");
+		System.println("-->");
 		System.println("<resources>");
-		System.println("    <!-- dimensions & type of device + reference device --> ");
-		System.println("    <string id=\"deviceTypeHelper\">" + device + "</string>");
-		System.println("    <!-- values are checked with system during run -->");
+		System.println("    <string id=\"RunFromRatios\">true</string> <!-- always output true for formatting upgrade -->");
+		System.println("    <string id=\"device\">" + device + "</string>");
 		System.println("    <string id=\"shape\">" + rezShape + "</string>");
 		System.println("    <string id=\"width\">" + rezWidth + "</string>");
-		//System.println("    <string id=\"height\">" + rezheight + "</string>"); // do not want this in case user uses two-field setting for datafields in rectangle devices
-		System.println("");
-		System.println("    <string id=\"xt0Mid\">" + xt0Mid.toFloat().format("%.1f") + "</string>   <!-- char xt0 mid-height so I can place AND SCALE UI using floats -->");
-		System.println("    <string id=\"lg4Mid\">" + lg4Mid.toFloat().format("%.1f") + "</string>   <!-- char lg4 mid-height so I can place AND SCALE UI using floats -->");
-		System.println("    <string id=\"md6Mid\">" + md6Mid.toFloat().format("%.1f") + "</string>   <!-- char md6 mid-height so I can place AND SCALE UI using floats -->");
 		System.println("");
 		logFontMetrics(dc); //  SEE logFontMetrics TO EDIT FONT OUTPUT HERE... (AT TOP OF FILE)
 		System.println("");
-		System.println("    <string id=\"XtopCenter\">" + (XtopCenter.toFloat()/rezWidth).format("%.3f") + "</string>  <!--    Center Line Top  -->");
-		System.println("    <string id=\"XtopOffsets\">" + (XtopOffsets.toFloat()/rezWidth).format("%.3f") + "</string> <!-- Margin to Line Top  -->");
+		System.println("    <!-- NOTE: the more times the ratios are converted using vscode, the more it will shift smaller and smaller (up and up on screen) due to subtle math conversions -->");
+		System.println("    <!-- So simply only run it once, and update your resources.xml file for each device, and be done with it.  Each extra run may decrease pixels by 1-2? -->");"
 		System.println("");
-		System.println("    <string id=\"Ylbl_GF\">" + (Ylbl_GF.toFloat()/dcHeight).format("%.3f") + "</string>     <!--  Labels Deg & SLD   -->");
-		System.println("    <string id=\"Ydat_GF\">" + (Ydat_GF.toFloat()/dcHeight).format("%.3f") + "</string>     <!--    Data Deg & SLD   -->");
+		System.println("    <string id=\"oXtopCenter\">"  + (XtopCenter.toFloat()/rezWidth).format("%.03f")    + "</string>  <!--   Center Line Top     ->   (pixels_" + XtopCenter.format("%3d") + ")                      / w_"                                                     + rezWidth + " = " + (XtopCenter.toFloat()/rezWidth).format("%.03f")  + " -->");
+		System.println("    <string id=\"oXtopOffsets\">" + (XtopOffsets.toFloat()/rezWidth).format("%.03f")   + "</string>  <!--  Margin to Center**   ->   (pixels_" + XtopOffsets.format("%3d") + ")                      / w_"                                                    + rezWidth + " = " + (XtopOffsets.toFloat()/rezWidth).format("%.03f") + " -->");
 		System.println("");
-		System.println("    <string id=\"Y_____1\">" + (Y_____1.toFloat()/dcHeight).format("%.3f") + "</string>     <!--      Top Line       -->");
-		System.println("    <string id=\"Ylbl_PHT\">" + (Ylbl_PHT.toFloat()/dcHeight).format("%.3f") + "</string>    <!-- Labels HR Alt Pace  -->");
-		System.println("    <string id=\"Ydat_PHT\">" + (Ydat_PHT.toFloat()/dcHeight).format("%.3f") + "</string>    <!--   Data HR Alt Pace  -->");
+		System.println("    <string id=\"oYlbl_GF\">"     + (mYlbl_GF.toFloat()/dcHeight).format("%.03f")  + "</string>      <!--   Labels Deg & SLD    ->   (pixels_" + Ylbl_GF.format("%3d") + " + xt0Mid_" + xt0Mid.format("%.1f") +   " )_" + mYlbl_GF.format("%.1f") + "   / h_" + dcHeight + " = " + (mYlbl_GF.toFloat()/dcHeight).format("%.03f")    + " -->");
+		System.println("    <string id=\"oYdat_GF\">"     + (mYdat_GF.toFloat()/dcHeight).format("%.03f")  + "</string>      <!--    Data Deg & SLD     ->   (pixels_" + Ydat_GF.format("%3d") + " + md6Mid_" + md6Mid.format("%.1f") +   " )_" + mYdat_GF.format("%.1f") + "  / h_"  + dcHeight + " = " + (mYdat_GF.toFloat()/dcHeight).format("%.03f")    + " -->");
 		System.println("");
-		System.println("    <string id=\"Y_____2\">" + (Y_____2.toFloat()/dcHeight).format("%.3f") + "</string>     <!--   Mid Line (thin)   -->");
-		System.println("    <string id=\"Ydat_TS\">" + (Ydat_TS.toFloat()/dcHeight).format("%.3f") + "</string>     <!--   Data Timer & Dist -->");
-		System.println("    <string id=\"Ylbl_TS\">" + (Ylbl_TS.toFloat()/dcHeight).format("%.3f") + "</string>     <!-- Labels Timer & Dist -->");
+		System.println("    <string id=\"oY_____1\">"     + (Y_____1.toFloat()/dcHeight).format("%.03f")   + "</string>      <!--       Top Line        ->   (pixels_" + Y_____1.format("%3d") + ")                      / h_"                                                        + dcHeight + " = " + (Y_____1.toFloat()/dcHeight).format("%.03f")     + " -->");
+		System.println("    <string id=\"oYlbl_PHT\">"    + (mYlbl_PHT.toFloat()/dcHeight).format("%.03f")  + "</string>     <!--  Labels HR Alt Pace   ->   (pixels_" + Ylbl_PHT.format("%3d") + " + xt0Mid_" + xt0Mid.format("%.1f") + "  )_" + mYlbl_PHT.format("%.1f") + " / h_"  + dcHeight + " = " + (mYlbl_PHT.toFloat()/dcHeight).format("%.03f")   + " -->");
+		System.println("    <string id=\"oYdat_PHT\">"    + (mYdat_PHT.toFloat()/dcHeight).format("%.03f")  + "</string>     <!--   Data HR Alt Pace    ->   (pixels_" + Ydat_PHT.format("%3d") + " + lg4Mid_" + lg4Mid.format("%.1f") +  " )_" + mYdat_PHT.format("%.1f") + " / h_"  + dcHeight + " = " + (mYdat_PHT.toFloat()/dcHeight).format("%.03f")   + " -->");
 		System.println("");
-		System.println("    <string id=\"Y_____3\">" + (Y_____3.toFloat()/dcHeight).format("%.3f") + "</string>     <!--     Bottom Line     -->");
-		System.println("    <string id=\"Ydat_BT\">" + (Ydat_BT.toFloat()/dcHeight).format("%.3f") + "</string>     <!--   Data Batt & Tod   -->");
+		System.println("    <string id=\"oY_____2\">"     + (Y_____2.toFloat()/dcHeight).format("%.03f")  +  "</string>      <!--   Mid Line (thin)     ->   (pixels_" + Y_____2.format("%3d") + ")                      / h_"                                                        + dcHeight + " = " + (Y_____2.toFloat()/dcHeight).format("%.03f")     + " -->");
+		System.println("    <string id=\"oYdat_TS\">"     + (mYdat_TS.toFloat()/dcHeight).format("%.03f")  + "</string>      <!--  Data Timer & Dist    ->   (pixels_" + Ydat_TS.format("%3d") + " + lg4Mid_" + lg4Mid.format("%.1f") +   " )_" + mYdat_TS.format("%.1f")  + " / h_"  + dcHeight + " = " + (mYdat_TS.toFloat()/dcHeight).format("%.03f")    + " -->");
+		System.println("    <string id=\"oYlbl_TS\">"     + (mYlbl_TS.toFloat()/dcHeight).format("%.03f")  + "</string>      <!-- Labels Timer & Dist   ->   (pixels_" + Ylbl_TS.format("%3d") + " + xt0Mid_" + xt0Mid.format("%.1f") +  "  )_" + mYlbl_TS.format("%.1f")  + " / h_"  + dcHeight + " = " + (mYlbl_TS.toFloat()/dcHeight).format("%.03f")    + " -->");
 		System.println("");
-		System.println("    <string id=\"XbtmCenter\">" + (XbtmCenter.toFloat()/rezWidth).format("%.3f") + "</string> <!--    Center Line Btm  -->");
-		System.println("    <string id=\"XbtmOffsets\">" + (XbtmOffsets.toFloat()/rezWidth).format("%.3f") + "</string> <!-- Margin to Line Btm  -->");
+		System.println("    <string id=\"oY_____3\">"     + (Y_____3.toFloat()/dcHeight).format("%.03f")  +  "</string>      <!--     Bottom Line       ->   (pixels_" + Y_____3.format("%3d") + ")                      / h_"                                                        + dcHeight + " = " + (Y_____3.toFloat()/dcHeight).format("%.03f")     + " -->");
+		System.println("    <string id=\"oYdat_BT\">"     + (mYdat_BT.toFloat()/dcHeight).format("%.03f")  + "</string>      <!--   Data Batt & Tod     ->   (pixels_" + Ydat_BT.format("%3d") + " + xt0Mid_" + xt0Mid.format("%.1f") +  "  )_" + mYdat_BT.format("%.1f")  + " / h_"  + dcHeight + " = " + (mYdat_BT.toFloat()/dcHeight).format("%.03f")    + " -->");
 		System.println("");
-		System.println("</resources>\n\n");
-		System.print("============================================================ ");
-		System.println(getModelIdentifier() + "  device tested: XXXXXX");
-				
+		System.println("    <string id=\"oXbtmCenter\">"  + (XbtmCenter.toFloat()/rezWidth).format("%.03f")   +  "</string>  <!--    Center Line Btm    ->   (pixels_" + XbtmCenter.format("%3d") + ")                      / w_"                                                     + rezWidth + " = " + (XbtmCenter.toFloat()/rezWidth).format("%.03f")  + " -->");
+		System.println("    <string id=\"oXbtmOffsets\">" + (XbtmOffsets.toFloat()/rezWidth).format("%.03f")   + "</string>  <!--  Margin to Ctr/Edge** ->   (pixels_" + XbtmOffsets.format("%3d") + ")                      / w_"                                                    + rezWidth + " = " + (XbtmOffsets.toFloat()/rezWidth).format("%.03f") + " -->");
+		System.println("    <!-- ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' -->"); // perhaps change this next Mike...
+		System.println("");
+		System.println("</resources>\n");
+		System.print("<!-- ============================================================ ");
+		System.println(getModelIdentifier() + "  device tested: XXXXXX  -->");
+		
 		
     }
 	// -------------------------------------------------------------------------------------------------------------------
@@ -595,18 +476,6 @@ class ORunView extends Ui.DataField {
 		forecol = Gfx.COLOR_WHITE;
     	
     	linecol = Gfx.COLOR_BLUE;
-    	
-		// may need to fix this for black and white displays such as instinct... edge130, edge130plus
-		//linecol = Gfx.COLOR_WHITE;
-		//redcol  = Gfx.COLOR_WHITE;
-		
-		// // the following settings required since black background apparently won't work properly on some older rect devices?
-		// // Edge130, Edge130plus, Edge520plus, edge820
-		// backcol = Gfx.COLOR_WHITE;
-		// forecol = Gfx.COLOR_BLACK;
-    	// linecol = Gfx.COLOR_BLACK; // for testing on white background on black/white devices like Edge130/Edge130plus
-    	
-
 
     	slbLabel = Ui.loadResource(Rez.Strings.slb);					// mike note: load strings for datafield labels
     	tmrLabel = Ui.loadResource(Rez.Strings.timer);
@@ -793,6 +662,118 @@ class ORunView extends Ui.DataField {
 	}
 	// mike note: for testing memory
 	function memstr () { return ((Toybox.System.getSystemStats().freeMemory.toFloat()/Toybox.System.getSystemStats().totalMemory.toFloat()) * 100).toNumber() + "% available"; } 
-}
+	// -------------------------------------------------------------------------------------------------------------------
+	function drawMidLines(dc, y) {
+		dc.setColor( Gfx.COLOR_GREEN, Gfx.COLOR_TRANSPARENT );
+	    dc.setPenWidth(1); 
+		dc.drawLine( 0, y, dc.getWidth(), y );
+		dc.setColor( Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT );
+	}
+	// -------------------------------------------------------------------------------------------------------------------
+    function dcdrawText(dc, x, y, font, text, justification){
+		
+		// attempt to undo mid for each text location... 
+		var undoMid = 0;
+		if (font == Gfx.FONT_XTINY) {
+			undoMid = xt0Mid;
+		} else if (font == Gfx.FONT_LARGE) {
+			undoMid = lg4Mid;
+		} else if (font == Gfx.FONT_NUMBER_MEDIUM) {
+			undoMid = md6Mid;
+		}
+		
+		// print text
+		dc.drawText(x, y - undoMid, font, text, justification);
+
+		if ( false ) { // if true, shows text outlines in yellow for debug purposes
+
+			// change to highlight red for justification
+			dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
+		    dc.setPenWidth(3); 
+		
+			// get dimensions array [width, height] and calculate justification
+    		var size = dc.getTextDimensions(text, font);
+			var justifiedX = x;
+			if (justification == Gfx.TEXT_JUSTIFY_LEFT) {
+				dc.drawLine( x, y, x, y + size[1] );
+			} else if (justification == Gfx.TEXT_JUSTIFY_CENTER) {
+				justifiedX = x - (size[0]/2);
+				dc.drawLine( x, y, x, y + size[1] );
+			} else if (justification == Gfx.TEXT_JUSTIFY_RIGHT) {
+				justifiedX = x - size[0];
+				dc.drawLine( x, y, x, y + size[1] );
+			}
+
+			// change to highlight color, yellow
+			dc.setColor( Gfx.COLOR_YELLOW, Gfx.COLOR_TRANSPARENT );
+		    dc.setPenWidth(1); 
+
+			// need to use special procedure to determine more accurate font height boxes: (steps 1-4)
+			
+			// 1. get the raw unadjusted text dimensions
+			var rawWidth = size[0];
+			var rawHeight = size[1];
+
+			// 2. determine closer estimate of font height using your heuristic
+			var ascent = Gfx.getFontAscent(font);
+			var descent = Gfx.getFontDescent(font);
+			var accurateHeight = ascent; 
+			if (descent != 0) {
+				// True visual height calculation
+				accurateHeight = (ascent + descent) * 0.78; 		
+			}
+
+			// 3. calculate the Y-position correction. We subtract the accurate height 
+			// from the raw block height to find the leftover padding space. Splitting 
+			// this remainder by 2 centers the bounding box vertically over the glyphs.
+			var totalPadding = rawHeight - accurateHeight;
+			var visualY = y + (totalPadding / 2);
+
+			// 4. use 'justifiedX' and 'rawWidth' for horizontal data, and the adjusted 'visualY' and 'accurateHeight' for vertical data.
+			dc.drawRectangle(justifiedX, visualY, rawWidth, accurateHeight);
+
+			// debug purposes show accurateHeight of font
+			//System.println("     ** accurateHeight of font '" + font + "' is " + accurateHeight);
+
+			// change color to forecol
+			dc.setColor( forecol, Gfx.COLOR_TRANSPARENT );
+		}
+	}
+	// -------------------------------------------------------------------------------------------------------------------
+    function logFontMetrics(dc){
+		var fonts = [ // if additional fonts added
+			Gfx.FONT_XTINY,
+			Gfx.FONT_LARGE,
+			Gfx.FONT_NUMBER_MEDIUM
+		];
+		var fontnames = [ // need to add additional font names here
+			"xt0Acc", // "FONT_XTINY",
+			"lg4Acc", // "FONT_LARGE",
+			"md6Acc",  // "FONT_NUMBER_MEDIUM"
+			"FONT_XTINY",
+			"FONT_LARGE",
+			"FONT_NUMBER_MEDIUM"
+			];
+
+		for (var i = 0; i < fonts.size(); i++) {
+			var font = fonts[i];
+			
+			// get raw system heights
+			var rawHeight = dc.getFontHeight(font);
+			var ascent = Gfx.getFontAscent(font);
+			var descent = Gfx.getFontDescent(font);
+			
+			// calculate closer visual estimate
+			var accurateHeight = ascent; 
+			if (descent != 0) {
+				accurateHeight = (ascent + descent) * 0.78; 		
+			}
+
+			// print metrics directly to the console
+			// System.println("    <string id=\"" + fontnames[i] + "\">" + accurateHeight.format("%.3f") + "</string>      <!-- <- accurateHeight of " + fontnames[i+3] + ", whereas getFontHeight()= " + rawHeight + " -->");
+			System.println("    <!-- on this device, getFontHeight(Gfx." + fontnames[i+3] + ")=" + rawHeight + " but actually " + accurateHeight.format("%.2f") + " pixels tall -->");
+		}
+	}
 // ======================================================================================================================
+}
 // notes below, class ends here

@@ -1,6 +1,7 @@
 <resources>
+    <string id="RunFromPixelsToCalcRatios">true</string>
     <!-- dimensions & type of device + reference device -->
-    <string id="deviceTypeHelper">round-208x208</string>
+    <string id="device">round-208x208</string>
     <!-- values are checked with system during run -->
     <string id="shape">round</string>
     <string id="width">208</string>
@@ -8,6 +9,7 @@
     <!-- tested on 
     fr55    
     -->
+    <string id="RunFromRatios">false</string>
 
     <string id="XtopCenter">5</string>   <!--    Center Line Top  -->
     <string id="XtopOffsets">2</string>  <!-- Margin to Line Top  -->
@@ -25,4 +27,18 @@
     <string id="XbtmOffsets">2</string>  <!--  Margin to Line Btm -->
 
  
+    <string id="oXtopCenter">0</string>
+    <string id="oXtopOffsets">0</string>
+    <string id="oYlbl_GF">0</string>
+    <string id="oYdat_GF">0</string>
+    <string id="oY_____1">0</string>
+    <string id="oYlbl_PHT">0</string>
+    <string id="oYdat_PHT">0</string>
+    <string id="oY_____2">0</string>
+    <string id="oYdat_TS">0</string>
+    <string id="oYlbl_TS">0</string>
+    <string id="oY_____3">0</string>
+    <string id="oYdat_BT">0</string>
+    <string id="oXbtmCenter">0</string>
+    <string id="oXbtmOffsets">0</string>
 </resources>

@@ -1,6 +1,6 @@
 <resources>
     <!-- dimensions & type of device + reference device -->
-    <string id="deviceTypeHelper">round-416x416-d2airx10</string>
+    <string id="device">round-416x416-d2airx10</string>
     <!-- values are checked with system during run -->
     <string id="shape">round</string>
     <string id="width">416</string>
@@ -10,6 +10,7 @@
     venu2
     venu2plus
     -->
+    <string id="RunFromRatios">false</string>
 
     <string id="XtopCenter">-15</string> <!-- Center Line Top -->
     <string id="XtopOffsets">15</string> <!-- Margin to Line Top -->
@@ -26,4 +27,18 @@
     <string id="XbtmCenter">-23</string> <!-- Center Line Btm -->
     <string id="XbtmOffsets">10</string>  <!--  Margin to Line Btm -->
     
+    <string id="oXtopCenter">0</string>
+    <string id="oXtopOffsets">0</string>
+    <string id="oYlbl_GF">0</string>
+    <string id="oYdat_GF">0</string>
+    <string id="oY_____1">0</string>
+    <string id="oYlbl_PHT">0</string>
+    <string id="oYdat_PHT">0</string>
+    <string id="oY_____2">0</string>
+    <string id="oYdat_TS">0</string>
+    <string id="oYlbl_TS">0</string>
+    <string id="oY_____3">0</string>
+    <string id="oYdat_BT">0</string>
+    <string id="oXbtmCenter">0</string>
+    <string id="oXbtmOffsets">0</string>
 </resources>

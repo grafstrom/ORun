@@ -1,9 +1,11 @@
 <resources>
+    <string id="RunFromRatios">false</string>
     <!-- dimensions & type of device + reference device -->
-    <string id="deviceTypeHelper">rectangle-220x240</string>
+    <string id="device">rectangle-220x240</string>
     <!-- values are checked with system during run -->
     <string id="shape">rectangle</string>
     <string id="width">220</string>
+    <string id="height">240</string>
 
     <!-- tested on venusq and venusqm -->
 
@@ -27,4 +29,20 @@
 
     <string id="XbtmCenter">-30</string> <!--    Center Line Btm  -->
     <string id="XbtmOffsets">10</string>  <!-- Margin to Line Btm  -->
+
+ 
+    <string id="oXtopCenter">0</string>
+    <string id="oXtopOffsets">0</string>
+    <string id="oYlbl_GF">0</string>
+    <string id="oYdat_GF">0</string>
+    <string id="oY_____1">0</string>
+    <string id="oYlbl_PHT">0</string>
+    <string id="oYdat_PHT">0</string>
+    <string id="oY_____2">0</string>
+    <string id="oYdat_TS">0</string>
+    <string id="oYlbl_TS">0</string>
+    <string id="oY_____3">0</string>
+    <string id="oYdat_BT">0</string>
+    <string id="oXbtmCenter">0</string>
+    <string id="oXbtmOffsets">0</string>
 </resources>
