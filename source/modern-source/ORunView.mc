@@ -134,29 +134,29 @@ class ORunView extends Ui.DataField {
 
 
 		// accurateHeight computed live (ascent+descent heuristic), no per-profile resource needed
-		var xt0Acc = Gfx.getFontAscent(Gfx.FONT_XTINY);
+		var xt0Acc = Gfx.getFontAscent(Gfx.FONT_XTINY).toFloat();
 		if (Gfx.getFontDescent(Gfx.FONT_XTINY) != 0) {
-			xt0Acc = (Gfx.getFontAscent(Gfx.FONT_XTINY) + Gfx.getFontDescent(Gfx.FONT_XTINY)) * 0.78;
+			xt0Acc = (Gfx.getFontAscent(Gfx.FONT_XTINY).toFloat() + Gfx.getFontDescent(Gfx.FONT_XTINY).toFloat()) * 0.78;
 		}
-		var lg4Acc = Gfx.getFontAscent(Gfx.FONT_LARGE);
+		var lg4Acc = Gfx.getFontAscent(Gfx.FONT_LARGE).toFloat();
 		if (Gfx.getFontDescent(Gfx.FONT_LARGE) != 0) {
-			lg4Acc = (Gfx.getFontAscent(Gfx.FONT_LARGE) + Gfx.getFontDescent(Gfx.FONT_LARGE)) * 0.78;
+			lg4Acc = (Gfx.getFontAscent(Gfx.FONT_LARGE).toFloat() + Gfx.getFontDescent(Gfx.FONT_LARGE).toFloat()) * 0.78;
 		}
 		var md6Acc = Gfx.getFontAscent(Gfx.FONT_NUMBER_MEDIUM);
 		if (Gfx.getFontDescent(Gfx.FONT_NUMBER_MEDIUM) != 0) {
-			md6Acc = (Gfx.getFontAscent(Gfx.FONT_NUMBER_MEDIUM) + Gfx.getFontDescent(Gfx.FONT_NUMBER_MEDIUM)) * 0.78;
+			md6Acc = (Gfx.getFontAscent(Gfx.FONT_NUMBER_MEDIUM).toFloat() + Gfx.getFontDescent(Gfx.FONT_NUMBER_MEDIUM).toFloat()) * 0.78;
 		}
 		
 		// 3. Find where the visual top of the numbers actually starts inside the raw block
 		//var TopPadding = (getFontHeight - accurateHeight) / 2;
-		var xt0TopPadding = ((dc.getFontHeight(Gfx.FONT_XTINY) - xt0Acc) / 2.0).toFloat(); // 
-		var lg4TopPadding = ((dc.getFontHeight(Gfx.FONT_LARGE) - lg4Acc) / 2.0).toFloat(); // 
-		var md6TopPadding = ((dc.getFontHeight(Gfx.FONT_NUMBER_MEDIUM) - md6Acc) / 2.0).toFloat(); // 
+		var xt0TopPadding = (dc.getFontHeight(Gfx.FONT_XTINY).toFloat() - xt0Acc) / 2.0; // 
+		var lg4TopPadding = (dc.getFontHeight(Gfx.FONT_LARGE).toFloat() - lg4Acc) / 2.0; // 
+		var md6TopPadding = (dc.getFontHeight(Gfx.FONT_NUMBER_MEDIUM).toFloat() - md6Acc) / 2.0; // 
 		//System.println("   TopPaddings are xt0TopPadding_" + xt0TopPadding.format("%.1f") + ", lg4TopPadding_" + lg4TopPadding.format("%.1f") + ", md6TopPadding_" + md6TopPadding.format("%.1f"));
 
-		xt0Mid = xt0TopPadding + (xt0Acc/2).toFloat(); // 
-		lg4Mid = lg4TopPadding + (lg4Acc/2).toFloat(); // 
-		md6Mid = md6TopPadding + (md6Acc/2).toFloat(); // 
+		xt0Mid = xt0TopPadding + xt0Acc/2; // 
+		lg4Mid = lg4TopPadding + lg4Acc/2; // 
+		md6Mid = md6TopPadding + md6Acc/2; // 
 		//System.println("   Mids are xt0Mid_" + xt0Mid.format("%.1f") + ", lg4Mid_" + lg4Mid.format("%.1f") + ", md6Mid_" + md6Mid.format("%.1f") + " // add to get center line for each: ");
 		var rezHeight = dcHeight; // default for round watches, no adjustment of metrics based on switching layouts from 1-2 datafields is allowed
 
@@ -236,10 +236,10 @@ class ORunView extends Ui.DataField {
 			oYdat_BT = (dcHeight * Ui.loadResource(Rez.Strings.oYdat_BT).toFloat());
 
 
-			XtopCenter = (oXtopCenter * rezWidth).toNumber(); //these are the pixel values, calculated from ratios in resources
-			XtopOffsets = (oXtopOffsets * rezWidth).toNumber();
-			XbtmCenter = (oXbtmCenter * rezWidth).toNumber();
-			XbtmOffsets = (oXbtmOffsets * rezWidth).toNumber();
+			XtopCenter = oXtopCenter * rezWidth; //these are the pixel values, calculated from ratios in resources - kept Float to avoid precision decay on re-export
+			XtopOffsets = oXtopOffsets * rezWidth;
+			XbtmCenter = oXbtmCenter * rezWidth;
+			XbtmOffsets = oXbtmOffsets * rezWidth;
 
 
 			mYlbl_GF = oYlbl_GF;
@@ -249,17 +249,17 @@ class ORunView extends Ui.DataField {
 			mYdat_TS = oYdat_TS;
 			mYlbl_TS = oYlbl_TS;
 			mYdat_BT = oYdat_BT;
-			Y_____1 = oY_____1.toNumber();
-			Y_____2 = oY_____2.toNumber();
-			Y_____3 = oY_____3.toNumber();
+			Y_____1 = oY_____1;
+			Y_____2 = oY_____2;
+			Y_____3 = oY_____3;
 
-			Ylbl_GF  = (mYlbl_GF  - xt0Mid).toNumber(); 
-			Ydat_GF  = (mYdat_GF  - md6Mid).toNumber();
-			Ylbl_PHT = (mYlbl_PHT - xt0Mid).toNumber();
-			Ydat_PHT = (mYdat_PHT - lg4Mid).toNumber();
-			Ydat_TS  = (mYdat_TS  - lg4Mid).toNumber();
-			Ylbl_TS  = (mYlbl_TS  - xt0Mid).toNumber();
-			Ydat_BT  = (mYdat_BT  - xt0Mid).toNumber();
+			Ylbl_GF  = mYlbl_GF  - xt0Mid; 
+			Ydat_GF  = mYdat_GF  - md6Mid;
+			Ylbl_PHT = mYlbl_PHT - xt0Mid;
+			Ydat_PHT = mYdat_PHT - lg4Mid;
+			Ydat_TS  = mYdat_TS  - lg4Mid;
+			Ylbl_TS  = mYlbl_TS  - xt0Mid;
+			Ydat_BT  = mYdat_BT  - xt0Mid;
 		}
 
 
@@ -419,33 +419,37 @@ class ORunView extends Ui.DataField {
 		System.println("    <string id=\"shape\">" + rezShape + "</string>");
 		System.println("    <string id=\"width\">" + rezWidth + "</string>");
 		System.println("");
-		logFontMetrics(dc); //  SEE logFontMetrics TO EDIT FONT OUTPUT HERE... (AT TOP OF FILE)
+		// logFontMetrics(dc); //  SEE logFontMetrics TO EDIT FONT OUTPUT HERE... (AT TOP OF FILE)
+
+		System.println("    <!-- on this device, getFontHeight(Gfx.FONT_XTINY)         = " + dc.getFontHeight(Gfx.FONT_XTINY)         + " but actually pixelsTall_" + xt0Acc.format("%.06f") + ".  * 0.5 + padding_" + xt0TopPadding + " = " + xt0Mid.format("%.06f") + "_midpoint -->");
+		System.println("    <!-- on this device, getFontHeight(Gfx.FONT_LARGE)         = " + dc.getFontHeight(Gfx.FONT_LARGE)         + " but actually pixelsTall_" + lg4Acc.format("%.06f") + ".  * 0.5 + padding_" + lg4TopPadding + " = " + lg4Mid.format("%.06f") + "_midpoint -->");
+		System.println("    <!-- on this device, getFontHeight(Gfx.FONT_NUMBER_MEDIUM) = " + dc.getFontHeight(Gfx.FONT_NUMBER_MEDIUM) + " but actually pixelsTall_" + md6Acc.format("%.06f") + ".  * 0.5 + padding_" + md6TopPadding + " = " + md6Mid.format("%.06f") + "_midpoint -->");
+
 		System.println("");
-		System.println("    <!-- NOTE: the more times the ratios are converted using vscode, the more it will shift smaller and smaller (up and up on screen) due to subtle math conversions -->");
-		System.println("    <!-- So simply only run it once, and update your resources.xml file for each device, and be done with it.  Each extra run may decrease pixels by 1-2? -->");"
+		System.println("    <!--  KEEP HIGH PRECISION:  1 pixel / " + rezWidth + " (screen width) = " + (1.0/rezWidth).format("%.06f")+ " portion of screen  -->");
 		System.println("");
-		System.println("    <string id=\"oXtopCenter\">"  + (XtopCenter.toFloat()/rezWidth).format("%.03f")    + "</string>  <!--   Center Line Top     ->   (pixels_" + XtopCenter.format("%3d") + ")                      / w_"                                                     + rezWidth + " = " + (XtopCenter.toFloat()/rezWidth).format("%.03f")  + " -->");
-		System.println("    <string id=\"oXtopOffsets\">" + (XtopOffsets.toFloat()/rezWidth).format("%.03f")   + "</string>  <!--  Margin to Center**   ->   (pixels_" + XtopOffsets.format("%3d") + ")                      / w_"                                                    + rezWidth + " = " + (XtopOffsets.toFloat()/rezWidth).format("%.03f") + " -->");
+		System.println("    <string id=\"oXtopCenter\">"  + (XtopCenter.toFloat()/rezWidth).format("%.06f")    + "</string>  <!--   Center Line Top     ->   (pixels_" + XtopCenter.toFloat().format("%.1f")                                                    + ")                        / w_"  + rezWidth + " = " + (XtopCenter.toFloat()/rezWidth).format("%.06f")  +  " -->");
+		System.println("    <string id=\"oXtopOffsets\">" + (XtopOffsets.toFloat()/rezWidth).format("%.06f")   + "</string>  <!--  Margin to Center**   ->   (pixels_" + XtopOffsets.toFloat().format("%.1f")                                                  + ")                         / w_"  + rezWidth + " = " + (XtopOffsets.toFloat()/rezWidth).format("%.06f") + "  -->");
 		System.println("");
-		System.println("    <string id=\"oYlbl_GF\">"     + (mYlbl_GF.toFloat()/dcHeight).format("%.03f")  + "</string>      <!--   Labels Deg & SLD    ->   (pixels_" + Ylbl_GF.format("%3d") + " + xt0Mid_" + xt0Mid.format("%.1f") +   " )_" + mYlbl_GF.format("%.1f") + "   / h_" + dcHeight + " = " + (mYlbl_GF.toFloat()/dcHeight).format("%.03f")    + " -->");
-		System.println("    <string id=\"oYdat_GF\">"     + (mYdat_GF.toFloat()/dcHeight).format("%.03f")  + "</string>      <!--    Data Deg & SLD     ->   (pixels_" + Ydat_GF.format("%3d") + " + md6Mid_" + md6Mid.format("%.1f") +   " )_" + mYdat_GF.format("%.1f") + "  / h_"  + dcHeight + " = " + (mYdat_GF.toFloat()/dcHeight).format("%.03f")    + " -->");
+		System.println("    <string id=\"oYlbl_GF\">"     + (mYlbl_GF.toFloat()/dcHeight).format("%.06f")  + "</string>      <!--   Labels Deg & SLD    ->   (pixels_" + Ylbl_GF.toFloat().format("%.1f") + " + xt0Mid_" + xt0Mid.format("%.1f") +  " )_" + mYlbl_GF.format("%.1f") +  "    / h_"  + dcHeight + " = " + (mYlbl_GF.toFloat()/dcHeight).format("%.06f")    + "  -->");
+		System.println("    <string id=\"oYdat_GF\">"     + (mYdat_GF.toFloat()/dcHeight).format("%.06f")  + "</string>      <!--    Data Deg & SLD     ->   (pixels_" + Ydat_GF.toFloat().format("%.1f") + " + md6Mid_" + md6Mid.format("%.1f") +  " )_" + mYdat_GF.format("%.1f") +   "   / h_"  + dcHeight + " = " + (mYdat_GF.toFloat()/dcHeight).format("%.06f")    + "  -->");
 		System.println("");
-		System.println("    <string id=\"oY_____1\">"     + (Y_____1.toFloat()/dcHeight).format("%.03f")   + "</string>      <!--       Top Line        ->   (pixels_" + Y_____1.format("%3d") + ")                      / h_"                                                        + dcHeight + " = " + (Y_____1.toFloat()/dcHeight).format("%.03f")     + " -->");
-		System.println("    <string id=\"oYlbl_PHT\">"    + (mYlbl_PHT.toFloat()/dcHeight).format("%.03f")  + "</string>     <!--  Labels HR Alt Pace   ->   (pixels_" + Ylbl_PHT.format("%3d") + " + xt0Mid_" + xt0Mid.format("%.1f") + "  )_" + mYlbl_PHT.format("%.1f") + " / h_"  + dcHeight + " = " + (mYlbl_PHT.toFloat()/dcHeight).format("%.03f")   + " -->");
-		System.println("    <string id=\"oYdat_PHT\">"    + (mYdat_PHT.toFloat()/dcHeight).format("%.03f")  + "</string>     <!--   Data HR Alt Pace    ->   (pixels_" + Ydat_PHT.format("%3d") + " + lg4Mid_" + lg4Mid.format("%.1f") +  " )_" + mYdat_PHT.format("%.1f") + " / h_"  + dcHeight + " = " + (mYdat_PHT.toFloat()/dcHeight).format("%.03f")   + " -->");
+		System.println("    <string id=\"oY_____1\">"     + (Y_____1.toFloat()/dcHeight).format("%.06f")   + "</string>      <!--       Top Line        ->   (pixels_" + Y_____1.toFloat().format("%.1f")                                                        + ")                       / h_"  + dcHeight + " = " + (Y_____1.toFloat()/dcHeight).format("%.06f")     + "  -->");
+		System.println("    <string id=\"oYlbl_PHT\">"    + (mYlbl_PHT.toFloat()/dcHeight).format("%.06f")  + "</string>     <!--  Labels HR Alt Pace   ->   (pixels_" + Ylbl_PHT.toFloat().format("%.1f") + " + xt0Mid_" + xt0Mid.format("%.1f") + "  )_" + mYlbl_PHT.format("%.1f") +   " / h_"  + dcHeight + " = " + (mYlbl_PHT.toFloat()/dcHeight).format("%.06f")   + "  -->");
+		System.println("    <string id=\"oYdat_PHT\">"    + (mYdat_PHT.toFloat()/dcHeight).format("%.06f")  + "</string>     <!--   Data HR Alt Pace    ->   (pixels_" + Ydat_PHT.toFloat().format("%.1f") + " + lg4Mid_" + lg4Mid.format("%.1f") +  " )_" + mYdat_PHT.format("%.1f")  + "  / h_"  + dcHeight + " = " + (mYdat_PHT.toFloat()/dcHeight).format("%.06f")   + "  -->");
 		System.println("");
-		System.println("    <string id=\"oY_____2\">"     + (Y_____2.toFloat()/dcHeight).format("%.03f")  +  "</string>      <!--   Mid Line (thin)     ->   (pixels_" + Y_____2.format("%3d") + ")                      / h_"                                                        + dcHeight + " = " + (Y_____2.toFloat()/dcHeight).format("%.03f")     + " -->");
-		System.println("    <string id=\"oYdat_TS\">"     + (mYdat_TS.toFloat()/dcHeight).format("%.03f")  + "</string>      <!--  Data Timer & Dist    ->   (pixels_" + Ydat_TS.format("%3d") + " + lg4Mid_" + lg4Mid.format("%.1f") +   " )_" + mYdat_TS.format("%.1f")  + " / h_"  + dcHeight + " = " + (mYdat_TS.toFloat()/dcHeight).format("%.03f")    + " -->");
-		System.println("    <string id=\"oYlbl_TS\">"     + (mYlbl_TS.toFloat()/dcHeight).format("%.03f")  + "</string>      <!-- Labels Timer & Dist   ->   (pixels_" + Ylbl_TS.format("%3d") + " + xt0Mid_" + xt0Mid.format("%.1f") +  "  )_" + mYlbl_TS.format("%.1f")  + " / h_"  + dcHeight + " = " + (mYlbl_TS.toFloat()/dcHeight).format("%.03f")    + " -->");
+		System.println("    <string id=\"oY_____2\">"     + (Y_____2.toFloat()/dcHeight).format("%.06f")  +  "</string>      <!--   Mid Line (thin)     ->   (pixels_" + Y_____2.toFloat().format("%.1f")                                                        + ")                       / h_"  + dcHeight + " = " + (Y_____2.toFloat()/dcHeight).format("%.06f")     + "  -->");
+		System.println("    <string id=\"oYdat_TS\">"     + (mYdat_TS.toFloat()/dcHeight).format("%.06f")  + "</string>      <!--  Data Timer & Dist    ->   (pixels_" + Ydat_TS.toFloat().format("%.1f") + " + lg4Mid_" + lg4Mid.format("%.1f") +    " )_" + mYdat_TS.format("%.1f")  + "  / h_"  + dcHeight + " = " + (mYdat_TS.toFloat()/dcHeight).format("%.06f")    + "  -->");
+		System.println("    <string id=\"oYlbl_TS\">"     + (mYlbl_TS.toFloat()/dcHeight).format("%.06f")  + "</string>      <!-- Labels Timer & Dist   ->   (pixels_" + Ylbl_TS.toFloat().format("%.1f") + " + xt0Mid_" + xt0Mid.format("%.1f") +   "  )_" + mYlbl_TS.format("%.1f")  +  " / h_"  + dcHeight + " = " + (mYlbl_TS.toFloat()/dcHeight).format("%.06f")    + "  -->");
 		System.println("");
-		System.println("    <string id=\"oY_____3\">"     + (Y_____3.toFloat()/dcHeight).format("%.03f")  +  "</string>      <!--     Bottom Line       ->   (pixels_" + Y_____3.format("%3d") + ")                      / h_"                                                        + dcHeight + " = " + (Y_____3.toFloat()/dcHeight).format("%.03f")     + " -->");
-		System.println("    <string id=\"oYdat_BT\">"     + (mYdat_BT.toFloat()/dcHeight).format("%.03f")  + "</string>      <!--   Data Batt & Tod     ->   (pixels_" + Ydat_BT.format("%3d") + " + xt0Mid_" + xt0Mid.format("%.1f") +  "  )_" + mYdat_BT.format("%.1f")  + " / h_"  + dcHeight + " = " + (mYdat_BT.toFloat()/dcHeight).format("%.03f")    + " -->");
+		System.println("    <string id=\"oY_____3\">"     + (Y_____3.toFloat()/dcHeight).format("%.06f")  +  "</string>      <!--     Bottom Line       ->   (pixels_" + Y_____3.toFloat().format("%.1f")                                                        + ")                       / h_"  + dcHeight + " = " + (Y_____3.toFloat()/dcHeight).format("%.06f")     + "  -->");
+		System.println("    <string id=\"oYdat_BT\">"     + (mYdat_BT.toFloat()/dcHeight).format("%.06f")  + "</string>      <!--   Data Batt & Tod     ->   (pixels_" + Ydat_BT.toFloat().format("%.1f") + " + xt0Mid_" + xt0Mid.format("%.1f") +  "  )_" + mYdat_BT.format("%.1f")   +  " / h_"  + dcHeight + " = " + (mYdat_BT.toFloat()/dcHeight).format("%.06f")    + "  -->");
 		System.println("");
-		System.println("    <string id=\"oXbtmCenter\">"  + (XbtmCenter.toFloat()/rezWidth).format("%.03f")   +  "</string>  <!--    Center Line Btm    ->   (pixels_" + XbtmCenter.format("%3d") + ")                      / w_"                                                     + rezWidth + " = " + (XbtmCenter.toFloat()/rezWidth).format("%.03f")  + " -->");
-		System.println("    <string id=\"oXbtmOffsets\">" + (XbtmOffsets.toFloat()/rezWidth).format("%.03f")   + "</string>  <!--  Margin to Ctr/Edge** ->   (pixels_" + XbtmOffsets.format("%3d") + ")                      / w_"                                                    + rezWidth + " = " + (XbtmOffsets.toFloat()/rezWidth).format("%.03f") + " -->");
+		System.println("    <string id=\"oXbtmCenter\">"  + (XbtmCenter.toFloat()/rezWidth).format("%.06f")   +  "</string>  <!--    Center Line Btm    ->   (pixels_" + XbtmCenter.toFloat().format("%.1f")                                                     + ")                       / w_"  + rezWidth + " = " + (XbtmCenter.toFloat()/rezWidth).format("%.06f")  +  " -->");
+		System.println("    <string id=\"oXbtmOffsets\">" + (XbtmOffsets.toFloat()/rezWidth).format("%.06f")   + "</string>  <!--  Margin to Ctr/Edge** ->   (pixels_" + XbtmOffsets.toFloat().format("%.1f")                                                  + ")                         / w_"  + rezWidth + " = " + (XbtmOffsets.toFloat()/rezWidth).format("%.06f") + "  -->");
 		System.println("    <!-- ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' -->"); // perhaps change this next Mike...
 		System.println("");
-		System.println("</resources>\n");
+		System.println("</resources>");
 		System.print("<!-- ============================================================ ");
 		System.println(getModelIdentifier() + "  device tested: XXXXXX  -->");
 		
@@ -658,7 +662,7 @@ class ORunView extends Ui.DataField {
 		// drawMidLines(dc, oYdat_BT);
 
 		// mike note: for testing memory
-		System.println(memstr());    
+		//System.println(memstr());    
 	}
 	// mike note: for testing memory
 	function memstr () { return ((Toybox.System.getSystemStats().freeMemory.toFloat()/Toybox.System.getSystemStats().totalMemory.toFloat()) * 100).toNumber() + "% available"; } 
@@ -747,9 +751,9 @@ class ORunView extends Ui.DataField {
 			Gfx.FONT_NUMBER_MEDIUM
 		];
 		var fontnames = [ // need to add additional font names here
-			"xt0Acc", // "FONT_XTINY",
-			"lg4Acc", // "FONT_LARGE",
-			"md6Acc",  // "FONT_NUMBER_MEDIUM"
+			"xt0Mid", // "FONT_XTINY",
+			"lg4Mid", // "FONT_LARGE",
+			"md6Mid",  // "FONT_NUMBER_MEDIUM"
 			"FONT_XTINY",
 			"FONT_LARGE",
 			"FONT_NUMBER_MEDIUM"
@@ -766,12 +770,11 @@ class ORunView extends Ui.DataField {
 			// calculate closer visual estimate
 			var accurateHeight = ascent; 
 			if (descent != 0) {
-				accurateHeight = (ascent + descent) * 0.78; 		
+				accurateHeight = (ascent + descent).toFloat() * 0.78; 		
 			}
 
 			// print metrics directly to the console
-			// System.println("    <string id=\"" + fontnames[i] + "\">" + accurateHeight.format("%.3f") + "</string>      <!-- <- accurateHeight of " + fontnames[i+3] + ", whereas getFontHeight()= " + rawHeight + " -->");
-			System.println("    <!-- on this device, getFontHeight(Gfx." + fontnames[i+3] + ")=" + rawHeight + " but actually " + accurateHeight.format("%.2f") + " pixels tall -->");
+			System.println("    <!-- on this device, getFontHeight(Gfx." + fontnames[i+3] + ")=" + rawHeight + " but actually " + accurateHeight.format("%.06f") + " pixels tall. ( + half tall '" + fontnames[i] + "' is " + (accurateHeight/2).format("%.06f") + ") -->");
 		}
 	}
 // ======================================================================================================================

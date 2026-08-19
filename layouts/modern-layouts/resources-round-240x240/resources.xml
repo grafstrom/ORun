@@ -1,37 +1,55 @@
+<!-- ============================================================ 006-B3542-00 -->
+<!-- Device:round-240x240   (part number 006-B3542-00)     (dcHeight:240 dcWidth:240)   -->
+<!-- Tested On:
+descentmk2s.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+fenix6s.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+fenix6spro.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+fenix7s.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+fenix7spro.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+
+# note for these you have to select proper watch, otherwise it will run marq2... larger watch
+marqadventurer.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+marqathlete.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+marqaviator.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+marqcaptain.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+marqcommander.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+marqdriver.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+marqexpedition.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+marqgolfer.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+-->
 <resources>
-    <!-- dimensions & type of device + reference device -->
+    <string id="RunFromRatios">true</string> <!-- always output true for formatting upgrade -->
     <string id="device">round-240x240</string>
-    <!-- values are checked with system during run -->
     <string id="shape">round</string>
     <string id="width">240</string>
-    <string id="RunFromRatios">false</string>
 
-    <string id="XtopCenter">-8</string> <!-- Center Line Top -->
-    <string id="XtopOffsets">9</string> <!-- Margin to Line Top -->
-    <string id="Ylbl_GF">13</string> <!-- Labels Deg & SLD -->
-    <string id="Ydat_GF">25</string> <!-- Data Deg & SLD -->
-    <string id="Y_____1">84</string> <!-- Top Line -->
-    <string id="Ylbl_PHT">87</string> <!-- Labels HR Alt Pace -->
-    <string id="Ydat_PHT">107</string> <!-- Data HR Alt Pace -->
-    <string id="Y_____2">145</string> <!-- Mid Line (thin) -->
-    <string id="Ydat_TS">145</string> <!-- Data Timer & Dist -->
-    <string id="Ylbl_TS">181</string> <!-- Labels Timer & Dist -->
-    <string id="Y_____3">205</string> <!-- Bottom Line -->
-    <string id="Ydat_BT">209</string> <!-- Data Batt & Tod -->
-    <string id="XbtmCenter">-16</string> <!-- Center Line Btm -->
-    <string id="XbtmOffsets">6</string>  <!--  Margin to Line Btm -->
-    <string id="oXtopCenter">0</string>
-    <string id="oXtopOffsets">0</string>
-    <string id="oYlbl_GF">0</string>
-    <string id="oYdat_GF">0</string>
-    <string id="oY_____1">0</string>
-    <string id="oYlbl_PHT">0</string>
-    <string id="oYdat_PHT">0</string>
-    <string id="oY_____2">0</string>
-    <string id="oYdat_TS">0</string>
-    <string id="oYlbl_TS">0</string>
-    <string id="oY_____3">0</string>
-    <string id="oYdat_BT">0</string>
-    <string id="oXbtmCenter">0</string>
-    <string id="oXbtmOffsets">0</string>
+    <!-- on this device, getFontHeight(Gfx.FONT_XTINY)         = 19 but actually pixelsTall_14.820000.  * 0.5 + padding_2.090000 = 9.500000_midpoint -->
+    <!-- on this device, getFontHeight(Gfx.FONT_LARGE)         = 37 but actually pixelsTall_28.859999.  * 0.5 + padding_4.070001 = 18.500000_midpoint -->
+    <!-- on this device, getFontHeight(Gfx.FONT_NUMBER_MEDIUM) = 68 but actually pixelsTall_53.039997.  * 0.5 + padding_7.480001 = 34.000000_midpoint -->
+
+    <!--  KEEP HIGH PRECISION:  1 pixel / 240 (screen width) = 0.004167 portion of screen  -->
+
+    <string id="oXtopCenter">-0.033333</string>  <!--   Center Line Top     ->   (pixels_-8.0)                        / w_240 = -0.033333 -->
+    <string id="oXtopOffsets">0.037500</string>  <!--  Margin to Center**   ->   (pixels_9.0)                         / w_240 = 0.037500  -->
+
+    <string id="oYlbl_GF">0.093750</string>      <!--   Labels Deg & SLD    ->   (pixels_13.0 + xt0Mid_9.5 )_22.5     / h_240 = 0.093750  -->
+    <string id="oYdat_GF">0.245833</string>      <!--    Data Deg & SLD     ->   (pixels_25.0 + md6Mid_34.0 )_59.0    / h_240 = 0.245833  -->
+
+    <string id="oY_____1">0.350000</string>      <!--       Top Line        ->   (pixels_84.0)                        / h_240 = 0.350000  -->
+    <string id="oYlbl_PHT">0.402083</string>     <!--  Labels HR Alt Pace   ->   (pixels_87.0 + xt0Mid_9.5  )_96.5    / h_240 = 0.402083  -->
+    <string id="oYdat_PHT">0.522917</string>     <!--   Data HR Alt Pace    ->   (pixels_107.0 + lg4Mid_18.5 )_125.5  / h_240 = 0.522917  -->
+
+    <string id="oY_____2">0.604167</string>      <!--   Mid Line (thin)     ->   (pixels_145.0)                       / h_240 = 0.604167  -->
+    <string id="oYdat_TS">0.681250</string>      <!--  Data Timer & Dist    ->   (pixels_145.0 + lg4Mid_18.5 )_163.5  / h_240 = 0.681250  -->
+    <string id="oYlbl_TS">0.793750</string>      <!-- Labels Timer & Dist   ->   (pixels_181.0 + xt0Mid_9.5  )_190.5  / h_240 = 0.793750  -->
+
+    <string id="oY_____3">0.854167</string>      <!--     Bottom Line       ->   (pixels_205.0)                       / h_240 = 0.854167  -->
+    <string id="oYdat_BT">0.910417</string>      <!--   Data Batt & Tod     ->   (pixels_209.0 + xt0Mid_9.5  )_218.5  / h_240 = 0.910417  -->
+
+    <string id="oXbtmCenter">-0.066667</string>  <!--    Center Line Btm    ->   (pixels_-16.0)                       / w_240 = -0.066667 -->
+    <string id="oXbtmOffsets">0.025000</string>  <!--  Margin to Ctr/Edge** ->   (pixels_6.0)                         / w_240 = 0.025000  -->
+    <!-- ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' -->
+
 </resources>
+<!-- ============================================================ 006-B3542-00  device tested: descentmk2s  -->
+

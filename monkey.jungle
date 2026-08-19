@@ -51,7 +51,7 @@ vivoactive4s.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resou
 fenix5s.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-218x218-fenix5s
 fenixchronos.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-218x218-fenix5s
 
-# round-240x240 // g2g
+# round-240x240-fenix5 // g2g
 d2charlie.resourcePath = 		    	$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-fenix5
 d2delta.resourcePath = 			    	$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-fenix5
 d2deltapx.resourcePath = 		    	$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-fenix5
@@ -82,6 +82,7 @@ fenix6s.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resource
 fenix6spro.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
 fenix7s.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
 fenix7spro.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+# note for these you have to select proper watch, otherwise it will run marq2... larger watch
 marqadventurer.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
 marqathlete.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
 marqaviator.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
@@ -118,9 +119,11 @@ fenix7xpronowifi.resourcePath = 		$(base.resourcePath);layouts/modern-layouts/re
 # round-280x280-enduro3 // g2g
 enduro3.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-280x280-enduro3
 fenix8solar51mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-280x280-enduro3
+
 # round-360x360 // g2g
 fr265s.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-360x360
 venu2s.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-360x360-venu2s
+
 
 # round-390x390 devices // g2g
 approachs50.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-390x390
