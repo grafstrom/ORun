@@ -149,7 +149,7 @@ epix2.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-
 epix2pro47mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-416x416
 # round-416x416-fenixe // g2g
 fenixe.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fenixe
-fenix843mm.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fenixe
+# fenix843mm.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fenixe
 # round-416x416-fr265 // g2g
 fr265.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fr265
 instinct3amoled50mm.resourcePath =      $(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fr265
