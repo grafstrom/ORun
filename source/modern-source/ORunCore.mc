@@ -50,6 +50,10 @@ class ORunCore {
         System.println("  user pressed Start: lap is now " + lap);
     }
 
+    function onTimerPause() {
+        System.println("  user pressed Pause: lap is now " + lap);
+    }
+
     function onTimerLap() {
         lap++;
         System.println("  user pressed Lap:   lap is now " + lap);

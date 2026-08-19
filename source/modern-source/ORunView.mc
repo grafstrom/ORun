@@ -46,8 +46,8 @@ class ORunView extends Ui.DataField {
 	var todX;
 	var battX;
 
-	const DEBUG_PRINT_RATIOS = false;
-	const DEBUG_PRINT_MIDLINES = false;
+	const DEBUG_PRINT_RATIOS = true;
+	const DEBUG_PRINT_MIDLINES = true;
 
 	// mike note: ----------------------------- after this line variables are used for core functionality, NOT DEVICE SPECIFIC
 
@@ -69,6 +69,8 @@ class ORunView extends Ui.DataField {
 	var distConv;
 	var unitConv;
 	var core;
+	var selectedDebugY = 0;
+	var debugYOffset = [0, 0, 0, 0, 0, 0, 0];
 	
 	// -------------------------------------------------------------------------------------------------------------------
 	function onLayout(dc) { 
@@ -152,8 +154,6 @@ class ORunView extends Ui.DataField {
 		oYlbl_TS = (dcHeight * Ui.loadResource(Rez.Strings.oYlbl_TS).toFloat());
 		oY_____3 = (dcHeight * Ui.loadResource(Rez.Strings.oY_____3).toFloat());
 		oYdat_BT = (dcHeight * Ui.loadResource(Rez.Strings.oYdat_BT).toFloat());
-
-
 		XtopCenter = oXtopCenter * rezWidth; //these are the pixel values, calculated from ratios in resources - kept Float to avoid precision decay on re-export
 		XtopOffsets = oXtopOffsets * rezWidth;
 		XbtmCenter = oXbtmCenter * rezWidth;
@@ -212,6 +212,7 @@ class ORunView extends Ui.DataField {
 		// debug printlns for producing ratio output for resources.xml files
 		if (DEBUG_PRINT_RATIOS) {
 			System.println("");
+			System.println("<!-- selected Y index: " + selectedDebugY + " offset pixels: " + debugYOffset[selectedDebugY] + " -->");
 			var device = Ui.loadResource(Rez.Strings.device);
 			System.println("<!-- ============================================================ " + getModelIdentifier() + " -->");
 			System.println("<!-- Device:" + device + "   (part number " + getModelIdentifier() + ")     (dcHeight:" + dc.getHeight() + " dcWidth:" + dc.getWidth() + ")   -->");
@@ -233,19 +234,19 @@ class ORunView extends Ui.DataField {
 			System.println("    <string id=\"oXtopCenter\">"  + (XtopCenter.toFloat()/rezWidth).format("%.06f")    + "</string>  <!--   Center Line Top     ->   (pixels_" + XtopCenter.toFloat().format("%.1f")                                                    + ")                        / w_"  + rezWidth + " = " + (XtopCenter.toFloat()/rezWidth).format("%.06f")  +  " -->");
 			System.println("    <string id=\"oXtopOffsets\">" + (XtopOffsets.toFloat()/rezWidth).format("%.06f")   + "</string>  <!--  Margin to Center**   ->   (pixels_" + XtopOffsets.toFloat().format("%.1f")                                                  + ")                         / w_"  + rezWidth + " = " + (XtopOffsets.toFloat()/rezWidth).format("%.06f") + "  -->");
 			System.println("");
-			System.println("    <string id=\"oYlbl_GF\">"     + (oYlbl_GF.toFloat()/dcHeight).format("%.06f")  + "</string>      <!--   Labels Deg & SLD    ->   (pixels_" + (oYlbl_GF - xt0Mid).format("%.1f") + " + xt0Mid_" + xt0Mid.format("%.1f") +  " )_" + oYlbl_GF.format("%.1f") +  "    / h_"  + dcHeight + " = " + (oYlbl_GF.toFloat()/dcHeight).format("%.06f")    + "  -->");
-			System.println("    <string id=\"oYdat_GF\">"     + (oYdat_GF.toFloat()/dcHeight).format("%.06f")  + "</string>      <!--    Data Deg & SLD     ->   (pixels_" + (oYdat_GF - md6Mid).format("%.1f") + " + md6Mid_" + md6Mid.format("%.1f") +  " )_" + oYdat_GF.format("%.1f") +   "   / h_"  + dcHeight + " = " + (oYdat_GF.toFloat()/dcHeight).format("%.06f")    + "  -->");
+			System.println("    <string id=\"oYlbl_GF\">"     + (debugAdjustedY(oYlbl_GF, 0).toFloat()/dcHeight).format("%.06f")  + "</string>      <!--   Labels Deg & SLD    ->   (pixels_" + (debugAdjustedY(oYlbl_GF, 0) - xt0Mid).format("%.1f") + " + xt0Mid_" + xt0Mid.format("%.1f") +  " )_" + debugAdjustedY(oYlbl_GF, 0).format("%.1f") +  "    / h_"  + dcHeight + " = " + (debugAdjustedY(oYlbl_GF, 0).toFloat()/dcHeight).format("%.06f")    + "  -->");
+			System.println("    <string id=\"oYdat_GF\">"     + (debugAdjustedY(oYdat_GF, 1).toFloat()/dcHeight).format("%.06f")  + "</string>      <!--    Data Deg & SLD     ->   (pixels_" + (debugAdjustedY(oYdat_GF, 1) - md6Mid).format("%.1f") + " + md6Mid_" + md6Mid.format("%.1f") +  " )_" + debugAdjustedY(oYdat_GF, 1).format("%.1f") +   "   / h_"  + dcHeight + " = " + (debugAdjustedY(oYdat_GF, 1).toFloat()/dcHeight).format("%.06f")    + "  -->");
 			System.println("");
 			System.println("    <string id=\"oY_____1\">"     + (oY_____1.toFloat()/dcHeight).format("%.06f")   + "</string>      <!--       Top Line        ->   (pixels_" + oY_____1.format("%.1f")                                                        + ")                       / h_"  + dcHeight + " = " + (oY_____1.toFloat()/dcHeight).format("%.06f")     + "  -->");
-			System.println("    <string id=\"oYlbl_PHT\">"    + (oYlbl_PHT.toFloat()/dcHeight).format("%.06f")  + "</string>     <!--  Labels HR Alt Pace   ->   (pixels_" + (oYlbl_PHT - xt0Mid).format("%.1f") + " + xt0Mid_" + xt0Mid.format("%.1f") + "  )_" + oYlbl_PHT.format("%.1f") +   " / h_"  + dcHeight + " = " + (oYlbl_PHT.toFloat()/dcHeight).format("%.06f")   + "  -->");
-			System.println("    <string id=\"oYdat_PHT\">"    + (oYdat_PHT.toFloat()/dcHeight).format("%.06f")  + "</string>     <!--   Data HR Alt Pace    ->   (pixels_" + (oYdat_PHT - lg4Mid).format("%.1f") + " + lg4Mid_" + lg4Mid.format("%.1f") +  " )_" + oYdat_PHT.format("%.1f")  + "  / h_"  + dcHeight + " = " + (oYdat_PHT.toFloat()/dcHeight).format("%.06f")   + "  -->");
+			System.println("    <string id=\"oYlbl_PHT\">"    + (debugAdjustedY(oYlbl_PHT, 2).toFloat()/dcHeight).format("%.06f")  + "</string>     <!--  Labels HR Alt Pace   ->   (pixels_" + (debugAdjustedY(oYlbl_PHT, 2) - xt0Mid).format("%.1f") + " + xt0Mid_" + xt0Mid.format("%.1f") + "  )_" + debugAdjustedY(oYlbl_PHT, 2).format("%.1f") +   " / h_"  + dcHeight + " = " + (debugAdjustedY(oYlbl_PHT, 2).toFloat()/dcHeight).format("%.06f")   + "  -->");
+			System.println("    <string id=\"oYdat_PHT\">"    + (debugAdjustedY(oYdat_PHT, 3).toFloat()/dcHeight).format("%.06f")  + "</string>     <!--   Data HR Alt Pace    ->   (pixels_" + (debugAdjustedY(oYdat_PHT, 3) - lg4Mid).format("%.1f") + " + lg4Mid_" + lg4Mid.format("%.1f") +  " )_" + debugAdjustedY(oYdat_PHT, 3).format("%.1f")  + "  / h_"  + dcHeight + " = " + (debugAdjustedY(oYdat_PHT, 3).toFloat()/dcHeight).format("%.06f")   + "  -->");
 			System.println("");
 			System.println("    <string id=\"oY_____2\">"     + (oY_____2.toFloat()/dcHeight).format("%.06f")  +  "</string>      <!--   Mid Line (thin)     ->   (pixels_" + oY_____2.format("%.1f")                                                        + ")                       / h_"  + dcHeight + " = " + (oY_____2.toFloat()/dcHeight).format("%.06f")     + "  -->");
-			System.println("    <string id=\"oYdat_TS\">"     + (oYdat_TS.toFloat()/dcHeight).format("%.06f")  + "</string>      <!--  Data Timer & Dist    ->   (pixels_" + (oYdat_TS - lg4Mid).format("%.1f") + " + lg4Mid_" + lg4Mid.format("%.1f") +    " )_" + oYdat_TS.format("%.1f")  + "  / h_"  + dcHeight + " = " + (oYdat_TS.toFloat()/dcHeight).format("%.06f")    + "  -->");
-			System.println("    <string id=\"oYlbl_TS\">"     + (oYlbl_TS.toFloat()/dcHeight).format("%.06f")  + "</string>      <!-- Labels Timer & Dist   ->   (pixels_" + (oYlbl_TS - xt0Mid).format("%.1f") + " + xt0Mid_" + xt0Mid.format("%.1f") +   "  )_" + oYlbl_TS.format("%.1f")  + " / h_"  + dcHeight + " = " + (oYlbl_TS.toFloat()/dcHeight).format("%.06f")    + "  -->");
+			System.println("    <string id=\"oYdat_TS\">"     + (debugAdjustedY(oYdat_TS, 4).toFloat()/dcHeight).format("%.06f")  + "</string>      <!--  Data Timer & Dist    ->   (pixels_" + (debugAdjustedY(oYdat_TS, 4) - lg4Mid).format("%.1f") + " + lg4Mid_" + lg4Mid.format("%.1f") +    " )_" + debugAdjustedY(oYdat_TS, 4).format("%.1f")  + "  / h_"  + dcHeight + " = " + (debugAdjustedY(oYdat_TS, 4).toFloat()/dcHeight).format("%.06f")    + "  -->");
+			System.println("    <string id=\"oYlbl_TS\">"     + (debugAdjustedY(oYlbl_TS, 5).toFloat()/dcHeight).format("%.06f")  + "</string>      <!-- Labels Timer & Dist   ->   (pixels_" + (debugAdjustedY(oYlbl_TS, 5) - xt0Mid).format("%.1f") + " + xt0Mid_" + xt0Mid.format("%.1f") +   "  )_" + debugAdjustedY(oYlbl_TS, 5).format("%.1f")  + " / h_"  + dcHeight + " = " + (debugAdjustedY(oYlbl_TS, 5).toFloat()/dcHeight).format("%.06f")    + "  -->");
 			System.println("");
 			System.println("    <string id=\"oY_____3\">"     + (oY_____3.toFloat()/dcHeight).format("%.06f")  +  "</string>      <!--     Bottom Line       ->   (pixels_" + oY_____3.format("%.1f")                                                        + ")                       / h_"  + dcHeight + " = " + (oY_____3.toFloat()/dcHeight).format("%.06f")     + "  -->");
-			System.println("    <string id=\"oYdat_BT\">"     + (oYdat_BT.toFloat()/dcHeight).format("%.06f")  + "</string>      <!--   Data Batt & Tod     ->   (pixels_" + (oYdat_BT - xt0Mid).format("%.1f") + " + xt0Mid_" + xt0Mid.format("%.1f") +  "  )_" + oYdat_BT.format("%.1f")   +  " / h_"  + dcHeight + " = " + (oYdat_BT.toFloat()/dcHeight).format("%.06f")    + "  -->");
+			System.println("    <string id=\"oYdat_BT\">"     + (debugAdjustedY(oYdat_BT, 6).toFloat()/dcHeight).format("%.06f")  + "</string>      <!--   Data Batt & Tod     ->   (pixels_" + (debugAdjustedY(oYdat_BT, 6) - xt0Mid).format("%.1f") + " + xt0Mid_" + xt0Mid.format("%.1f") +  "  )_" + debugAdjustedY(oYdat_BT, 6).format("%.1f")   +  " / h_"  + dcHeight + " = " + (debugAdjustedY(oYdat_BT, 6).toFloat()/dcHeight).format("%.06f")    + "  -->");
 			System.println("");
 			System.println("    <string id=\"oXbtmCenter\">"  + (XbtmCenter.toFloat()/rezWidth).format("%.06f")   +  "</string>  <!--    Center Line Btm    ->   (pixels_" + XbtmCenter.toFloat().format("%.1f")                                                     + ")                       / w_"  + rezWidth + " = " + (XbtmCenter.toFloat()/rezWidth).format("%.06f")  +  " -->");
 			System.println("    <string id=\"oXbtmOffsets\">" + (XbtmOffsets.toFloat()/rezWidth).format("%.06f")   + "</string>  <!--  Margin to Ctr/Edge** ->   (pixels_" + XbtmOffsets.toFloat().format("%.1f")                                                  + ")                         / w_"  + rezWidth + " = " + (XbtmOffsets.toFloat()/rezWidth).format("%.06f") + "  -->");
@@ -315,11 +316,13 @@ class ORunView extends Ui.DataField {
     // -------------------------------------------------------------------------------------------------------------------
     function onTimerStart() { // mike note: increment lap when user presses start, which is interesting to me
 		core.onTimerStart();
+		selectedDebugY = (selectedDebugY + 1) % debugYOffset.size();
         Ui.requestUpdate();
     }
     // -------------------------------------------------------------------------------------------------------------------
     function onTimerLap() { // mike note: increment lap when user presses lap
 		core.onTimerLap();
+		debugYOffset[selectedDebugY] += 1;
         Ui.requestUpdate();
     }
     // -------------------------------------------------------------------------------------------------------------------
@@ -372,6 +375,14 @@ class ORunView extends Ui.DataField {
     //! Handle the update event
     function onUpdate(dc) 
     {
+		var yBearingLabel = debugAdjustedY(slbY1, 0);
+		var yBearingData = debugAdjustedY(slbY2, 1);
+		var yMiddleLabel = debugAdjustedY(oYlbl_PHT, 2);
+		var yMiddleData = debugAdjustedY(oYdat_PHT, 3);
+		var yTimerDistanceData = debugAdjustedY(oYdat_TS, 4);
+		var yTimerDistanceLabel = debugAdjustedY(oYlbl_TS, 5);
+		var yBatteryTime = debugAdjustedY(oYdat_BT, 6);
+
         dc.setColor(Gfx.COLOR_WHITE, backcol); // this should work normally; if not check simulator "data fields -> background color -> black" if weird white areas showing up on simulator
         dc.clear(); // paint background color
         
@@ -399,14 +410,14 @@ class ORunView extends Ui.DataField {
         // ---------- ////////////////////////////////////
         
 		// mike note: top left - Deg / slb - degrees bearing (in RED medium font)
-        dcdrawText( dc, slbX1, slbY1, Gfx.FONT_XTINY, slbLabel, topAlign1 );
+		dcdrawText( dc, slbX1, yBearingLabel, Gfx.FONT_XTINY, slbLabel, topAlign1 );
         dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
-        dcdrawText( dc, slbX2, slbY2, Gfx.FONT_NUMBER_MEDIUM, getBearing(), topAlign2 );
+		dcdrawText( dc, slbX2, yBearingData, Gfx.FONT_NUMBER_MEDIUM, getBearing(), topAlign2 );
         
 		// mike note: top right - SLD straight-line distance in ft or m (in med font)
 		dc.setColor( forecol, Gfx.COLOR_TRANSPARENT );
-        dcdrawText( dc, sldX1, sldY1, Gfx.FONT_XTINY, sldLabel, topAlign3 );
-        dcdrawText( dc, sldX2, sldY2, Gfx.FONT_NUMBER_MEDIUM, getSld(), topAlign4 );
+		dcdrawText( dc, sldX1, yBearingLabel, Gfx.FONT_XTINY, sldLabel, topAlign3 );
+		dcdrawText( dc, sldX2, yBearingData, Gfx.FONT_NUMBER_MEDIUM, getSld(), topAlign4 );
         
         // ------------- ////////////////////////////////////
         // MIDDLE fields ////////////////////////////////////
@@ -415,66 +426,95 @@ class ORunView extends Ui.DataField {
 
 		// mike note: middle left - heart rate in bpm
 		var hrString = (core.heart != null ? core.heart.toString() : "");
-        dcdrawText( dc, halfMiddleWidth, oYlbl_PHT, Gfx.FONT_XTINY, hbtLabel, Gfx.TEXT_JUSTIFY_CENTER );
-        dcdrawText( dc, halfMiddleWidth, oYdat_PHT, midfont, hrString, Gfx.TEXT_JUSTIFY_CENTER );
+		dcdrawText( dc, halfMiddleWidth, yMiddleLabel, Gfx.FONT_XTINY, hbtLabel, Gfx.TEXT_JUSTIFY_CENTER );
+		dcdrawText( dc, halfMiddleWidth, yMiddleData, midfont, hrString, Gfx.TEXT_JUSTIFY_CENTER );
         
 		// mike note: middle center - altitude with unit conversion
-        dcdrawText( dc, altX, oYlbl_PHT, Gfx.FONT_XTINY, altLabel, Gfx.TEXT_JUSTIFY_CENTER );
+		dcdrawText( dc, altX, yMiddleLabel, Gfx.FONT_XTINY, altLabel, Gfx.TEXT_JUSTIFY_CENTER );
         var altNum = getAlt();
         if (altNum > 9999) { // mike note: if elevation over 9999 (10k ft or m?), use smaller font (med instead of large)
         	dcdrawText( dc, altX, 100, Gfx.FONT_MEDIUM, altNum.toString(), Gfx.TEXT_JUSTIFY_CENTER );
         }
         else {
-        	dcdrawText( dc, altX, oYdat_PHT, midfont, altNum.toString(), Gfx.TEXT_JUSTIFY_CENTER );
+			dcdrawText( dc, altX, yMiddleData, midfont, altNum.toString(), Gfx.TEXT_JUSTIFY_CENTER );
         }
         
 		// mike note: middle right - pace with unit conversion
-        dcdrawText( dc, paceX, oYlbl_PHT, Gfx.FONT_XTINY, paceLabel, Gfx.TEXT_JUSTIFY_CENTER );
-        dcdrawText( dc, paceX, oYdat_PHT, midfont, getPace(), Gfx.TEXT_JUSTIFY_CENTER ); 					
+		dcdrawText( dc, paceX, yMiddleLabel, Gfx.FONT_XTINY, paceLabel, Gfx.TEXT_JUSTIFY_CENTER );
+		dcdrawText( dc, paceX, yMiddleData, midfont, getPace(), Gfx.TEXT_JUSTIFY_CENTER );
         
         // ------- // mike note: lower half of middle fields 
         
 		// mike note: lower middle left - elapsed activity time, formatted
-        dcdrawText( dc, tidX, oYdat_TS, midfont, getTid(), Gfx.TEXT_JUSTIFY_CENTER );
-        dcdrawText( dc, tidX, oYlbl_TS, Gfx.FONT_XTINY, tmrLabel, Gfx.TEXT_JUSTIFY_CENTER );
+		dcdrawText( dc, tidX, yTimerDistanceData, midfont, getTid(), Gfx.TEXT_JUSTIFY_CENTER );
+		dcdrawText( dc, tidX, yTimerDistanceLabel, Gfx.FONT_XTINY, tmrLabel, Gfx.TEXT_JUSTIFY_CENTER );
         
 		// mike note: lower middle right - converted activity distance total (does not reset upon new lap)
-        dcdrawText( dc, distX, oYdat_TS, midfont, getDist(), Gfx.TEXT_JUSTIFY_CENTER );
-        dcdrawText( dc, distX, oYlbl_TS, Gfx.FONT_XTINY, distLabel, Gfx.TEXT_JUSTIFY_CENTER );
+		dcdrawText( dc, distX, yTimerDistanceData, midfont, getDist(), Gfx.TEXT_JUSTIFY_CENTER );
+		dcdrawText( dc, distX, yTimerDistanceLabel, Gfx.FONT_XTINY, distLabel, Gfx.TEXT_JUSTIFY_CENTER );
         
         // ------------- ////////////////////////////////////
         // Bottom fields ////////////////////////////////////
         // ------------- ////////////////////////////////////
         
 		// mike note: time of day HH:MM:SS
-		dcdrawText( dc, todX, oYdat_BT, Gfx.FONT_XTINY, getTod(), bottomAlign2); //Gfx.TEXT_JUSTIFY_LEFT );
+		dcdrawText( dc, todX, yBatteryTime, Gfx.FONT_XTINY, getTod(), bottomAlign2); //Gfx.TEXT_JUSTIFY_LEFT );
         
 		// mike note: battery percentage, writing in different color depending upon percentage
         var batt = Sys.getSystemStats().battery.toNumber();
         setBatteryColor(dc, batt);
-        dcdrawText( dc, battX, oYdat_BT, Gfx.FONT_XTINY, batt + "%", bottomAlign1); // Gfx.TEXT_JUSTIFY_RIGHT);
+		dcdrawText( dc, battX, yBatteryTime, Gfx.FONT_XTINY, batt + "%", bottomAlign1); // Gfx.TEXT_JUSTIFY_RIGHT);
 
 		if (DEBUG_PRINT_MIDLINES) {
-			drawMidLines(dc, slbY1); //oYlbl_GF); 
-			drawMidLines(dc, slbY2); //oYdat_GF);
-			drawMidLines(dc, oYlbl_PHT);
-			drawMidLines(dc, oYdat_PHT);
-			drawMidLines(dc, oYdat_TS);
-			drawMidLines(dc, oYlbl_TS);
-			drawMidLines(dc, oYdat_BT);
+			drawMidLines(dc, yBearingLabel); //oYlbl_GF);
+			drawMidLines(dc, yBearingData); //oYdat_GF);
+			drawMidLines(dc, yMiddleLabel);
+			drawMidLines(dc, yMiddleData);
+			drawMidLines(dc, yTimerDistanceData);
+			drawMidLines(dc, yTimerDistanceLabel);
+			drawMidLines(dc, yBatteryTime);
+			drawSelectedMidLine(dc, getSelectedDebugY());
 		}
 
 		// mike note: for testing memory
-		System.println(memstr());
+		//System.println(memstr());
 	}
 	// mike note: for testing memory
 	function memstr () { return ((Toybox.System.getSystemStats().freeMemory.toFloat()/Toybox.System.getSystemStats().totalMemory.toFloat()) * 100).toNumber() + "% available"; } 
+	// -------------------------------------------------------------------------------------------------------------------
+	function debugAdjustedY(y, index) {
+		return y + debugYOffset[index];
+	}
 	// -------------------------------------------------------------------------------------------------------------------
 	function drawMidLines(dc, y) {
 		dc.setColor( Gfx.COLOR_GREEN, Gfx.COLOR_TRANSPARENT );
 	    dc.setPenWidth(1); 
 		dc.drawLine( 0, y, dc.getWidth(), y );
 		dc.setColor( Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT );
+	}
+	// -------------------------------------------------------------------------------------------------------------------
+	function getSelectedDebugY() {
+		if (selectedDebugY == 0) {
+			return debugAdjustedY(slbY1, 0);
+		} else if (selectedDebugY == 1) {
+			return debugAdjustedY(slbY2, 1);
+		} else if (selectedDebugY == 2) {
+			return debugAdjustedY(oYlbl_PHT, 2);
+		} else if (selectedDebugY == 3) {
+			return debugAdjustedY(oYdat_PHT, 3);
+		} else if (selectedDebugY == 4) {
+			return debugAdjustedY(oYdat_TS, 4);
+		} else if (selectedDebugY == 5) {
+			return debugAdjustedY(oYlbl_TS, 5);
+		}
+		return debugAdjustedY(oYdat_BT, 6);
+	}
+	// -------------------------------------------------------------------------------------------------------------------
+	function drawSelectedMidLine(dc, y) {
+		dc.setColor(Gfx.COLOR_YELLOW, Gfx.COLOR_TRANSPARENT);
+		dc.setPenWidth(2);
+		dc.drawLine(0, y, dc.getWidth(), y);
+		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
 	}
 	// -------------------------------------------------------------------------------------------------------------------
     function dcdrawText(dc, x, y, font, text, justification){

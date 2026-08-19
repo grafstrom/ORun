@@ -1,6 +1,8 @@
 <!-- ============================================================ 006-B2909-00 -->
 <!-- Device:rectangle-230x303   (part number 006-B2909-00)     (dcHeight:303 dcWidth:230)   -->
 <!-- Tested On:
+// recommend only one field
+
 edge130.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-230x303
 edge130plus.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-230x303
 

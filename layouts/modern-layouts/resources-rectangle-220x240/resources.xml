@@ -1,6 +1,7 @@
 <!-- ============================================================ 006-B3600-00 -->
 <!-- Device:rectangle-220x240   (part number 006-B3600-00)     (dcHeight:240 dcWidth:220)   -->
 <!-- Tested On:
+// recommend one field only
 venusq.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-220x240
 venusqm.resourcePath =                  $(base.resourcePath);layouts/modern-layouts/resources-rectangle-220x240
 
