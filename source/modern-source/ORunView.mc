@@ -8,6 +8,8 @@ using Toybox.Graphics as Gfx;
 class ORunView extends Ui.DataField {
 
 	var oY_____1;
+	var oYlbl_GF;
+	var oYdat_GF;
 	var oYlbl_PHT;
 	var oYdat_PHT;
 	var oY_____2;
@@ -15,6 +17,7 @@ class ORunView extends Ui.DataField {
 	var oYlbl_TS;
 	var oY_____3;
 	var oYdat_BT;
+	var tooSmall = false; // rectangle-only: true when the dynamic layout can't fit without overlap
 	var xt0Mid;
 	var lg4Mid;
 	var md6Mid;
@@ -50,6 +53,7 @@ class ORunView extends Ui.DataField {
 	const DEBUG_PRINT_MIDLINES = true;
 	const DEBUG_PRINT_ONLY_SELECTED_MIDLINE = true;
 	const DEBUG_PRINT_TEXTBOXES = true;
+	const LAYOUT_MIN_GAP = 1.0; // rectangle dynamic layout: minimum pixel clearance between any two elements
 	// mike note: ----------------------------- after this line variables are used for core functionality, NOT DEVICE SPECIFIC
 
 	// mike note: other view variables - colors
@@ -81,8 +85,6 @@ class ORunView extends Ui.DataField {
 		var XbtmOffsets;
 		var oXtopCenter;
 		var oXtopOffsets;
-		var oYlbl_GF;
-		var oYdat_GF;
 		var oXbtmCenter;
 		var oXbtmOffsets;
 
@@ -145,16 +147,23 @@ class ORunView extends Ui.DataField {
 		oXtopOffsets = Ui.loadResource(Rez.Strings.oXtopOffsets).toFloat();
 		oXbtmCenter = Ui.loadResource(Rez.Strings.oXbtmCenter).toFloat();
 		oXbtmOffsets = Ui.loadResource(Rez.Strings.oXbtmOffsets).toFloat();
-		oYlbl_GF = (dcHeight * Ui.loadResource(Rez.Strings.oYlbl_GF).toFloat());
-		oYdat_GF = (dcHeight * Ui.loadResource(Rez.Strings.oYdat_GF).toFloat());
-		oY_____1 = (dcHeight * Ui.loadResource(Rez.Strings.oY_____1).toFloat());
-		oYlbl_PHT = (dcHeight * Ui.loadResource(Rez.Strings.oYlbl_PHT).toFloat());
-		oYdat_PHT = (dcHeight * Ui.loadResource(Rez.Strings.oYdat_PHT).toFloat());
-		oY_____2 = (dcHeight * Ui.loadResource(Rez.Strings.oY_____2).toFloat());
-		oYdat_TS = (dcHeight * Ui.loadResource(Rez.Strings.oYdat_TS).toFloat());
-		oYlbl_TS = (dcHeight * Ui.loadResource(Rez.Strings.oYlbl_TS).toFloat());
-		oY_____3 = (dcHeight * Ui.loadResource(Rez.Strings.oY_____3).toFloat());
-		oYdat_BT = (dcHeight * Ui.loadResource(Rez.Strings.oYdat_BT).toFloat());
+		oY_____1 = (dcHeight * Ui.loadResource(Rez.Strings.oY_____1).toFloat()); // manual anchor per device; never computed
+
+		if (shape == System.SCREEN_SHAPE_RECTANGLE) {
+			computeDynamicVerticalLayout(dcHeight, xt0Acc, lg4Acc, md6Acc);
+		} else {
+			tooSmall = false;
+			oYlbl_GF = (dcHeight * Ui.loadResource(Rez.Strings.oYlbl_GF).toFloat());
+			oYdat_GF = (dcHeight * Ui.loadResource(Rez.Strings.oYdat_GF).toFloat());
+			oYlbl_PHT = (dcHeight * Ui.loadResource(Rez.Strings.oYlbl_PHT).toFloat());
+			oYdat_PHT = (dcHeight * Ui.loadResource(Rez.Strings.oYdat_PHT).toFloat());
+			oY_____2 = (dcHeight * Ui.loadResource(Rez.Strings.oY_____2).toFloat());
+			oYdat_TS = (dcHeight * Ui.loadResource(Rez.Strings.oYdat_TS).toFloat());
+			oYlbl_TS = (dcHeight * Ui.loadResource(Rez.Strings.oYlbl_TS).toFloat());
+			oY_____3 = (dcHeight * Ui.loadResource(Rez.Strings.oY_____3).toFloat());
+			oYdat_BT = (dcHeight * Ui.loadResource(Rez.Strings.oYdat_BT).toFloat());
+		}
+
 		XtopCenter = oXtopCenter * rezWidth; //these are the pixel values, calculated from ratios in resources - kept Float to avoid precision decay on re-export
 		XtopOffsets = oXtopOffsets * rezWidth;
 		XbtmCenter = oXbtmCenter * rezWidth;
@@ -258,6 +267,57 @@ class ORunView extends Ui.DataField {
 			System.println(getModelIdentifier() + "  device tested: XXXXXX  -->");
 		}
     }
+	// -------------------------------------------------------------------------------------------------------------------
+	// Rectangle-only: Row A (slb/sld) is anchored bottom-up against the manual oY_____1 divider;
+	// Rows B/C/D + divider2/divider3 equally split whatever vertical space remains beneath it.
+	function computeDynamicVerticalLayout(dcHeight, xt0Acc, lg4Acc, md6Acc) {
+		tooSmall = false;
+
+		// Row A: 3 elastic gaps (top margin, label-to-data, data-to-divider1) share the space above oY_____1
+		var minContentTop = xt0Acc + md6Acc;
+		var leftoverTop = oY_____1 - minContentTop - (3 * LAYOUT_MIN_GAP);
+		if (leftoverTop < 0) {
+			tooSmall = true;
+			leftoverTop = 0; // clamp so positions stay well-defined; "too small" message takes over onUpdate
+		}
+		var gapTop = LAYOUT_MIN_GAP + (leftoverTop / 3.0);
+
+		var cursorTop = gapTop;
+		oYlbl_GF = cursorTop + (xt0Acc / 2.0);
+		cursorTop += xt0Acc;
+		cursorTop += gapTop;
+		oYdat_GF = cursorTop + (md6Acc / 2.0);
+
+		// Rows B/C/D + divider2/divider3: 8 elastic gaps share whatever space is left
+		var minContent = (3 * xt0Acc) + (2 * lg4Acc);
+		var availableLower = dcHeight - oY_____1;
+		var leftover = availableLower - minContent - (8 * LAYOUT_MIN_GAP);
+		if (leftover < 0) {
+			tooSmall = true;
+			leftover = 0; // clamp so positions stay well-defined; "too small" message takes over onUpdate
+		}
+		var gap = LAYOUT_MIN_GAP + (leftover / 8.0);
+
+		var cursor = oY_____1;
+		cursor += gap;
+		oYlbl_PHT = cursor + (xt0Acc / 2.0);
+		cursor += xt0Acc;
+		cursor += gap;
+		oYdat_PHT = cursor + (lg4Acc / 2.0);
+		cursor += lg4Acc;
+		cursor += gap;
+		oY_____2 = cursor;
+		cursor += gap;
+		oYdat_TS = cursor + (lg4Acc / 2.0);
+		cursor += lg4Acc;
+		cursor += gap;
+		oYlbl_TS = cursor + (xt0Acc / 2.0);
+		cursor += xt0Acc;
+		cursor += gap;
+		oY_____3 = cursor;
+		cursor += gap;
+		oYdat_BT = cursor + (xt0Acc / 2.0);
+	}
 	// -------------------------------------------------------------------------------------------------------------------
 	function getModelIdentifier() {
 		var settings = System.getDeviceSettings();
@@ -376,6 +436,14 @@ class ORunView extends Ui.DataField {
     //! Handle the update event
     function onUpdate(dc) 
     {
+		if (tooSmall) {
+			dc.setColor(Gfx.COLOR_WHITE, backcol);
+			dc.clear();
+			dc.setColor(forecol, Gfx.COLOR_TRANSPARENT);
+			dc.drawText(dc.getWidth() / 2, (dc.getHeight() - dc.getFontHeight(Gfx.FONT_XTINY)) / 2, Gfx.FONT_XTINY, "layout too small", Gfx.TEXT_JUSTIFY_CENTER);
+			return;
+		}
+
 		var yBearingLabel = debugAdjustedY(slbY1, 0);
 		var yBearingData = debugAdjustedY(slbY2, 1);
 		var yMiddleLabel = debugAdjustedY(oYlbl_PHT, 2);
