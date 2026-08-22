@@ -149,7 +149,8 @@ epix2.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-
 epix2pro47mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-416x416
 # round-416x416-fenixe // g2g
 fenixe.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fenixe
-# fenix843mm.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fenixe
+        # the fenix843mm might not be a real device, it existed in previous SDK but not anymore?
+        # fenix843mm.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fenixe
 # round-416x416-fr265 // g2g
 fr265.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fr265
 instinct3amoled50mm.resourcePath =      $(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fr265
@@ -227,7 +228,7 @@ edge840.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resou
 edge1030.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-282x470
 edge1030bontrager.resourcePath = 		$(base.resourcePath);layouts/modern-layouts/resources-rectangle-282x470
 edge1030plus.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-rectangle-282x470
-edge1040.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-282x470-1040
+edge1040.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-282x470_edge1040
 
 venusq2.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-rectangle-320x360
 venusq2m.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-320x360

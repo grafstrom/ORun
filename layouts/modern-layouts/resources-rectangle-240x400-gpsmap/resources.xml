@@ -4,6 +4,8 @@
 <!-- Tested On: 
 
 STILL NEED TO TEST THESE METRICS FOR 1X AND 2X LAYOUT OPTIONS - NOT G2G YET
+gpsmap seems to BEST support a 3-field format for this app...
+238 wide by 122 tall
 
 gpsmap66.resourcePath = 				$(base.resourcePath);devices/resources-rectangle-240x400_gpsmap
 gpsmap67.resourcePath = 				$(base.resourcePath);devices/resources-rectangle-240x400_gpsmap

@@ -3,8 +3,6 @@
 <!-- Device:rectangle-282x470   (part number 006-B2713-00)     (dcHeight:470 dcWidth:282)   -->
 <!-- Tested On:
 
-STILL NEED TO TEST THESE METRICS FOR 1X AND 2X LAYOUT OPTIONS - NOT G2G YET
-
 edge1040.resourcePath = 				$(base.resourcePath);modern-layouts/resources-rectangle-282x470_1040
 
 -->

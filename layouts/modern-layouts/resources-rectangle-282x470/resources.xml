@@ -3,8 +3,6 @@
 <!-- Device:rectangle-282x470   (part number 006-B2713-00)     (dcHeight:470 dcWidth:282)   -->
 <!-- Tested On:
 
-STILL NEED TO TEST THESE METRICS FOR 1X AND 2X LAYOUT OPTIONS - NOT G2G YET
-
 edge1030.resourcePath = 				$(base.resourcePath);modern-layouts/resources-rectangle-282x470
 edge1030bontrager.resourcePath = 		$(base.resourcePath);modern-layouts/resources-rectangle-282x470
 edge1030plus.resourcePath = 			$(base.resourcePath);modern-layouts/resources-rectangle-282x470
@@ -26,15 +24,15 @@ edge1030plus.resourcePath = 			$(base.resourcePath);modern-layouts/resources-rec
     <string id="oXtopOffsets">0.054167</string>  <!--  Margin to Center**   ->   (pixels_15.3)                         / w_282 = 0.054167  -->
 
     <string id="oYlbl_GF">0.063750</string>      <!--   Labels Deg & SLD    ->   (pixels_22.0 + xt0Mid_8.0 )_30.0    / h_470 = 0.063750  -->
-    <string id="oYdat_GF">0.162500</string>      <!--    Data Deg & SLD     ->   (pixels_51.9 + md6Mid_24.5 )_76.4   / h_470 = 0.162500  -->
+    <string id="oYdat_GF">0.185904</string>      <!--    Data Deg & SLD     ->   (pixels_62.9 + md6Mid_24.5 )_87.4   / h_470 = 0.185904  -->
 
     <string id="oY_____1">0.300000</string>      <!--       Top Line        ->   (pixels_141.0)                       / h_470 = 0.300000  -->
     <string id="oYlbl_PHT">0.363750</string>     <!--  Labels HR Alt Pace   ->   (pixels_163.0 + xt0Mid_8.0  )_171.0 / h_470 = 0.363750  -->
-    <string id="oYdat_PHT">0.443750</string>     <!--   Data HR Alt Pace    ->   (pixels_184.6 + lg4Mid_24.0 )_208.6  / h_470 = 0.443750  -->
+    <string id="oYdat_PHT">0.484176</string>     <!--   Data HR Alt Pace    ->   (pixels_203.6 + lg4Mid_24.0 )_227.6  / h_470 = 0.484176  -->
 
     <string id="oY_____2">0.600000</string>      <!--   Mid Line (thin)     ->   (pixels_282.0)                       / h_470 = 0.600000  -->
-    <string id="oYdat_TS">0.663750</string>      <!--  Data Timer & Dist    ->   (pixels_288.0 + lg4Mid_24.0 )_312.0  / h_470 = 0.663750  -->
-    <string id="oYlbl_TS">0.833750</string>      <!-- Labels Timer & Dist   ->   (pixels_383.9 + xt0Mid_8.0  )_391.9 / h_470 = 0.833750  -->
+    <string id="oYdat_TS">0.704175</string>      <!--  Data Timer & Dist    ->   (pixels_307.0 + lg4Mid_24.0 )_331.0  / h_470 = 0.704175  -->
+    <string id="oYlbl_TS">0.840133</string>      <!-- Labels Timer & Dist   ->   (pixels_386.9 + xt0Mid_8.0  )_394.9 / h_470 = 0.840133  -->
 
     <string id="oY_____3">0.890000</string>      <!--     Bottom Line       ->   (pixels_418.3)                       / h_470 = 0.890000  -->
     <string id="oYdat_BT">0.948750</string>      <!--   Data Batt & Tod     ->   (pixels_437.9 + xt0Mid_8.0  )_445.9 / h_470 = 0.948750  -->

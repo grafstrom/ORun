@@ -48,7 +48,8 @@ class ORunView extends Ui.DataField {
 
 	const DEBUG_PRINT_RATIOS = true;
 	const DEBUG_PRINT_MIDLINES = true;
-
+	const DEBUG_PRINT_ONLY_SELECTED_MIDLINE = true;
+	const DEBUG_PRINT_TEXTBOXES = true;
 	// mike note: ----------------------------- after this line variables are used for core functionality, NOT DEVICE SPECIFIC
 
 	// mike note: other view variables - colors
@@ -466,16 +467,19 @@ class ORunView extends Ui.DataField {
 		dcdrawText( dc, battX, yBatteryTime, Gfx.FONT_XTINY, batt + "%", bottomAlign1); // Gfx.TEXT_JUSTIFY_RIGHT);
 
 		if (DEBUG_PRINT_MIDLINES) {
-			drawMidLines(dc, yBearingLabel); //oYlbl_GF);
-			drawMidLines(dc, yBearingData); //oYdat_GF);
-			drawMidLines(dc, yMiddleLabel);
-			drawMidLines(dc, yMiddleData);
-			drawMidLines(dc, yTimerDistanceData);
-			drawMidLines(dc, yTimerDistanceLabel);
-			drawMidLines(dc, yBatteryTime);
-			drawSelectedMidLine(dc, getSelectedDebugY());
-		}
-
+			if (DEBUG_PRINT_ONLY_SELECTED_MIDLINE) {
+				drawSelectedMidLine(dc, getSelectedDebugY());
+			} else {
+				drawMidLines(dc, yBearingLabel); //oYlbl_GF);
+				drawMidLines(dc, yBearingData); //oYdat_GF);
+				drawMidLines(dc, yMiddleLabel);
+				drawMidLines(dc, yMiddleData);
+				drawMidLines(dc, yTimerDistanceData);
+				drawMidLines(dc, yTimerDistanceLabel);
+				drawMidLines(dc, yBatteryTime);
+				drawSelectedMidLine(dc, getSelectedDebugY());
+			}
+		} 
 		// mike note: for testing memory
 		//System.println(memstr());
 	}
@@ -520,19 +524,19 @@ class ORunView extends Ui.DataField {
     function dcdrawText(dc, x, y, font, text, justification){
 		
 		// attempt to undo mid for each text location... 
-		var undoMid = 0;
+		var yT = 0; // undo MID by subtracting it; use yT throughout the rest of this function
 		if (font == Gfx.FONT_XTINY) {
-			undoMid = xt0Mid;
+			yT = y - xt0Mid;
 		} else if (font == Gfx.FONT_LARGE) {
-			undoMid = lg4Mid;
+			yT = y - lg4Mid;
 		} else if (font == Gfx.FONT_NUMBER_MEDIUM) {
-			undoMid = md6Mid;
+			yT = y - md6Mid;
 		}
 		
 		// print text
-		dc.drawText(x, y - undoMid, font, text, justification);
+		dc.drawText(x, yT, font, text, justification);
 
-		if ( false ) { // if true, shows text outlines in yellow for debug purposes
+		if ( DEBUG_PRINT_TEXTBOXES ) { // if true, shows text outlines in yellow for debug purposes
 
 			// change to highlight red for justification
 			dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
@@ -542,13 +546,13 @@ class ORunView extends Ui.DataField {
     		var size = dc.getTextDimensions(text, font);
 			var justifiedX = x;
 			if (justification == Gfx.TEXT_JUSTIFY_LEFT) {
-				dc.drawLine( x, y, x, y + size[1] );
+				dc.drawLine( x, yT, x, yT + size[1] );
 			} else if (justification == Gfx.TEXT_JUSTIFY_CENTER) {
 				justifiedX = x - (size[0]/2);
-				dc.drawLine( x, y, x, y + size[1] );
+				dc.drawLine( x, yT, x, yT + size[1] );
 			} else if (justification == Gfx.TEXT_JUSTIFY_RIGHT) {
 				justifiedX = x - size[0];
-				dc.drawLine( x, y, x, y + size[1] );
+				dc.drawLine( x, yT, x, yT + size[1] );
 			}
 
 			// change to highlight color, yellow
@@ -570,11 +574,11 @@ class ORunView extends Ui.DataField {
 				accurateHeight = (ascent + descent) * 0.78; 		
 			}
 
-			// 3. calculate the Y-position correction. We subtract the accurate height 
+			// 3. calculate the yT-position correction. We subtract the accurate height 
 			// from the raw block height to find the leftover padding space. Splitting 
 			// this remainder by 2 centers the bounding box vertically over the glyphs.
 			var totalPadding = rawHeight - accurateHeight;
-			var visualY = y + (totalPadding / 2);
+			var visualY = yT + (totalPadding / 2);
 
 			// 4. use 'justifiedX' and 'rawWidth' for horizontal data, and the adjusted 'visualY' and 'accurateHeight' for vertical data.
 			dc.drawRectangle(justifiedX, visualY, rawWidth, accurateHeight);

@@ -3,8 +3,6 @@
 <!-- Device:rectangle-246x322   (part number 006-B3121-00)     (dcHeight:322 dcWidth:246)   -->
 <!-- Tested On:
 
-STILL NEED TO TEST THESE METRICS FOR 1X AND 2X LAYOUT OPTIONS - NOT G2G YET
-
 edge530.resourcePath = 				    $(base.resourcePath);devices/resources-rectangle-246x322
 edge830.resourcePath = 				    $(base.resourcePath);devices/resources-rectangle-246x322
 

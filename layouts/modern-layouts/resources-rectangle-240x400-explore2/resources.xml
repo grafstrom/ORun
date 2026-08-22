@@ -1,12 +1,11 @@
+<!-- ============================================================ 006-B4169-00  device tested: XXXXXX  -->
 
+<!-- selected Y index: 4 offset pixels: 19 -->
 <!-- ============================================================ 006-B4169-00 -->
 <!-- Device:rectangle-240x400-explore2   (part number 006-B4169-00)     (dcHeight:400 dcWidth:240)   -->
-<!-- Tested On:
-
-STILL NEED TO TEST THESE METRICS FOR 1X AND 2X LAYOUT OPTIONS - NOT G2G YET
-
-
+<!-- Tested On: 
 edgeexplore2.resourcePath = 			$(base.resourcePath);devices/resources-rectangle-240x400_explore2
+
 
 -->
 <resources>
@@ -25,14 +24,14 @@ edgeexplore2.resourcePath = 			$(base.resourcePath);devices/resources-rectangle-
     <string id="oXtopOffsets">0.054167</string>  <!--  Margin to Center**   ->   (pixels_13.0)                         / w_240 = 0.054167  -->
 
     <string id="oYlbl_GF">0.063750</string>      <!--   Labels Deg & SLD    ->   (pixels_19.5 + xt0Mid_6.0 )_25.5    / h_400 = 0.063750  -->
-    <string id="oYdat_GF">0.162500</string>      <!--    Data Deg & SLD     ->   (pixels_41.0 + md6Mid_24.0 )_65.0   / h_400 = 0.162500  -->
+    <string id="oYdat_GF">0.172500</string>      <!--    Data Deg & SLD     ->   (pixels_45.0 + md6Mid_24.0 )_69.0   / h_400 = 0.172500  -->
 
     <string id="oY_____1">0.300000</string>      <!--       Top Line        ->   (pixels_120.0)                       / h_400 = 0.300000  -->
     <string id="oYlbl_PHT">0.363750</string>     <!--  Labels HR Alt Pace   ->   (pixels_139.5 + xt0Mid_6.0  )_145.5 / h_400 = 0.363750  -->
-    <string id="oYdat_PHT">0.443750</string>     <!--   Data HR Alt Pace    ->   (pixels_159.5 + lg4Mid_18.0 )_177.5  / h_400 = 0.443750  -->
+    <string id="oYdat_PHT">0.476250</string>     <!--   Data HR Alt Pace    ->   (pixels_172.5 + lg4Mid_18.0 )_190.5  / h_400 = 0.476250  -->
 
     <string id="oY_____2">0.600000</string>      <!--   Mid Line (thin)     ->   (pixels_240.0)                       / h_400 = 0.600000  -->
-    <string id="oYdat_TS">0.663750</string>      <!--  Data Timer & Dist    ->   (pixels_247.5 + lg4Mid_18.0 )_265.5  / h_400 = 0.663750  -->
+    <string id="oYdat_TS">0.711250</string>      <!--  Data Timer & Dist    ->   (pixels_266.5 + lg4Mid_18.0 )_284.5  / h_400 = 0.711250  -->
     <string id="oYlbl_TS">0.833750</string>      <!-- Labels Timer & Dist   ->   (pixels_327.5 + xt0Mid_6.0  )_333.5 / h_400 = 0.833750  -->
 
     <string id="oY_____3">0.890000</string>      <!--     Bottom Line       ->   (pixels_356.0)                       / h_400 = 0.890000  -->
@@ -43,4 +42,4 @@ edgeexplore2.resourcePath = 			$(base.resourcePath);devices/resources-rectangle-
     <!-- ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' -->
 
 </resources>
-<!-- ============================================================ 006-B4169-00  device tested: edgeexplore2  -->
+<!-- ============================================================ 006-B4169-00  device tested: XXXXXX  -->
