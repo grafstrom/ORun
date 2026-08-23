@@ -149,8 +149,8 @@ epix2.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-
 epix2pro47mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-416x416
 # round-416x416-fenixe // g2g
 fenixe.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fenixe
-        # the fenix843mm might not be a real device, it existed in previous SDK but not anymore?
-        # fenix843mm.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fenixe
+# the fenix843mm might not be a real device, it existed in previous SDK but not anymore?
+# fenix843mm.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fenixe
 # round-416x416-fr265 // g2g
 fr265.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fr265
 instinct3amoled50mm.resourcePath =      $(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fr265
@@ -192,18 +192,15 @@ fenix847mm.resourcePath =			    $(base.resourcePath);layouts/modern-layouts/reso
 # semioctagon-176x176 
 descentg1.resourcePath =                $(base.resourcePath);layouts/modern-layouts/resources-semioctagon-176x176
 # semioctagon-163x156
-instinct2s.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-semi-octagon-163x156
+instinct2s.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-semioctagon-163x156
 # semioctagon-166x166 
-instincte40mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-semi-octagon-166x166
+instincte40mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-semioctagon-166x166
 
 
 
 # rectangle-200x265
 edge520plus.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-200x265
 edge820.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-200x265
-
-## ===================== here
-
 
 edge130.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-230x303
 edge130plus.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-230x303
@@ -222,8 +219,8 @@ gpsmap86.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resource
 
 edge530.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-246x322
 edge830.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-246x322
-edge540.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-246x322_540
-edge840.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-246x322_540
+edge540.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-246x322-edge540
+edge840.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-246x322-edge540
 
 edge1030.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-282x470
 edge1030bontrager.resourcePath = 		$(base.resourcePath);layouts/modern-layouts/resources-rectangle-282x470

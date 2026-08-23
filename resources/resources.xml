@@ -11,4 +11,23 @@
     <string id="dist">Dist</string>
     <string id="hbt">HR</string>
     <string id="alt">Alt</string>
+
+    <!-- per-device override: positive pixels move FONT_XTINY text and debug box up; negative pixels move them down -->
+    <string id="xt0MidShift">0</string>
+    <!-- per-device override: positive display-height ratios move FONT_LARGE text and debug box up; negative ratios move them down -->
+    <string id="lg4MidShiftRatio">0</string>
+    <!-- per-device override: dead-space pixels above/below the digits within FONT_NUMBER_MEDIUM's ascent box -->
+    <string id="md6PadTop">0</string>
+    <string id="md6PadBot">0</string>
+    <!-- per-device override: positive pixels move FONT_NUMBER_MEDIUM text and debug box up; negative pixels move them down -->
+    <string id="md6MidShift">0</string>
+
+    <!-- rectangle-only edge inset for top labels and bottom values, as a portion of display width -->
+    <string id="horizontalEdgeInset">0.04</string>
+
+    <!-- per device override to ignore lower section, for gpsmap66.. 0 is inactive, 1 is active-->
+    <string id="lowercompressionok">0</string>
+
+    <!-- per-device override: black and white (1) vs multi-color (0) -->
+    <string id="notMonochrome">1</string>
 </resources>

@@ -49,17 +49,17 @@ class ORunView extends Ui.DataField {
 	var todX;
 	var battX;
 
-	const DEBUG_PRINT_RATIOS = true;
-	const DEBUG_PRINT_MIDLINES = true;
-	const DEBUG_PRINT_ONLY_SELECTED_MIDLINE = true;
-	const DEBUG_PRINT_TEXTBOXES = true;
-	const LAYOUT_MIN_GAP = 1.0; // rectangle dynamic layout: minimum pixel clearance between any two elements
+	const DEBUG_PRINT_RATIOS = false;
+	const DEBUG_PRINT_MIDLINES = false;
+	const DEBUG_PRINT_ONLY_SELECTED_MIDLINE = false;
+	const LAYOUT_MIN_GAP = 0.0; // rectangle dynamic layout: minimum pixel clearance between any two elements
 	// mike note: ----------------------------- after this line variables are used for core functionality, NOT DEVICE SPECIFIC
 
 	// mike note: other view variables - colors
 	var backcol;
 	var forecol;
 	var linecol;
+	var notMonochrome;
 
 	// mike note: label text for drawtexts..
 	var distLabel;
@@ -74,6 +74,8 @@ class ORunView extends Ui.DataField {
 	var distConv;
 	var unitConv;
 	var core;
+	var debugPrintTextboxes = false;
+	var timerLapCount = 0;
 	var selectedDebugY = 0;
 	var debugYOffset = [0, 0, 0, 0, 0, 0, 0];
 	
@@ -87,6 +89,7 @@ class ORunView extends Ui.DataField {
 		var oXtopOffsets;
 		var oXbtmCenter;
 		var oXbtmOffsets;
+		// var landscape;
 
 		//Sys.println("-----------------------------onLayout called - poss change in LAYOUTs-------- dcWidth: " + dc.getWidth() + "    dcHeight: " + dc.getHeight());
 		// testing eventual responsive design for rectangle watches
@@ -102,20 +105,29 @@ class ORunView extends Ui.DataField {
 		var dcHeight = dc.getHeight();
 
 		// handle width
-		//var dcWidth = dc.getWidth(); // mike note: I changed this back to rezWidth, which
+		var dcWidth = dc.getWidth(); // mike note: I changed this back to rezWidth, which
 									 // means it's important to ensure that resources.xml 
 									 // have the correct width in it at the top! 
+		System.println("<!-- (dcHeight:" + dc.getHeight() + " dcWidth:" + dc.getWidth() + ")   -->");
+
 		rezWidth = Ui.loadResource(Rez.Strings.width).toNumber(); //easier to use dc.getWidth(), but easier to debug/maintain if we load from resource file
 	    if (rezWidth != dc.getWidth()) {
 			Sys.println("ERROR: dc.getWidth() does not match Ui.loadResource(Rez.Strings.width).toNumber()");
 		}
-
+		if (shape == System.SCREEN_SHAPE_RECTANGLE) {
+			rezWidth = dcWidth;
+		}		
 
 		// accurateHeight computed live (ascent+descent heuristic), no per-profile resource needed
 		var xt0Acc = Gfx.getFontAscent(Gfx.FONT_XTINY).toFloat();
 		if (Gfx.getFontDescent(Gfx.FONT_XTINY) != 0) {
 			xt0Acc = (Gfx.getFontAscent(Gfx.FONT_XTINY).toFloat() + Gfx.getFontDescent(Gfx.FONT_XTINY).toFloat()) * 0.78;
 		}
+		var md3Acc = Gfx.getFontAscent(Gfx.FONT_MEDIUM).toFloat();
+		if (Gfx.getFontDescent(Gfx.FONT_MEDIUM) != 0) {
+			md3Acc = (Gfx.getFontAscent(Gfx.FONT_MEDIUM).toFloat() + Gfx.getFontDescent(Gfx.FONT_MEDIUM).toFloat()) * 0.78;
+		}
+		
 		var lg4Acc = Gfx.getFontAscent(Gfx.FONT_LARGE).toFloat();
 		if (Gfx.getFontDescent(Gfx.FONT_LARGE) != 0) {
 			lg4Acc = (Gfx.getFontAscent(Gfx.FONT_LARGE).toFloat() + Gfx.getFontDescent(Gfx.FONT_LARGE).toFloat()) * 0.78;
@@ -128,31 +140,40 @@ class ORunView extends Ui.DataField {
 		// 3. Find where the visual top of the numbers actually starts inside the raw block
 		//var TopPadding = (getFontHeight - accurateHeight) / 2;
 		var xt0TopPadding = (dc.getFontHeight(Gfx.FONT_XTINY).toFloat() - xt0Acc) / 2.0; // 
+		var md3TopPadding = (dc.getFontHeight(Gfx.FONT_MEDIUM).toFloat() - md3Acc) / 2.0; // 
 		var lg4TopPadding = (dc.getFontHeight(Gfx.FONT_LARGE).toFloat() - lg4Acc) / 2.0; // 
 		var md6TopPadding = (dc.getFontHeight(Gfx.FONT_NUMBER_MEDIUM).toFloat() - md6Acc) / 2.0; // 
-		//System.println("   TopPaddings are xt0TopPadding_" + xt0TopPadding.format("%.1f") + ", lg4TopPadding_" + lg4TopPadding.format("%.1f") + ", md6TopPadding_" + md6TopPadding.format("%.1f"));
+		System.println("   TopPaddings are xt0TopPadding_" + xt0TopPadding.format("%.1f") + ", md3TopPadding_" + md3TopPadding.format("%.1f") + ", lg4TopPadding_" + lg4TopPadding.format("%.1f") + ", md6TopPadding_" + md6TopPadding.format("%.1f"));
 
-		xt0Mid = xt0TopPadding + xt0Acc/2; // 
-		lg4Mid = lg4TopPadding + lg4Acc/2; // 
-		md6Mid = md6TopPadding + md6Acc/2; // 
-		//System.println("   Mids are xt0Mid_" + xt0Mid.format("%.1f") + ", lg4Mid_" + lg4Mid.format("%.1f") + ", md6Mid_" + md6Mid.format("%.1f") + " // add to get center line for each: ");
+		// BELOW OVERRIDES FOR SPECIFIC DEVICES..............
+					// Positive per-device values move XTINY text and its debug box up; negative values move them down.
+					var xt0MidShift = Ui.loadResource(Rez.Strings.xt0MidShift).toFloat();
+					xt0Mid = xt0TopPadding + xt0Acc/2 + xt0MidShift; // 
+					// Positive per-device ratios move LARGE text and its debug box up; negative ratios move them down.
+					var lg4MidShift = Ui.loadResource(Rez.Strings.lg4MidShiftRatio).toFloat() * dcHeight;
+					lg4Mid = lg4TopPadding + lg4Acc/2 + lg4MidShift; // 
+					// Positive per-device values move NUMBER_MEDIUM text and its debug box up; negative values move them down.
+					var md6MidShift = Ui.loadResource(Rez.Strings.md6MidShift).toFloat();
+					md6Mid = md6TopPadding + md6Acc/2 + md6MidShift; // 
+					//System.println("   Mids are xt0Mid_" + xt0Mid.format("%.1f") + ", lg4Mid_" + lg4Mid.format("%.1f") + ", md6Mid_" + md6Mid.format("%.1f") + " // add to get center line for each: ");
+		// ABOVE OVERRIDES FOR SPECIFIC DEVICES..............
+
+
+		
+		
 		if (shape == System.SCREEN_SHAPE_RECTANGLE) {
-			// if (dc.Height() >= )
-			
-			dcHeight = dc.getHeight();
-			
-		}
+			// calculate off single Y_____1 value
+			oY_____1 = 0.300000 * dcHeight;// * Ui.loadResource(Rez.Strings.oY_____1).toFloat()); // manual anchor per device; never computed
 
-		oXtopCenter = Ui.loadResource(Rez.Strings.oXtopCenter).toFloat();
-		oXtopOffsets = Ui.loadResource(Rez.Strings.oXtopOffsets).toFloat();
-		oXbtmCenter = Ui.loadResource(Rez.Strings.oXbtmCenter).toFloat();
-		oXbtmOffsets = Ui.loadResource(Rez.Strings.oXbtmOffsets).toFloat();
-		oY_____1 = (dcHeight * Ui.loadResource(Rez.Strings.oY_____1).toFloat()); // manual anchor per device; never computed
-
-		if (shape == System.SCREEN_SHAPE_RECTANGLE) {
-			computeDynamicVerticalLayout(dcHeight, xt0Acc, lg4Acc, md6Acc);
+			computeDynamicLayout(dcHeight, dcWidth);
+			XtopCenter = topCenter - halfWitt;
+			XtopOffsets = topCenter - slbX2;
+			XbtmCenter = bottomCenter - halfWitt;
+			XbtmOffsets = battX;
 		} else {
+			// calculate off ratio values
 			tooSmall = false;
+			oY_____1 = (dcHeight * Ui.loadResource(Rez.Strings.oY_____1).toFloat()); 
 			oYlbl_GF = (dcHeight * Ui.loadResource(Rez.Strings.oYlbl_GF).toFloat());
 			oYdat_GF = (dcHeight * Ui.loadResource(Rez.Strings.oYdat_GF).toFloat());
 			oYlbl_PHT = (dcHeight * Ui.loadResource(Rez.Strings.oYlbl_PHT).toFloat());
@@ -162,27 +183,32 @@ class ORunView extends Ui.DataField {
 			oYlbl_TS = (dcHeight * Ui.loadResource(Rez.Strings.oYlbl_TS).toFloat());
 			oY_____3 = (dcHeight * Ui.loadResource(Rez.Strings.oY_____3).toFloat());
 			oYdat_BT = (dcHeight * Ui.loadResource(Rez.Strings.oYdat_BT).toFloat());
+
+			oXtopCenter = Ui.loadResource(Rez.Strings.oXtopCenter).toFloat();
+			oXbtmCenter = Ui.loadResource(Rez.Strings.oXbtmCenter).toFloat();
+
+			oXtopOffsets = Ui.loadResource(Rez.Strings.oXtopOffsets).toFloat();
+			oXbtmOffsets = Ui.loadResource(Rez.Strings.oXbtmOffsets).toFloat();
+
+			XtopCenter = oXtopCenter * rezWidth; //these are the pixel values, calculated from ratios in resources - kept Float to avoid precision decay on re-export
+			XtopOffsets = oXtopOffsets * rezWidth;
+			XbtmCenter = oXbtmCenter * rezWidth;
+			XbtmOffsets = oXbtmOffsets * rezWidth;
+
+			halfWitt = rezWidth / 2;
+			middlew = rezWidth / 3;
+			halfMiddleWidth = middlew / 2;
+			altX = middlew + halfMiddleWidth;
+			tidX = (halfWitt / 2) + 5;
+			distX = (3 * halfWitt / 2) - 5;
+			paceX = 2 * middlew + halfMiddleWidth;
+
+			topCenter = halfWitt + XtopCenter;    // X adjustment from middle of top vertical line
+			bottomCenter = halfWitt + XbtmCenter; // X adjustment from middle of bottom vertical line
+
+			slbX2 = topCenter - XtopOffsets; // dat is still center-justified for all devices
+			sldX2 = topCenter + XtopOffsets; // dat is still center-justified for all devices
 		}
-
-		XtopCenter = oXtopCenter * rezWidth; //these are the pixel values, calculated from ratios in resources - kept Float to avoid precision decay on re-export
-		XtopOffsets = oXtopOffsets * rezWidth;
-		XbtmCenter = oXbtmCenter * rezWidth;
-		XbtmOffsets = oXbtmOffsets * rezWidth;
-
-
-		halfWitt = rezWidth / 2;
-		middlew = rezWidth / 3;
-		halfMiddleWidth = middlew / 2;
-		altX = middlew + halfMiddleWidth;
-		tidX = (halfWitt / 2) + 5;
-		distX = (3 * halfWitt / 2) - 5;
-		paceX = 2 * middlew + halfMiddleWidth;
-		
-		topCenter = halfWitt + XtopCenter;    // X adjustment from middle of top vertical line
-		bottomCenter = halfWitt + XbtmCenter; // X adjustment from middle of bottom vertical line
-
-		slbX2 = topCenter - XtopOffsets; // dat is still center-justified for all devices
-		sldX2 = topCenter + XtopOffsets; // dat is still center-justified for all devices
 
 		slbY1 = oYlbl_GF;
 		slbY2 = oYdat_GF;
@@ -191,11 +217,6 @@ class ORunView extends Ui.DataField {
 
 		// handle top label (slb, sld), and bottom data (batt, tod) margin and justification
 		if (shape == System.SCREEN_SHAPE_RECTANGLE) {
-			// on rectangle devices, tld and tlb (at top), and batt & tod (at bottom) are SIDE-EDGE-justified
-			slbX1 = XbtmOffsets; 					// use SAME as BOTTOM offset distance for slb label
-			sldX1 = rezWidth - 2 - XbtmOffsets;   // use SAME as BOTTOM offset distance for slD label
-			battX = XbtmOffsets;
-			todX  = rezWidth - 2 - XbtmOffsets;
 			// on rectangle devices, tld and tlb (at top), and batt & tod (at bottom) are SIDE-EDGE-justified
 			topAlign1 = Gfx.TEXT_JUSTIFY_LEFT;
 			topAlign2 = Gfx.TEXT_JUSTIFY_RIGHT;
@@ -219,10 +240,12 @@ class ORunView extends Ui.DataField {
 			bottomAlign2 = Gfx.TEXT_JUSTIFY_LEFT;
 		}
 		
+			
+
 		// debug printlns for producing ratio output for resources.xml files
 		if (DEBUG_PRINT_RATIOS) {
 			System.println("");
-			System.println("<!-- selected Y index: " + selectedDebugY + " offset pixels: " + debugYOffset[selectedDebugY] + " -->");
+			//System.println("<!-- selected Y index: " + selectedDebugY + " offset pixels: " + debugYOffset[selectedDebugY] + " -->");
 			var device = Ui.loadResource(Rez.Strings.device);
 			System.println("<!-- ============================================================ " + getModelIdentifier() + " -->");
 			System.println("<!-- Device:" + device + "   (part number " + getModelIdentifier() + ")     (dcHeight:" + dc.getHeight() + " dcWidth:" + dc.getWidth() + ")   -->");
@@ -268,13 +291,25 @@ class ORunView extends Ui.DataField {
 		}
     }
 	// -------------------------------------------------------------------------------------------------------------------
-	// Rectangle-only: Row A (slb/sld) is anchored bottom-up against the manual oY_____1 divider;
-	// Rows B/C/D + divider2/divider3 equally split whatever vertical space remains beneath it.
-	function computeDynamicVerticalLayout(dcHeight, xt0Acc, lg4Acc, md6Acc) {
+	// Rectangle-only: calculate horizontal field anchors and dynamically pack all vertical rows.
+	function computeDynamicLayout(dcHeight, dcWidth) {
 		tooSmall = false;
 
+		// budgeting uses ascent-only heights: this app's text never has descenders, so real ink is much shorter than ascent+descent
+		var packXt0 = Gfx.getFontAscent(Gfx.FONT_XTINY).toFloat();
+		var packLg4 = Gfx.getFontAscent(Gfx.FONT_LARGE).toFloat();
+		var packMd6 = Gfx.getFontAscent(Gfx.FONT_NUMBER_MEDIUM).toFloat();
+
+		// per-device trim: dead space observed above/below the digits within FONT_NUMBER_MEDIUM's ascent box
+		var md6PadTop = Ui.loadResource(Rez.Strings.md6PadTop).toFloat();
+		var md6PadBot = Ui.loadResource(Rez.Strings.md6PadBot).toFloat();
+		packMd6 -= (md6PadTop + md6PadBot);
+		if (packMd6 < 0) {
+			packMd6 = 0;
+		}
+
 		// Row A: 3 elastic gaps (top margin, label-to-data, data-to-divider1) share the space above oY_____1
-		var minContentTop = xt0Acc + md6Acc;
+		var minContentTop = packXt0 + packMd6;
 		var leftoverTop = oY_____1 - minContentTop - (3 * LAYOUT_MIN_GAP);
 		if (leftoverTop < 0) {
 			tooSmall = true;
@@ -282,41 +317,78 @@ class ORunView extends Ui.DataField {
 		}
 		var gapTop = LAYOUT_MIN_GAP + (leftoverTop / 3.0);
 
+		// Reserve relative capacity for 3.5 bearing digits on the left and 4 SLD digits on the right.
+		// The same inset anchors the top labels and bottom values; centerGap clears data from the divider.
+		var edgeInset = dcWidth * Ui.loadResource(Rez.Strings.horizontalEdgeInset).toFloat();
+		var centerGap = gapTop;
+		var minCenterGap = dcWidth * 0.01;
+		if (centerGap < minCenterGap) {
+			centerGap = minCenterGap;
+		}
+		var usableWidth = dcWidth - (2 * edgeInset);
+		var topDataWidth = usableWidth - (2 * centerGap);
+		if (topDataWidth < 0) {
+			topDataWidth = 0;
+		}
+		halfWitt = dcWidth / 2;
+		middlew = dcWidth / 3;
+		halfMiddleWidth = middlew / 2;
+		topCenter = edgeInset + (topDataWidth * (3.5 / 7.5)) + centerGap;
+		bottomCenter = topCenter;
+		slbX1 = edgeInset;
+		sldX1 = dcWidth - edgeInset;
+		slbX2 = topCenter - centerGap;
+		sldX2 = topCenter + centerGap;
+		battX = edgeInset;
+		todX = dcWidth - edgeInset;
+		altX = middlew + halfMiddleWidth;
+		tidX = (halfWitt / 2) + 5;
+		distX = (3 * halfWitt / 2) - 5;
+		paceX = 2 * middlew + halfMiddleWidth;
+
 		var cursorTop = gapTop;
-		oYlbl_GF = cursorTop + (xt0Acc / 2.0);
-		cursorTop += xt0Acc;
+		oYlbl_GF = cursorTop + (packXt0 / 2.0);
+		cursorTop += packXt0;
 		cursorTop += gapTop;
-		oYdat_GF = cursorTop + (md6Acc / 2.0);
+		oYdat_GF = cursorTop + (packMd6 / 2.0);
 
 		// Rows B/C/D + divider2/divider3: 8 elastic gaps share whatever space is left
-		var minContent = (3 * xt0Acc) + (2 * lg4Acc);
+		var minContent = (3 * packXt0) + (2 * packLg4);
 		var availableLower = dcHeight - oY_____1;
 		var leftover = availableLower - minContent - (8 * LAYOUT_MIN_GAP);
 		if (leftover < 0) {
 			tooSmall = true;
 			leftover = 0; // clamp so positions stay well-defined; "too small" message takes over onUpdate
 		}
+
+		// override for gpsmap66... 
+		if (Ui.loadResource(Rez.Strings.lowercompressionok).toNumber() == 1) {
+			if (dcHeight == 122) {	// specific height for gpsmap66 3-field display
+				tooSmall = false;
+			}
+		}
+
 		var gap = LAYOUT_MIN_GAP + (leftover / 8.0);
 
 		var cursor = oY_____1;
 		cursor += gap;
-		oYlbl_PHT = cursor + (xt0Acc / 2.0);
-		cursor += xt0Acc;
+		oYlbl_PHT = cursor + (packXt0 / 2.0);
+		cursor += packXt0;
 		cursor += gap;
-		oYdat_PHT = cursor + (lg4Acc / 2.0);
-		cursor += lg4Acc;
+		oYdat_PHT = cursor + (packLg4 / 2.0);
+		cursor += packLg4;
 		cursor += gap;
 		oY_____2 = cursor;
 		cursor += gap;
-		oYdat_TS = cursor + (lg4Acc / 2.0);
-		cursor += lg4Acc;
+		oYdat_TS = cursor + (packLg4 / 2.0);
+		cursor += packLg4;
 		cursor += gap;
-		oYlbl_TS = cursor + (xt0Acc / 2.0);
-		cursor += xt0Acc;
+		oYlbl_TS = cursor + (packXt0 / 2.0);
+		cursor += packXt0;
 		cursor += gap;
 		oY_____3 = cursor;
 		cursor += gap;
-		oYdat_BT = cursor + (xt0Acc / 2.0);
+		oYdat_BT = cursor + (packXt0 / 2.0);
 	}
 	// -------------------------------------------------------------------------------------------------------------------
 	function getModelIdentifier() {
@@ -343,6 +415,8 @@ class ORunView extends Ui.DataField {
 		forecol = Gfx.COLOR_WHITE;
     	
     	linecol = Gfx.COLOR_BLUE;
+
+		notMonochrome = (Ui.loadResource(Rez.Strings.notMonochrome).equals("1")) ? true : false; // set notMonochrome as boolean value
 
     	slbLabel = Ui.loadResource(Rez.Strings.slb);					// mike note: load strings for datafield labels
     	tmrLabel = Ui.loadResource(Rez.Strings.timer);
@@ -377,13 +451,18 @@ class ORunView extends Ui.DataField {
     // -------------------------------------------------------------------------------------------------------------------
     function onTimerStart() { // mike note: increment lap when user presses start, which is interesting to me
 		core.onTimerStart();
-		selectedDebugY = (selectedDebugY + 1) % debugYOffset.size();
+		// selectedDebugY = (selectedDebugY + 1) % debugYOffset.size(); // disabled: runtime vertical-nudge-by-button deactivated for now
         Ui.requestUpdate();
     }
     // -------------------------------------------------------------------------------------------------------------------
     function onTimerLap() { // mike note: increment lap when user presses lap
 		core.onTimerLap();
-		debugYOffset[selectedDebugY] += 1;
+		timerLapCount += 1;
+		if (timerLapCount >= 2) {
+			debugPrintTextboxes = !debugPrintTextboxes;
+			timerLapCount = 0;
+		}		
+		// debugYOffset[selectedDebugY] += 1; // disabled: runtime vertical-nudge-by-button deactivated for now
         Ui.requestUpdate();
     }
     // -------------------------------------------------------------------------------------------------------------------
@@ -480,7 +559,9 @@ class ORunView extends Ui.DataField {
         
 		// mike note: top left - Deg / slb - degrees bearing (in RED medium font)
 		dcdrawText( dc, slbX1, yBearingLabel, Gfx.FONT_XTINY, slbLabel, topAlign1 );
-        dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
+        if (notMonochrome) {
+			dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
+		}
 		dcdrawText( dc, slbX2, yBearingData, Gfx.FONT_NUMBER_MEDIUM, getBearing(), topAlign2 );
         
 		// mike note: top right - SLD straight-line distance in ft or m (in med font)
@@ -531,7 +612,9 @@ class ORunView extends Ui.DataField {
         
 		// mike note: battery percentage, writing in different color depending upon percentage
         var batt = Sys.getSystemStats().battery.toNumber();
-        setBatteryColor(dc, batt);
+        if (notMonochrome) {
+			setBatteryColor(dc, batt);
+		}
 		dcdrawText( dc, battX, yBatteryTime, Gfx.FONT_XTINY, batt + "%", bottomAlign1); // Gfx.TEXT_JUSTIFY_RIGHT);
 
 		if (DEBUG_PRINT_MIDLINES) {
@@ -604,10 +687,12 @@ class ORunView extends Ui.DataField {
 		// print text
 		dc.drawText(x, yT, font, text, justification);
 
-		if ( DEBUG_PRINT_TEXTBOXES ) { // if true, shows text outlines in yellow for debug purposes
+		if (debugPrintTextboxes) { // if true, shows text outlines in yellow for debug purposes
 
 			// change to highlight red for justification
-			dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
+	        if (notMonochrome) {
+				dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
+			}
 		    dc.setPenWidth(3); 
 		
 			// get dimensions array [width, height] and calculate justification
@@ -624,7 +709,11 @@ class ORunView extends Ui.DataField {
 			}
 
 			// change to highlight color, yellow
-			dc.setColor( Gfx.COLOR_YELLOW, Gfx.COLOR_TRANSPARENT );
+	        if (notMonochrome) {
+				dc.setColor( Gfx.COLOR_YELLOW, Gfx.COLOR_TRANSPARENT );
+			} else {
+				System.println("monochrome printing rectangles");
+			}
 		    dc.setPenWidth(1); 
 
 			// need to use special procedure to determine more accurate font height boxes: (steps 1-4)
@@ -647,6 +736,19 @@ class ORunView extends Ui.DataField {
 			// this remainder by 2 centers the bounding box vertically over the glyphs.
 			var totalPadding = rawHeight - accurateHeight;
 			var visualY = yT + (totalPadding / 2);
+
+			if (font == Gfx.FONT_NUMBER_MEDIUM) {
+				// mirror the ascent-only, pad-trimmed box that computeDynamicVerticalLayout budgets for;
+				// top/bottom pads are independent, so offset each edge directly instead of re-centering
+				var md6PadTop = Ui.loadResource(Rez.Strings.md6PadTop).toFloat();
+				var md6PadBot = Ui.loadResource(Rez.Strings.md6PadBot).toFloat();
+				var unadjustedTop = yT + (rawHeight - ascent.toFloat()) / 2.0;
+				accurateHeight = ascent.toFloat() - md6PadTop - md6PadBot;
+				if (accurateHeight < 0) {
+					accurateHeight = 0;
+				}
+				visualY = unadjustedTop + md6PadTop;
+			}
 
 			// 4. use 'justifiedX' and 'rawWidth' for horizontal data, and the adjusted 'visualY' and 'accurateHeight' for vertical data.
 			dc.drawRectangle(justifiedX, visualY, rawWidth, accurateHeight);

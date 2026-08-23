@@ -17,30 +17,36 @@ venusq2m.resourcePath = 				$(base.resourcePath);modern-layouts/resources-rectan
 
     <!-- on this device, getFontHeight(Gfx.FONT_XTINY)         = 39 but actually pixelsTall_30.419998.  * 0.5 + padding_4.290001 = 19.500000_midpoint -->
     <!-- on this device, getFontHeight(Gfx.FONT_LARGE)         = 68 but actually pixelsTall_53.039997.  * 0.5 + padding_7.480001 = 34.000000_midpoint -->
-    <!-- onedge1050 this device, getFontHeight(Gfx.FONT_NUMBER_MEDIUM) = 105 but actually pixelsTall_81.899994.  * 0.5 + padding_11.550003 = 52.500000_midpoint -->
+    <!-- on this device, getFontHeight(Gfx.FONT_NUMBER_MEDIUM) = 105 but actually pixelsTall_81.899994.  * 0.5 + padding_11.550003 = 52.500000_midpoint -->
 
+    <!-- TODO measure on-device via the yellow DEBUG_PRINT_TEXTBOXES box and set these two values -->
+    <string id="md6PadTop">9</string>
+    <string id="md6PadBot">9</string>
     <!--  KEEP HIGH PRECISION:  1 pixel / 320 (screen width) = 0.003125 portion of screen  -->
-
-    <string id="oXtopCenter">-0.021739</string>  <!--   Center Line Top     ->   (pixels_-7.0)                        / w_320 = -0.021739 -->
-    <string id="oXtopOffsets">0.043478</string>  <!--  Margin to Center**   ->   (pixels_13.9)                         / w_320 = 0.043478  -->
-
-    <string id="oYlbl_GF">0.064356</string>      <!--   Labels Deg & SLD    ->   (pixels_3.7 + xt0Mid_19.5 )_23.2    / h_360 = 0.064356  -->
-    <string id="oYdat_GF">0.198020</string>      <!--    Data Deg & SLD     ->   (pixels_18.8 + md6Mid_52.5 )_71.3   / h_360 = 0.198020  -->
-
-    <string id="oY_____1">0.290429</string>      <!--       Top Line        ->   (pixels_104.6)                       / h_360 = 0.290429  -->
-    <string id="oYlbl_PHT">0.374587</string>     <!--  Labels HR Alt Pace   ->   (pixels_115.4 + xt0Mid_19.5  )_134.9 / h_360 = 0.374587  -->
-    <string id="oYdat_PHT">0.496700</string>     <!--   Data HR Alt Pace    ->   (pixels_144.8 + lg4Mid_34.0 )_178.8  / h_360 = 0.496700  -->
-
-    <string id="oY_____2">0.590759</string>      <!--   Mid Line (thin)     ->   (pixels_212.7)                       / h_360 = 0.590759  -->
-    <string id="oYdat_TS">0.681518</string>      <!--  Data Timer & Dist    ->   (pixels_211.3 + lg4Mid_34.0 )_245.3  / h_360 = 0.681518  -->
-    <string id="oYlbl_TS">0.793729</string>      <!-- Labels Timer & Dist   ->   (pixels_266.2 + xt0Mid_19.5  )_285.7 / h_360 = 0.793729  -->
-
-    <string id="oY_____3">0.871287</string>      <!--     Bottom Line       ->   (pixels_313.7)                       / h_360 = 0.871287  -->
-    <string id="oYdat_BT">0.935644</string>      <!--   Data Batt & Tod     ->   (pixels_317.3 + xt0Mid_19.5  )_336.8 / h_360 = 0.935644  -->
-
+    <string id="oY_____1">0.300000</string>      <!--       Top Line        ->   (pixels_240.0)                       / h_800 = 0.300000  -->
+    <!-- <string id="oY_____1">0.290429</string>-->      <!--       Top Line        ->   (pixels_104.6)                       / h_360 = 0.290429  -->
+    
+    <string id="oXtopCenter">-0.041739</string>  <!-- 021739  Center Line Top     ->   (pixels_-7.0)                        / w_320 = -0.021739 -->
     <string id="oXbtmCenter">-0.065217</string>  <!--    Center Line Btm    ->   (pixels_-20.9)                       / w_320 = -0.065217 -->
+
+    <string id="oXtopOffsets">0.043478</string>  <!--  Margin to Center**   ->   (pixels_13.9)                         / w_320 = 0.043478  -->
     <string id="oXbtmOffsets">0.043478</string>  <!--  Margin to Ctr/Edge** ->   (pixels_13.9)                         / w_320 = 0.043478  -->
     <!-- ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' -->
 
+    <!--
+    <string id="oYlbl_GF">0.064356</string>      <!- -   Labels Deg & SLD    ->   (pixels_3.7 + xt0Mid_19.5 )_23.2    / h_360 = 0.064356  - ->
+    <string id="oYdat_GF">0.198020</string>      <!- -    Data Deg & SLD     ->   (pixels_18.8 + md6Mid_52.5 )_71.3   / h_360 = 0.198020  - ->
+
+    <string id="oYlbl_PHT">0.374587</string>     <!- -  Labels HR Alt Pace   ->   (pixels_115.4 + xt0Mid_19.5  )_134.9 / h_360 = 0.374587  - ->
+    <string id="oYdat_PHT">0.496700</string>     <!- -   Data HR Alt Pace    ->   (pixels_144.8 + lg4Mid_34.0 )_178.8  / h_360 = 0.496700  - ->
+
+    <string id="oY_____2">0.590759</string>      <!- -   Mid Line (thin)     ->   (pixels_212.7)                       / h_360 = 0.590759  - ->
+    <string id="oYdat_TS">0.681518</string>      <!- -  Data Timer & Dist    ->   (pixels_211.3 + lg4Mid_34.0 )_245.3  / h_360 = 0.681518  - ->
+    <string id="oYlbl_TS">0.793729</string>      <!- - Labels Timer & Dist   ->   (pixels_266.2 + xt0Mid_19.5  )_285.7 / h_360 = 0.793729  - ->
+
+    <string id="oY_____3">0.871287</string>      <!- -     Bottom Line       ->   (pixels_313.7)                       / h_360 = 0.871287  - ->
+    <string id="oYdat_BT">0.935644</string>      <!- -   Data Batt & Tod     ->   (pixels_317.3 + xt0Mid_19.5  )_336.8 / h_360 = 0.935644  - ->
+    -->
+    
 </resources>
 <!-- ============================================================ 006-B4115-00  device tested: venusq2  -->

@@ -14,28 +14,35 @@ edge820.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resou
     <!-- on this device, getFontHeight(Gfx.FONT_LARGE)         = 36 but actually pixelsTall_28.079998.  * 0.5 + padding_3.960001 = 18.000000_midpoint -->
     <!-- on this device, getFontHeight(Gfx.FONT_NUMBER_MEDIUM) = 39 but actually pixelsTall_30.419998.  * 0.5 + padding_4.290001 = 19.500000_midpoint -->
 
+    <!-- per-device override: positive pixels move FONT_XTINY text up; negative pixels move it down -->
+    <string id="xt0MidShift">1</string>
+
+    <string id="md6PadTop">-1</string>           <!-- SLB/D texttop to box -->
+    <string id="md6PadBot">3</string>            <!-- SLB/D texttop to box -->
     <!--  KEEP HIGH PRECISION:  1 pixel / 200 (screen width) = 0.005000 portion of screen  -->
+    <string id="oY_____1">0.300000</string>      <!-- 294000      Top Line        ->   (pixels_77.9)                       / h_265 = 0.294000  -->
 
-    <string id="oXtopCenter">-0.080000</string>  <!--   Center Line Top     ->   (pixels_-16.0)                        / w_200 = -0.080000 -->
-    <string id="oXtopOffsets">0.030000</string>  <!--  Margin to Center**   ->   (pixels_6.0)                         / w_200 = 0.030000  -->
-
-    <string id="oYlbl_GF">0.070000</string>      <!--   Labels Deg & SLD    ->   (pixels_12.5 + xt0Mid_6.0 )_18.5    / h_265 = 0.070000  -->
-    <string id="oYdat_GF">0.180000</string>      <!--    Data Deg & SLD     ->   (pixels_28.2 + md6Mid_19.5 )_47.7   / h_265 = 0.180000  -->
-
-    <string id="oY_____1">0.294000</string>      <!--       Top Line        ->   (pixels_77.9)                       / h_265 = 0.294000  -->
-    <string id="oYlbl_PHT">0.360000</string>     <!--  Labels HR Alt Pace   ->   (pixels_89.4 + xt0Mid_6.0  )_95.4 / h_265 = 0.360000  -->
-    <string id="oYdat_PHT">0.490000</string>     <!--   Data HR Alt Pace    ->   (pixels_111.9 + lg4Mid_18.0 )_129.9  / h_265 = 0.490000  -->
-
-    <string id="oY_____2">0.600000</string>      <!--   Mid Line (thin)     ->   (pixels_159.0)                       / h_265 = 0.600000  -->
-    <string id="oYdat_TS">0.710000</string>      <!--  Data Timer & Dist    ->   (pixels_170.1 + lg4Mid_18.0 )_188.1  / h_265 = 0.710000  -->
-    <string id="oYlbl_TS">0.830000</string>      <!-- Labels Timer & Dist   ->   (pixels_213.9 + xt0Mid_6.0  )_219.9 / h_265 = 0.830000  -->
-
-    <string id="oY_____3">0.887000</string>      <!--     Bottom Line       ->   (pixels_235.1)                       / h_265 = 0.887000  -->
-    <string id="oYdat_BT">0.950000</string>      <!--   Data Batt & Tod     ->   (pixels_245.8 + xt0Mid_6.0  )_251.8 / h_265 = 0.950000  -->
-
+    <string id="oXtopCenter">-0.040000</string>  <!--   Center Line Top     ->   (pixels_-16.0)                        / w_200 = -0.080000 -->
     <string id="oXbtmCenter">-0.080000</string>  <!--    Center Line Btm    ->   (pixels_-16.0)                       / w_200 = -0.080000 -->
+
+    <string id="oXtopOffsets">0.030000</string>  <!--  Margin to Center**   ->   (pixels_6.0)                         / w_200 = 0.030000  -->
     <string id="oXbtmOffsets">0.020000</string>  <!--  Margin to Ctr/Edge** ->   (pixels_4.0)                         / w_200 = 0.020000  -->
     <!-- ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' -->
+
+    <!--
+    <string id="oYlbl_GF">0.070000</string>      <!- -   Labels Deg & SLD    ->   (pixels_12.5 + xt0Mid_6.0 )_18.5    / h_265 = 0.070000  - ->
+    <string id="oYdat_GF">0.180000</string>      <!- -    Data Deg & SLD     ->   (pixels_28.2 + md6Mid_19.5 )_47.7   / h_265 = 0.180000  - ->
+
+    <string id="oYlbl_PHT">0.360000</string>     <!- -  Labels HR Alt Pace   ->   (pixels_89.4 + xt0Mid_6.0  )_95.4 / h_265 = 0.360000  - ->
+    <string id="oYdat_PHT">0.490000</string>     <!- -   Data HR Alt Pace    ->   (pixels_111.9 + lg4Mid_18.0 )_129.9  / h_265 = 0.490000  - ->
+
+    <string id="oY_____2">0.600000</string>      <!- -   Mid Line (thin)     ->   (pixels_159.0)                       / h_265 = 0.600000  - ->
+    <string id="oYdat_TS">0.710000</string>      <!- -  Data Timer & Dist    ->   (pixels_170.1 + lg4Mid_18.0 )_188.1  / h_265 = 0.710000  - ->
+    <string id="oYlbl_TS">0.830000</string>      <!- - Labels Timer & Dist   ->   (pixels_213.9 + xt0Mid_6.0  )_219.9 / h_265 = 0.830000  - ->
+
+    <string id="oY_____3">0.887000</string>      <!- -     Bottom Line       ->   (pixels_235.1)                       / h_265 = 0.887000  - ->
+    <string id="oYdat_BT">0.950000</string>      <!- -   Data Batt & Tod     ->   (pixels_245.8 + xt0Mid_6.0  )_251.8 / h_265 = 0.950000  - ->
+    -->
 
 </resources>
 <!-- ============================================================ 006-B3112-00  device tested: XXXXXX  -->

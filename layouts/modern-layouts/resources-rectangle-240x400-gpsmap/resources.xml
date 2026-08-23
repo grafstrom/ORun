@@ -21,28 +21,38 @@ gpsmap86.resourcePath = 				$(base.resourcePath);devices/resources-rectangle-240
     <!-- on this device, getFontHeight(Gfx.FONT_LARGE)         = 43 but actually pixelsTall_33.539997.  * 0.5 + padding_4.730001 = 21.500000_midpoint -->
     <!-- on this device, getFontHeight(Gfx.FONT_NUMBER_MEDIUM) = 46 but actually pixelsTall_35.879997.  * 0.5 + padding_5.060001 = 23.000000_midpoint -->
 
+    <string id="xt0MidShift">2</string>
+    <string id="md6MidShift">8</string>           <!-- positive moves SLB/D data and debug box up; negative moves them down -->
+
+    <string id="md6PadTop">-2</string>           <!-- SLB/D texttop to box -->
+    <string id="md6PadBot">0</string>            <!-- SLB/D texttop to box -->
+    
+    <string id="lowercompressionok">1</string>   <!-- override for gps66 so it works with limited height -->
+
     <!--  KEEP HIGH PRECISION:  1 pixel / 240 (screen width) = 0.004167 portion of screen  -->
+    <string id="oY_____1">0.300000</string>      <!--       Top Line        ->   (pixels_36.6)                       / h_122 = 0.300000  -->
 
     <string id="oXtopCenter">-0.041667</string>  <!--   Center Line Top     ->   (pixels_-10.0)                        / w_240 = -0.041667 -->
-    <string id="oXtopOffsets">0.054167</string>  <!--  Margin to Center**   ->   (pixels_13.0)                         / w_240 = 0.054167  -->
-
-    <string id="oYlbl_GF">0.063750</string>      <!--   Labels Deg & SLD    ->   (pixels_1.8 + xt0Mid_6.0 )_7.8    / h_122 = 0.063750  -->
-    <string id="oYdat_GF">0.162500</string>      <!--    Data Deg & SLD     ->   (pixels_-3.2 + md6Mid_23.0 )_19.8   / h_122 = 0.162500  -->
-
-    <string id="oY_____1">0.300000</string>      <!--       Top Line        ->   (pixels_36.6)                       / h_122 = 0.300000  -->
-    <string id="oYlbl_PHT">0.363750</string>     <!--  Labels HR Alt Pace   ->   (pixels_38.4 + xt0Mid_6.0  )_44.4 / h_122 = 0.363750  -->
-    <string id="oYdat_PHT">0.443750</string>     <!--   Data HR Alt Pace    ->   (pixels_32.6 + lg4Mid_21.5 )_54.1  / h_122 = 0.443750  -->
-
-    <string id="oY_____2">0.600000</string>      <!--   Mid Line (thin)     ->   (pixels_73.2)                       / h_122 = 0.600000  -->
-    <string id="oYdat_TS">0.663750</string>      <!--  Data Timer & Dist    ->   (pixels_59.5 + lg4Mid_21.5 )_81.0  / h_122 = 0.663750  -->
-    <string id="oYlbl_TS">0.833750</string>      <!-- Labels Timer & Dist   ->   (pixels_95.7 + xt0Mid_6.0  )_101.7 / h_122 = 0.833750  -->
-
-    <string id="oY_____3">0.890000</string>      <!--     Bottom Line       ->   (pixels_108.6)                       / h_122 = 0.890000  -->
-    <string id="oYdat_BT">0.948750</string>      <!--   Data Batt & Tod     ->   (pixels_109.7 + xt0Mid_6.0  )_115.7 / h_122 = 0.948750  -->
-
     <string id="oXbtmCenter">-0.062500</string>  <!--    Center Line Btm    ->   (pixels_-15.0)                       / w_240 = -0.062500 -->
+
+    <string id="oXtopOffsets">0.054167</string>  <!--  Margin to Center**   ->   (pixels_13.0)                         / w_240 = 0.054167  -->
     <string id="oXbtmOffsets">0.054167</string>  <!--  Margin to Ctr/Edge** ->   (pixels_13.0)                         / w_240 = 0.054167  -->
     <!-- ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' -->
+
+    <!--
+    <string id="oYlbl_GF">0.063750</string>      <!- -   Labels Deg & SLD    ->   (pixels_1.8 + xt0Mid_6.0 )_7.8    / h_122 = 0.063750  - ->
+    <string id="oYdat_GF">0.162500</string>      <!- -    Data Deg & SLD     ->   (pixels_-3.2 + md6Mid_23.0 )_19.8   / h_122 = 0.162500  - ->
+
+    <string id="oYlbl_PHT">0.363750</string>     <!- -  Labels HR Alt Pace   ->   (pixels_38.4 + xt0Mid_6.0  )_44.4 / h_122 = 0.363750  - ->
+    <string id="oYdat_PHT">0.443750</string>     <!- -   Data HR Alt Pace    ->   (pixels_32.6 + lg4Mid_21.5 )_54.1  / h_122 = 0.443750  - ->
+
+    <string id="oY_____2">0.600000</string>      <!- -   Mid Line (thin)     ->   (pixels_73.2)                       / h_122 = 0.600000  - ->
+    <string id="oYdat_TS">0.663750</string>      <!- -  Data Timer & Dist    ->   (pixels_59.5 + lg4Mid_21.5 )_81.0  / h_122 = 0.663750  - ->
+    <string id="oYlbl_TS">0.833750</string>      <!- - Labels Timer & Dist   ->   (pixels_95.7 + xt0Mid_6.0  )_101.7 / h_122 = 0.833750  - ->
+
+    <string id="oY_____3">0.890000</string>      <!- -     Bottom Line       ->   (pixels_108.6)                       / h_122 = 0.890000  - ->
+    <string id="oYdat_BT">0.948750</string>      <!- -   Data Batt & Tod     ->   (pixels_109.7 + xt0Mid_6.0  )_115.7 / h_122 = 0.948750  - ->
+    -->
 
 </resources>
 <!-- ============================================================ 006-B3028-00  device tested: XXXXXX  -->
