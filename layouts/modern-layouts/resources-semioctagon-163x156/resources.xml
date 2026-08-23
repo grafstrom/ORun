@@ -3,12 +3,12 @@
     <string id="deviceTypeHelper">semioctagon-176x176</string>
     <!-- values are checked with system during run -->
     <string id="shape">semioctagon</string>
-    <string id="width">176</string>
-    <string id="height">176</string>
+    <string id="width">163</string>
+    <string id="height">156</string>
     <string id="notMonochrome">0</string> <!-- black and white -->
 
     <!-- tested on 
-    instincte40mm
+    descentg1
     -->
 
 

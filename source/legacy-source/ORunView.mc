@@ -459,7 +459,7 @@ class ORunView extends Ui.DataField {
 	}
 	
 	function computeDistance (pos1, pos2) {
-	    var lat1, lat2, lon1, lon2, lat, lon;
+	    var lat1, lat2, lon1, lon2, lat; //, lon; // lon not used
 	    var dx, dy, distance;
 	
 	    lat1 = pos1.toDegrees()[0].toFloat();

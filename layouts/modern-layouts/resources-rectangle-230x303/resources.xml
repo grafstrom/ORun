@@ -41,7 +41,7 @@ edge130plus.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/re
     <string id="oXbtmCenter">-0.065217</string>  <!- -    Center Line Btm    ->   (pixels_-15.0)                       / w_230 = -0.065217 - ->
     <string id="oXbtmOffsets">0.043478</string>  <!- -  Margin to Ctr/Edge** ->   (pixels_10.0)                         / w_230 = 0.043478  - ->
     <!- - ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' - ->
-    - ->
+    -->
 
 </resources>
 <!-- ============================================================ 006-B2909-00  device tested: edge130  -->

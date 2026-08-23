@@ -43,7 +43,7 @@ rino7xx.resourcePath = 				    $(base.resourcePath);devices/resources-rectangle-
     <string id="oXbtmOffsets">0.054167</string>  <!- -  Margin to Ctr/Edge** ->   (pixels_13.0)                         / w_240 = 0.054167  - ->
     <!- - ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' - ->
 
-    - ->
+    -->
 
 </resources>
 <!-- ============================================================ 006-B1836-00  device tested: edge_1000  -->
