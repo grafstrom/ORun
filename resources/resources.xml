@@ -14,7 +14,7 @@
 
     <!-- per-device override: positive pixels move FONT_XTINY text and debug box up; negative pixels move them down -->
     <string id="xt0MidShift">0</string>
-    <!-- per-device override: positive display-height ratios move FONT_LARGE text and debug box up; negative ratios move them down -->
+    <!-- per-device calibration: positive FONT_LARGE visual-height ratios move glyphs up; negative ratios move them down -->
     <string id="lg4MidShiftRatio">0</string>
     <!-- per-device override: dead-space pixels above/below the digits within FONT_NUMBER_MEDIUM's ascent box -->
     <string id="md6PadTop">0</string>
@@ -24,9 +24,24 @@
 
     <!-- rectangle-only edge inset for top labels and bottom values, as a portion of display width -->
     <string id="horizontalEdgeInset">0.04</string>
+    <!-- rectangle layout policy: shared clearance around top data -->
+    <string id="topDataClearanceRatio">0.50</string>
 
-    <!-- per device override to ignore lower section, for gpsmap66.. 0 is inactive, 1 is active-->
-    <string id="lowercompressionok">0</string>
+    <!-- Compatibility defaults for the non-rectangle ratio branch; round profiles override these. -->
+    <string id="oY_____1">0</string>
+    <string id="oYlbl_GF">0</string>
+    <string id="oYdat_GF">0</string>
+    <string id="oYlbl_PHT">0</string>
+    <string id="oYdat_PHT">0</string>
+    <string id="oY_____2">0</string>
+    <string id="oYdat_TS">0</string>
+    <string id="oYlbl_TS">0</string>
+    <string id="oY_____3">0</string>
+    <string id="oYdat_BT">0</string>
+    <string id="oXtopCenter">0</string>
+    <string id="oXtopOffsets">0</string>
+    <string id="oXbtmCenter">0</string>
+    <string id="oXbtmOffsets">0</string>
 
     <!-- per-device override: black and white (1) vs multi-color (0) -->
     <string id="notMonochrome">1</string>

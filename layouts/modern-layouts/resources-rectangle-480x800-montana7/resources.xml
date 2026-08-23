@@ -1,11 +1,6 @@
-<!-- ERROR: dc.getWidth() does not match Ui.loadResource(Rez.Strings.width).toNumber()
--->
-
-
 <!-- ============================================================ 006-B3459-00 -->
 <!-- Device:rectangle-480x800-montana7   (part number 006-B3459-00)     (dcHeight:220 dcWidth:478)   -->
 <!-- Tested On:
-
 
 montana7xx.resourcePath = 				$(base.resourcePath);modern-layouts/resources-rectangle-480x800_montana7
 
@@ -27,19 +22,15 @@ montana7xx.resourcePath = 				$(base.resourcePath);modern-layouts/resources-rect
     <string id="md6PadBot">5</string>            <!-- SLB/D texttop to box -->
     <!--  KEEP HIGH PRECISION:  1 pixel / 480 (screen width) = 0.002083 portion of screen  -->
 
-    <string id="oY_____1">0.300000</string>      <!--       Top Line        ->   (pixels_66.0)                       / h_220 = 0.300000  -->
-
-    <string id="oXtopCenter">-0.041667</string>  <!--   Center Line Top     ->   (pixels_-20.0)                        / w_480 = -0.041667 -->
-    <string id="oXbtmCenter">-0.062500</string>  <!--    Center Line Btm    ->   (pixels_-30.0)                       / w_480 = -0.062500 -->
-
-    <string id="oXtopOffsets">0.054167</string>  <!--  Margin to Center**   ->   (pixels_26.0)                         / w_480 = 0.054167  -->
-    <string id="oXbtmOffsets">0.054167</string>  <!--  Margin to Ctr/Edge** ->   (pixels_26.0)                         / w_480 = 0.054167  -->
-    <!-- ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' -->
 
     <!--
+    <string id="oXtopCenter">-0.041667</string>  <!- -   Center Line Top     ->   (pixels_-20.0)                        / w_480 = -0.041667 - ->
+    <string id="oXtopOffsets">0.054167</string>  <!- -  Margin to Center**   ->   (pixels_26.0)                         / w_480 = 0.054167  - ->
+
     <string id="oYlbl_GF">0.063750</string>      <!- -   Labels Deg & SLD    ->   (pixels_6.5 + xt0Mid_7.5 )_14.0    / h_220 = 0.063750  - ->
     <string id="oYdat_GF">0.162500</string>      <!- -    Data Deg & SLD     ->   (pixels_10.8 + md6Mid_25.0 )_35.8   / h_220 = 0.162500  - ->
 
+    <string id="oY_____1">0.300000</string>      <!- -       Top Line        ->   (pixels_66.0)                       / h_220 = 0.300000  - ->
     <string id="oYlbl_PHT">0.363750</string>     <!- -  Labels HR Alt Pace   ->   (pixels_72.5 + xt0Mid_7.5  )_80.0 / h_220 = 0.363750  - ->
     <string id="oYdat_PHT">0.443750</string>     <!- -   Data HR Alt Pace    ->   (pixels_74.1 + lg4Mid_23.5 )_97.6  / h_220 = 0.443750  - ->
 
@@ -49,6 +40,10 @@ montana7xx.resourcePath = 				$(base.resourcePath);modern-layouts/resources-rect
 
     <string id="oY_____3">0.890000</string>      <!- -     Bottom Line       ->   (pixels_195.8)                       / h_220 = 0.890000  - ->
     <string id="oYdat_BT">0.948750</string>      <!- -   Data Batt & Tod     ->   (pixels_201.2 + xt0Mid_7.5  )_208.7 / h_220 = 0.948750  - ->
+
+    <string id="oXbtmCenter">-0.062500</string>  <!- -    Center Line Btm    ->   (pixels_-30.0)                       / w_480 = -0.062500 - ->
+    <string id="oXbtmOffsets">0.054167</string>  <!- -  Margin to Ctr/Edge** ->   (pixels_26.0)                         / w_480 = 0.054167  - ->
+    <!- - ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' - ->
     -->
 
 </resources>

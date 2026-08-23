@@ -1,11 +1,7 @@
-<!-- ============================================================ 006-B4169-00  device tested: XXXXXX  -->
-
-<!-- selected Y index: 4 offset pixels: 19 -->
 <!-- ============================================================ 006-B4169-00 -->
 <!-- Device:rectangle-240x400-explore2   (part number 006-B4169-00)     (dcHeight:400 dcWidth:240)   -->
 <!-- Tested On: 
 edgeexplore2.resourcePath = 			$(base.resourcePath);devices/resources-rectangle-240x400_explore2
-
 
 -->
 <resources>
@@ -23,19 +19,17 @@ edgeexplore2.resourcePath = 			$(base.resourcePath);devices/resources-rectangle-
     <!-- on this device, getFontHeight(Gfx.FONT_NUMBER_MEDIUM) = 48 but actually pixelsTall_37.439999.  * 0.5 + padding_5.280001 = 24.000000_midpoint -->
 
     <!--  KEEP HIGH PRECISION:  1 pixel / 240 (screen width) = 0.004167 portion of screen  -->
-    <string id="oY_____1">0.300000</string>      <!--       Top Line        ->   (pixels_120.0)                       / h_400 = 0.300000  -->
 
-    <string id="oXtopCenter">-0.041667</string>  <!--   Center Line Top     ->   (pixels_-10.0)                        / w_240 = -0.041667 -->
-    <string id="oXbtmCenter">-0.062500</string>  <!--    Center Line Btm    ->   (pixels_-15.0)                       / w_240 = -0.062500 -->
-
-    <string id="oXtopOffsets">0.054167</string>  <!--  Margin to Center**   ->   (pixels_13.0)                         / w_240 = 0.054167  -->
-    <string id="oXbtmOffsets">0.054167</string>  <!--  Margin to Ctr/Edge** ->   (pixels_13.0)                         / w_240 = 0.054167  -->
-    <!-- ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' -->
+    
 
     <!--
+    <string id="oXtopCenter">-0.041667</string>  <!- -   Center Line Top     ->   (pixels_-10.0)                        / w_240 = -0.041667 - ->
+    <string id="oXtopOffsets">0.054167</string>  <!- -  Margin to Center**   ->   (pixels_13.0)                         / w_240 = 0.054167  - ->
+
     <string id="oYlbl_GF">0.063750</string>      <!- -   Labels Deg & SLD    ->   (pixels_19.5 + xt0Mid_6.0 )_25.5    / h_400 = 0.063750  - ->
     <string id="oYdat_GF">0.172500</string>      <!- -    Data Deg & SLD     ->   (pixels_45.0 + md6Mid_24.0 )_69.0   / h_400 = 0.172500  - ->
 
+    <string id="oY_____1">0.300000</string>      <!- -       Top Line        ->   (pixels_120.0)                       / h_400 = 0.300000  - ->
     <string id="oYlbl_PHT">0.363750</string>     <!- -  Labels HR Alt Pace   ->   (pixels_139.5 + xt0Mid_6.0  )_145.5 / h_400 = 0.363750  - ->
     <string id="oYdat_PHT">0.476250</string>     <!- -   Data HR Alt Pace    ->   (pixels_172.5 + lg4Mid_18.0 )_190.5  / h_400 = 0.476250  - ->
 
@@ -45,6 +39,10 @@ edgeexplore2.resourcePath = 			$(base.resourcePath);devices/resources-rectangle-
 
     <string id="oY_____3">0.890000</string>      <!- -     Bottom Line       ->   (pixels_356.0)                       / h_400 = 0.890000  - ->
     <string id="oYdat_BT">0.948750</string>      <!- -   Data Batt & Tod     ->   (pixels_373.5 + xt0Mid_6.0  )_379.5 / h_400 = 0.948750  - ->
+
+    <string id="oXbtmCenter">-0.062500</string>  <!- -    Center Line Btm    ->   (pixels_-15.0)                       / w_240 = -0.062500 - ->
+    <string id="oXbtmOffsets">0.054167</string>  <!- -  Margin to Ctr/Edge** ->   (pixels_13.0)                         / w_240 = 0.054167  - ->
+    <!- - ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' - ->
     -->
 </resources>
-<!-- ============================================================ 006-B4169-00  device tested: XXXXXX  -->
+<!-- ============================================================ 006-B4169-00  device tested: edgeexplore2  -->

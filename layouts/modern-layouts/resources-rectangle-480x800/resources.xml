@@ -5,8 +5,6 @@
 
 edge1050.resourcePath = 				$(base.resourcePath);modern-layouts/resources-rectangle-480x800
 
-this device seems to print large and xtiny text higher than it should... 
-
 -->
 
 <resources>
@@ -19,23 +17,20 @@ this device seems to print large and xtiny text higher than it should...
     <!-- on this device, getFontHeight(Gfx.FONT_LARGE)         = 61 but actually pixelsTall_47.579998.  * 0.5 + padding_6.710001 = 30.500000_midpoint -->
     <!-- on this device, getFontHeight(Gfx.FONT_NUMBER_MEDIUM) = 82 but actually pixelsTall_63.959999.  * 0.5 + padding_9.020000 = 41.000000_midpoint -->
 
-    <string id="lg4MidShiftRatio">-0.02</string> <!-- move HR/Alt/Pace/Timer/Dist glyphs down by 2% of display height -->
+    <string id="lg4MidShiftRatio">-0.336276</string> <!-- preserve the measured 16.00px downward FONT_LARGE correction -->
     <string id="md6PadTop">2</string>           <!-- SLB/D texttop to box -->
     <string id="md6PadBot">3</string>            <!-- SLB/D texttop to box -->
 
     <string id="md6MidShift">-2</string>            <!-- SLB/D texttop to box -->
 
     <!--  KEEP HIGH PRECISION:  1 pixel / 480 (screen width) = 0.002083 portion of screen  -->
-    <string id="oY_____1">0.300000</string>      <!--       Top Line        ->   (pixels_240.0)                       / h_800 = 0.300000  -->
 
-    <string id="oXtopCenter">-0.041667</string>  <!--   Center Line Top     ->   (pixels_-20.0)                        / w_480 = -0.041667 -->
-    <string id="oXbtmCenter">-0.062500</string>  <!--    Center Line Btm    ->   (pixels_-30.0)                       / w_480 = -0.062500 -->
 
-    <string id="oXtopOffsets">0.054167</string>  <!--  Margin to Center**   ->   (pixels_26.0)                         / w_480 = 0.054167  -->
-    <string id="oXbtmOffsets">0.054167</string>  <!--  Margin to Ctr/Edge** ->   (pixels_26.0)                         / w_480 = 0.054167  -->
-    <!-- ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' -->
 
     <!--
+    <string id="oXtopCenter">-0.041667</string>  <!- -   Center Line Top     ->   (pixels_-20.0)                        / w_480 = -0.041667 - ->
+    <string id="oXtopOffsets">0.054167</string>  <!- -  Margin to Center**   ->   (pixels_26.0)                         / w_480 = 0.054167  - ->
+
     <string id="oYlbl_GF">0.063750</string>      <!- -   Labels Deg & SLD    ->   (pixels_40.5 + xt0Mid_10.5 )_51.0    / h_800 = 0.063750  - ->
     <string id="oYdat_GF">0.173750</string>      <!- -    Data Deg & SLD     ->   (pixels_98.0 + md6Mid_41.0 )_139.0   / h_800 = 0.173750  - ->
 
@@ -49,6 +44,10 @@ this device seems to print large and xtiny text higher than it should...
 
     <string id="oY_____3">0.890000</string>      <!- -     Bottom Line       ->   (pixels_712.0)                       / h_800 = 0.890000  - ->
     <string id="oYdat_BT">0.952500</string>      <!- -   Data Batt & Tod     ->   (pixels_751.5 + xt0Mid_10.5  )_762.0 / h_800 = 0.952500  - ->
+
+    <string id="oXbtmCenter">-0.062500</string>  <!- -    Center Line Btm    ->   (pixels_-30.0)                       / w_480 = -0.062500 - ->
+    <string id="oXbtmOffsets">0.054167</string>  <!- -  Margin to Ctr/Edge** ->   (pixels_26.0)                         / w_480 = 0.054167  - ->
+    <!- - ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' - ->
     -->
 
 

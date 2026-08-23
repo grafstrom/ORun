@@ -1,7 +1,6 @@
 <!-- ============================================================ 006-B3600-00 -->
 <!-- Device:rectangle-220x240   (part number 006-B3600-00)     (dcHeight:240 dcWidth:220)   -->
 <!-- Tested On:
-// recommend one field only
 venusq.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-220x240
 venusqm.resourcePath =                  $(base.resourcePath);layouts/modern-layouts/resources-rectangle-220x240
 
@@ -22,19 +21,16 @@ venusqm.resourcePath =                  $(base.resourcePath);layouts/modern-layo
 
 
     <!--  KEEP HIGH PRECISION:  1 pixel / 220 (screen width) = 0.004545 portion of screen  -->
-    <string id="oY_____1">0.300000</string>      <!-- 0.325000      Top Line        ->   (pixels_78.0)                       / h_240 = 0.325000  -->
 
-    <string id="oXtopCenter">-0.068182</string>  <!--   Center Line Top     ->   (pixels_-15.0)                        / w_220 = -0.068182 -->
-    <string id="oXbtmCenter">-0.136364</string>  <!--    Center Line Btm    ->   (pixels_-30.0)                       / w_220 = -0.136364 -->
-
-    <string id="oXtopOffsets">0.045455</string>  <!--  Margin to Center**   ->   (pixels_10.0)                         / w_220 = 0.045455  -->
-    <string id="oXbtmOffsets">0.045455</string>  <!--  Margin to Ctr/Edge** ->   (pixels_10.0)                         / w_220 = 0.045455  -->
-    <!-- ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' -->
-
+        
     <!--
+    <string id="oXtopCenter">-0.068182</string>  <!- -   Center Line Top     ->   (pixels_-15.0)                        / w_220 = -0.068182 - ->
+    <string id="oXtopOffsets">0.045455</string>  <!- -  Margin to Center**   ->   (pixels_10.0)                         / w_220 = 0.045455  - ->
+    
     <string id="oYlbl_GF">0.087500</string>      <!- -   Labels Deg & SLD    ->   (pixels_8.0 + xt0Mid_13.0 )_21.0    / h_240 = 0.087500  - ->
     <string id="oYdat_GF">0.239583</string>      <!- -    Data Deg & SLD     ->   (pixels_34.0 + md6Mid_23.5 )_57.5   / h_240 = 0.239583  - ->
 
+    <string id="oY_____1">0.300000</string>      <!- - 0.325000      Top Line        ->   (pixels_78.0)                       / h_240 = 0.325000  - ->
     <string id="oYlbl_PHT">0.404167</string>     <!- -  Labels HR Alt Pace   ->   (pixels_84.0 + xt0Mid_13.0  )_97.0 / h_240 = 0.404167  - ->
     <string id="oYdat_PHT">0.525000</string>     <!- -   Data HR Alt Pace    ->   (pixels_110.0 + lg4Mid_16.0 )_126.0  / h_240 = 0.525000  - ->
 
@@ -44,6 +40,10 @@ venusqm.resourcePath =                  $(base.resourcePath);layouts/modern-layo
 
     <string id="oY_____3">0.866667</string>      <!- -     Bottom Line       ->   (pixels_208.0)                       / h_240 = 0.866667  - ->
     <string id="oYdat_BT">0.929167</string>      <!- -   Data Batt & Tod     ->   (pixels_210.0 + xt0Mid_13.0  )_223.0 / h_240 = 0.929167  - ->
+    
+    <string id="oXbtmCenter">-0.136364</string>  <!- -    Center Line Btm    ->   (pixels_-30.0)                       / w_220 = -0.136364 - ->
+    <string id="oXbtmOffsets">0.045455</string>  <!- -  Margin to Ctr/Edge** ->   (pixels_10.0)                         / w_220 = 0.045455  - ->
+    <!- - ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' - ->
     -->
 
 </resources>

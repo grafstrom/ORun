@@ -6,7 +6,6 @@
 edge530.resourcePath = 				    $(base.resourcePath);devices/resources-rectangle-246x322
 edge830.resourcePath = 				    $(base.resourcePath);devices/resources-rectangle-246x322
 
-// large text ok vert
 -->
 <resources>
     <string id="RunFromRatios">true</string> <!-- always output true for formatting upgrade -->
@@ -22,19 +21,17 @@ edge830.resourcePath = 				    $(base.resourcePath);devices/resources-rectangle-
     <string id="md6PadBot">3</string>            <!-- SLB/D texttop to box -->
 
     <!--  KEEP HIGH PRECISION:  1 pixel / 246 (screen width) = 0.004065 portion of screen  -->
-    <string id="oY_____1">0.300000</string>      <!-- 0.290429      Top Line        ->   (pixels_93.5)                       / h_322 = 0.290429  -->
 
-    <string id="oXtopCenter">-0.021739</string>  <!--   Center Line Top     ->   (pixels_-5.3)                        / w_246 = -0.021739 -->
-    <string id="oXbtmCenter">-0.065217</string>  <!--    Center Line Btm    ->   (pixels_-16.0)                       / w_246 = -0.065217 -->
 
-    <string id="oXtopOffsets">0.043478</string>  <!--  Margin to Center**   ->   (pixels_10.7)                         / w_246 = 0.043478  -->
-    <string id="oXbtmOffsets">0.043478</string>  <!--  Margin to Ctr/Edge** ->   (pixels_10.7)                         / w_246 = 0.043478  -->
-    <!-- ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' -->
 
     <!--
+    <string id="oXtopCenter">-0.021739</string>  <!- -   Center Line Top     ->   (pixels_-5.3)                        / w_246 = -0.021739 - ->
+    <string id="oXtopOffsets">0.043478</string>  <!- -  Margin to Center**   ->   (pixels_10.7)                         / w_246 = 0.043478  - ->
+
     <string id="oYlbl_GF">0.064356</string>      <!- -   Labels Deg & SLD    ->   (pixels_14.2 + xt0Mid_6.5 )_20.7    / h_322 = 0.064356  - ->
     <string id="oYdat_GF">0.198020</string>      <!- -    Data Deg & SLD     ->   (pixels_42.8 + md6Mid_21.0 )_63.8   / h_322 = 0.198020  - ->
 
+    <string id="oY_____1">0.290429</string>      <!- -       Top Line        ->   (pixels_93.5)                       / h_322 = 0.290429  - ->
     <string id="oYlbl_PHT">0.374587</string>     <!- -  Labels HR Alt Pace   ->   (pixels_114.1 + xt0Mid_6.5  )_120.6 / h_322 = 0.374587  - ->
     <string id="oYdat_PHT">0.496700</string>     <!- -   Data HR Alt Pace    ->   (pixels_139.4 + lg4Mid_20.5 )_159.9  / h_322 = 0.496700  - ->
 
@@ -44,6 +41,10 @@ edge830.resourcePath = 				    $(base.resourcePath);devices/resources-rectangle-
 
     <string id="oY_____3">0.871287</string>      <!- -     Bottom Line       ->   (pixels_280.6)                       / h_322 = 0.871287  - ->
     <string id="oYdat_BT">0.935644</string>      <!- -   Data Batt & Tod     ->   (pixels_294.8 + xt0Mid_6.5  )_301.3 / h_322 = 0.935644  - ->
+
+    <string id="oXbtmCenter">-0.065217</string>  <!- -    Center Line Btm    ->   (pixels_-16.0)                       / w_246 = -0.065217 - ->
+    <string id="oXbtmOffsets">0.043478</string>  <!- -  Margin to Ctr/Edge** ->   (pixels_10.7)                         / w_246 = 0.043478  - ->
+    <!- - ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' - ->
     -->
 
 </resources>

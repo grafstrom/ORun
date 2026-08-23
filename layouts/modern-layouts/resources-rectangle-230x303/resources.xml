@@ -1,7 +1,6 @@
 <!-- ============================================================ 006-B2909-00 -->
 <!-- Device:rectangle-230x303   (part number 006-B2909-00)     (dcHeight:303 dcWidth:230)   -->
 <!-- Tested On:
-// recommend only one field
 
 edge130.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-230x303
 edge130plus.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-230x303
@@ -19,19 +18,16 @@ edge130plus.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/re
     <string id="notMonochrome">0</string>
 
     <!--  KEEP HIGH PRECISION:  1 pixel / 230 (screen width) = 0.004348 portion of screen  -->
-    <string id="oY_____1">0.300000</string>      <!-- 0.290429      Top Line        ->   (pixels_88.0)                       / h_303 = 0.290429  -->
-
-    <string id="oXtopCenter">-0.021739</string>  <!--   Center Line Top     ->   (pixels_-5.0)                        / w_230 = -0.021739 -->
-    <string id="oXbtmCenter">-0.065217</string>  <!--    Center Line Btm    ->   (pixels_-15.0)                       / w_230 = -0.065217 -->
-
-    <string id="oXtopOffsets">0.043478</string>  <!--  Margin to Center**   ->   (pixels_10.0)                         / w_230 = 0.043478  -->
-    <string id="oXbtmOffsets">0.043478</string>  <!--  Margin to Ctr/Edge** ->   (pixels_10.0)                         / w_230 = 0.043478  -->
-    <!-- ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' -->
-
+    
+    
     <!--
+    <string id="oXtopCenter">-0.021739</string>  <!- -   Center Line Top     ->   (pixels_-5.0)                        / w_230 = -0.021739 - ->
+    <string id="oXtopOffsets">0.043478</string>  <!- -  Margin to Center**   ->   (pixels_10.0)                         / w_230 = 0.043478  - ->
+    
     <string id="oYlbl_GF">0.064356</string>      <!- -   Labels Deg & SLD    ->   (pixels_6.0 + xt0Mid_13.5 )_19.5    / h_303 = 0.064356  - ->
     <string id="oYdat_GF">0.198020</string>      <!- -    Data Deg & SLD     ->   (pixels_31.0 + md6Mid_29.0 )_60.0   / h_303 = 0.198020  - ->
 
+    <string id="oY_____1">0.300000</string>      <!- - 0.290429      Top Line        ->   (pixels_88.0)                       / h_303 = 0.290429  - ->
     <string id="oYlbl_PHT">0.374587</string>     <!- -  Labels HR Alt Pace   ->   (pixels_100.0 + xt0Mid_13.5  )_113.5 / h_303 = 0.374587  - ->
     <string id="oYdat_PHT">0.496700</string>     <!- -   Data HR Alt Pace    ->   (pixels_133.0 + lg4Mid_17.5 )_150.5  / h_303 = 0.496700  - ->
 
@@ -41,7 +37,11 @@ edge130plus.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/re
 
     <string id="oY_____3">0.871287</string>      <!- -     Bottom Line       ->   (pixels_264.0)                       / h_303 = 0.871287  - ->
     <string id="oYdat_BT">0.935644</string>      <!- -   Data Batt & Tod     ->   (pixels_270.0 + xt0Mid_13.5  )_283.5 / h_303 = 0.935644  - ->
-    -->
+    
+    <string id="oXbtmCenter">-0.065217</string>  <!- -    Center Line Btm    ->   (pixels_-15.0)                       / w_230 = -0.065217 - ->
+    <string id="oXbtmOffsets">0.043478</string>  <!- -  Margin to Ctr/Edge** ->   (pixels_10.0)                         / w_230 = 0.043478  - ->
+    <!- - ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' - ->
+    - ->
 
 </resources>
 <!-- ============================================================ 006-B2909-00  device tested: edge130  -->

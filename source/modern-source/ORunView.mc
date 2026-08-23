@@ -19,8 +19,21 @@ class ORunView extends Ui.DataField {
 	var oYdat_BT;
 	var tooSmall = false; // rectangle-only: true when the dynamic layout can't fit without overlap
 	var xt0Mid;
+	var sm2Mid;
+	var md3Mid;
 	var lg4Mid;
 	var md6Mid;
+	var xt0VisualHeight;
+	var sm2VisualHeight;
+	var md3VisualHeight;
+	var lg4VisualHeight;
+	var md6VisualHeight;
+	var md6TrimTop;
+	var md6TrimBottom;
+	var xt0VisualCenterOffset;
+	var md6VisualCenterOffset;
+	var topDataFont = Gfx.FONT_NUMBER_MEDIUM;
+	var lowerDataFont = Gfx.FONT_LARGE;
 	var rezWidth;
 	var halfWitt;
 	var middlew;
@@ -53,6 +66,8 @@ class ORunView extends Ui.DataField {
 	const DEBUG_PRINT_MIDLINES = false;
 	const DEBUG_PRINT_ONLY_SELECTED_MIDLINE = false;
 	const LAYOUT_MIN_GAP = 0.0; // rectangle dynamic layout: minimum pixel clearance between any two elements
+	const TOP_BEARING_CAPACITY = 3.5;
+	const TOP_DISTANCE_CAPACITY = 4.0;
 	// mike note: ----------------------------- after this line variables are used for core functionality, NOT DEVICE SPECIFIC
 
 	// mike note: other view variables - colors
@@ -110,18 +125,23 @@ class ORunView extends Ui.DataField {
 									 // have the correct width in it at the top! 
 		System.println("<!-- (dcHeight:" + dc.getHeight() + " dcWidth:" + dc.getWidth() + ")   -->");
 
-		rezWidth = Ui.loadResource(Rez.Strings.width).toNumber(); //easier to use dc.getWidth(), but easier to debug/maintain if we load from resource file
-	    if (rezWidth != dc.getWidth()) {
-			Sys.println("ERROR: dc.getWidth() does not match Ui.loadResource(Rez.Strings.width).toNumber()");
-		}
 		if (shape == System.SCREEN_SHAPE_RECTANGLE) {
 			rezWidth = dcWidth;
-		}		
+		} else {
+			rezWidth = Ui.loadResource(Rez.Strings.width).toNumber();
+			if (rezWidth != dcWidth) {
+				Sys.println("ERROR: dc.getWidth() does not match Ui.loadResource(Rez.Strings.width).toNumber()");
+			}
+		}
 
 		// accurateHeight computed live (ascent+descent heuristic), no per-profile resource needed
 		var xt0Acc = Gfx.getFontAscent(Gfx.FONT_XTINY).toFloat();
 		if (Gfx.getFontDescent(Gfx.FONT_XTINY) != 0) {
 			xt0Acc = (Gfx.getFontAscent(Gfx.FONT_XTINY).toFloat() + Gfx.getFontDescent(Gfx.FONT_XTINY).toFloat()) * 0.78;
+		}
+		var sm2Acc = Gfx.getFontAscent(Gfx.FONT_SMALL).toFloat();
+		if (Gfx.getFontDescent(Gfx.FONT_SMALL) != 0) {
+			sm2Acc = (Gfx.getFontAscent(Gfx.FONT_SMALL).toFloat() + Gfx.getFontDescent(Gfx.FONT_SMALL).toFloat()) * 0.78;
 		}
 		var md3Acc = Gfx.getFontAscent(Gfx.FONT_MEDIUM).toFloat();
 		if (Gfx.getFontDescent(Gfx.FONT_MEDIUM) != 0) {
@@ -140,6 +160,7 @@ class ORunView extends Ui.DataField {
 		// 3. Find where the visual top of the numbers actually starts inside the raw block
 		//var TopPadding = (getFontHeight - accurateHeight) / 2;
 		var xt0TopPadding = (dc.getFontHeight(Gfx.FONT_XTINY).toFloat() - xt0Acc) / 2.0; // 
+		var sm2TopPadding = (dc.getFontHeight(Gfx.FONT_SMALL).toFloat() - sm2Acc) / 2.0;
 		var md3TopPadding = (dc.getFontHeight(Gfx.FONT_MEDIUM).toFloat() - md3Acc) / 2.0; // 
 		var lg4TopPadding = (dc.getFontHeight(Gfx.FONT_LARGE).toFloat() - lg4Acc) / 2.0; // 
 		var md6TopPadding = (dc.getFontHeight(Gfx.FONT_NUMBER_MEDIUM).toFloat() - md6Acc) / 2.0; // 
@@ -149,12 +170,26 @@ class ORunView extends Ui.DataField {
 					// Positive per-device values move XTINY text and its debug box up; negative values move them down.
 					var xt0MidShift = Ui.loadResource(Rez.Strings.xt0MidShift).toFloat();
 					xt0Mid = xt0TopPadding + xt0Acc/2 + xt0MidShift; // 
-					// Positive per-device ratios move LARGE text and its debug box up; negative ratios move them down.
-					var lg4MidShift = Ui.loadResource(Rez.Strings.lg4MidShiftRatio).toFloat() * dcHeight;
+					xt0VisualCenterOffset = -xt0MidShift;
+					sm2Mid = sm2TopPadding + sm2Acc/2;
+					md3Mid = md3TopPadding + md3Acc/2;
+					// Scale device calibration with the rasterized font, not the changing data-field allocation height.
+					var lg4MidShift = Ui.loadResource(Rez.Strings.lg4MidShiftRatio).toFloat() * lg4Acc;
 					lg4Mid = lg4TopPadding + lg4Acc/2 + lg4MidShift; // 
 					// Positive per-device values move NUMBER_MEDIUM text and its debug box up; negative values move them down.
 					var md6MidShift = Ui.loadResource(Rez.Strings.md6MidShift).toFloat();
 					md6Mid = md6TopPadding + md6Acc/2 + md6MidShift; // 
+					md6TrimTop = Ui.loadResource(Rez.Strings.md6PadTop).toFloat();
+					md6TrimBottom = Ui.loadResource(Rez.Strings.md6PadBot).toFloat();
+					md6VisualHeight = Gfx.getFontAscent(Gfx.FONT_NUMBER_MEDIUM).toFloat() - md6TrimTop - md6TrimBottom;
+					if (md6VisualHeight < 0) {
+						md6VisualHeight = 0;
+					}
+					md6VisualCenterOffset = ((md6TrimTop - md6TrimBottom) / 2.0) - md6MidShift;
+					xt0VisualHeight = xt0Acc;
+					sm2VisualHeight = sm2Acc;
+					md3VisualHeight = md3Acc;
+					lg4VisualHeight = lg4Acc;
 					//System.println("   Mids are xt0Mid_" + xt0Mid.format("%.1f") + ", lg4Mid_" + lg4Mid.format("%.1f") + ", md6Mid_" + md6Mid.format("%.1f") + " // add to get center line for each: ");
 		// ABOVE OVERRIDES FOR SPECIFIC DEVICES..............
 
@@ -162,8 +197,7 @@ class ORunView extends Ui.DataField {
 		
 		
 		if (shape == System.SCREEN_SHAPE_RECTANGLE) {
-			// calculate off single Y_____1 value
-			oY_____1 = 0.300000 * dcHeight;// * Ui.loadResource(Rez.Strings.oY_____1).toFloat()); // manual anchor per device; never computed
+			oY_____1 = 0.30 * dcHeight;
 
 			computeDynamicLayout(dcHeight, dcWidth);
 			XtopCenter = topCenter - halfWitt;
@@ -295,36 +329,43 @@ class ORunView extends Ui.DataField {
 	function computeDynamicLayout(dcHeight, dcWidth) {
 		tooSmall = false;
 
-		// budgeting uses ascent-only heights: this app's text never has descenders, so real ink is much shorter than ascent+descent
-		var packXt0 = Gfx.getFontAscent(Gfx.FONT_XTINY).toFloat();
-		var packLg4 = Gfx.getFontAscent(Gfx.FONT_LARGE).toFloat();
-		var packMd6 = Gfx.getFontAscent(Gfx.FONT_NUMBER_MEDIUM).toFloat();
-
-		// per-device trim: dead space observed above/below the digits within FONT_NUMBER_MEDIUM's ascent box
-		var md6PadTop = Ui.loadResource(Rez.Strings.md6PadTop).toFloat();
-		var md6PadBot = Ui.loadResource(Rez.Strings.md6PadBot).toFloat();
-		packMd6 -= (md6PadTop + md6PadBot);
-		if (packMd6 < 0) {
-			packMd6 = 0;
+		var packXt0 = xt0VisualHeight;
+		var packLg4 = lg4VisualHeight;
+		topDataFont = Gfx.FONT_NUMBER_MEDIUM;
+		var topDataVisualHeight = md6VisualHeight;
+		var topDataVisualCenterOffset = md6VisualCenterOffset;
+		if (topDataVisualHeight > oY_____1) {
+			topDataFont = Gfx.FONT_MEDIUM;
+			topDataVisualHeight = md3VisualHeight;
+			topDataVisualCenterOffset = 0;
+		}
+		if (topDataVisualHeight > oY_____1) {
+			topDataFont = Gfx.FONT_SMALL;
+			topDataVisualHeight = sm2VisualHeight;
+		}
+		if (topDataVisualHeight > oY_____1) {
+			topDataFont = Gfx.FONT_XTINY;
+			topDataVisualHeight = xt0VisualHeight;
+			topDataVisualCenterOffset = xt0VisualCenterOffset;
 		}
 
-		// Row A: 3 elastic gaps (top margin, label-to-data, data-to-divider1) share the space above oY_____1
-		var minContentTop = packXt0 + packMd6;
-		var leftoverTop = oY_____1 - minContentTop - (3 * LAYOUT_MIN_GAP);
-		if (leftoverTop < 0) {
-			tooSmall = true;
-			leftoverTop = 0; // clamp so positions stay well-defined; "too small" message takes over onUpdate
+		// Cap shared clearance so the glyph's top margin is never smaller than its clearance to Y_____1.
+		var topDataClearance = topDataVisualHeight * Ui.loadResource(Rez.Strings.topDataClearanceRatio).toFloat();
+		if (topDataClearance < 0) {
+			topDataClearance = 0;
 		}
-		var gapTop = LAYOUT_MIN_GAP + (leftoverTop / 3.0);
+		var maxTopDataClearance = (oY_____1 - topDataVisualHeight) / 2.0;
+		if (maxTopDataClearance < 0) {
+			maxTopDataClearance = 0;
+		}
+		if (topDataClearance > maxTopDataClearance) {
+			topDataClearance = maxTopDataClearance;
+		}
 
 		// Reserve relative capacity for 3.5 bearing digits on the left and 4 SLD digits on the right.
-		// The same inset anchors the top labels and bottom values; centerGap clears data from the divider.
+		// The same clearance separates the data's visible bottom and its inner horizontal edges from the dividers.
 		var edgeInset = dcWidth * Ui.loadResource(Rez.Strings.horizontalEdgeInset).toFloat();
-		var centerGap = gapTop;
-		var minCenterGap = dcWidth * 0.01;
-		if (centerGap < minCenterGap) {
-			centerGap = minCenterGap;
-		}
+		var centerGap = topDataClearance;
 		var usableWidth = dcWidth - (2 * edgeInset);
 		var topDataWidth = usableWidth - (2 * centerGap);
 		if (topDataWidth < 0) {
@@ -333,7 +374,7 @@ class ORunView extends Ui.DataField {
 		halfWitt = dcWidth / 2;
 		middlew = dcWidth / 3;
 		halfMiddleWidth = middlew / 2;
-		topCenter = edgeInset + (topDataWidth * (3.5 / 7.5)) + centerGap;
+		topCenter = edgeInset + (topDataWidth * (TOP_BEARING_CAPACITY / (TOP_BEARING_CAPACITY + TOP_DISTANCE_CAPACITY))) + centerGap;
 		bottomCenter = topCenter;
 		slbX1 = edgeInset;
 		sldX1 = dcWidth - edgeInset;
@@ -342,53 +383,56 @@ class ORunView extends Ui.DataField {
 		battX = edgeInset;
 		todX = dcWidth - edgeInset;
 		altX = middlew + halfMiddleWidth;
-		tidX = (halfWitt / 2) + 5;
-		distX = (3 * halfWitt / 2) - 5;
+		tidX = halfWitt / 2;
+		distX = 3 * halfWitt / 2;
 		paceX = 2 * middlew + halfMiddleWidth;
 
-		var cursorTop = gapTop;
-		oYlbl_GF = cursorTop + (packXt0 / 2.0);
-		cursorTop += packXt0;
-		cursorTop += gapTop;
-		oYdat_GF = cursorTop + (packMd6 / 2.0);
+		var dataVisualBottom = oY_____1 - topDataClearance;
+		var dataVisualCenter = dataVisualBottom - (topDataVisualHeight / 2.0);
+		oYdat_GF = dataVisualCenter - topDataVisualCenterOffset;
+		var labelRegionBottom = dataVisualCenter - (topDataVisualHeight / 2.0);
+		oYlbl_GF = labelRegionBottom / 2.0;
 
-		// Rows B/C/D + divider2/divider3: 8 elastic gaps share whatever space is left
-		var minContent = (3 * packXt0) + (2 * packLg4);
-		var availableLower = dcHeight - oY_____1;
-		var leftover = availableLower - minContent - (8 * LAYOUT_MIN_GAP);
-		if (leftover < 0) {
-			tooSmall = true;
-			leftover = 0; // clamp so positions stay well-defined; "too small" message takes over onUpdate
-		}
-
-		// override for gpsmap66... 
-		if (Ui.loadResource(Rez.Strings.lowercompressionok).toNumber() == 1) {
-			if (dcHeight == 122) {	// specific height for gpsmap66 3-field display
-				tooSmall = false;
+		lowerDataFont = Gfx.FONT_LARGE;
+		if (!computeLowerLayout(dcHeight, packXt0, packLg4)) {
+			lowerDataFont = Gfx.FONT_MEDIUM;
+			if (!computeLowerLayout(dcHeight, packXt0, md3VisualHeight)) {
+				lowerDataFont = Gfx.FONT_SMALL;
+				if (!computeLowerLayout(dcHeight, packXt0, sm2VisualHeight)) {
+					tooSmall = true;
+				}
 			}
 		}
-
+	}
+	// -------------------------------------------------------------------------------------------------------------------
+	function computeLowerLayout(dcHeight, labelHeight, dataHeight) {
+		var minContent = (3 * labelHeight) + (2 * dataHeight);
+		var leftover = (dcHeight - oY_____1) - minContent - (8 * LAYOUT_MIN_GAP);
+		if (leftover < 0) {
+			return false;
+		}
 		var gap = LAYOUT_MIN_GAP + (leftover / 8.0);
 
 		var cursor = oY_____1;
 		cursor += gap;
-		oYlbl_PHT = cursor + (packXt0 / 2.0);
-		cursor += packXt0;
+		oYlbl_PHT = cursor + (labelHeight / 2.0);
+		cursor += labelHeight;
 		cursor += gap;
-		oYdat_PHT = cursor + (packLg4 / 2.0);
-		cursor += packLg4;
+		oYdat_PHT = cursor + (dataHeight / 2.0);
+		cursor += dataHeight;
 		cursor += gap;
 		oY_____2 = cursor;
 		cursor += gap;
-		oYdat_TS = cursor + (packLg4 / 2.0);
-		cursor += packLg4;
+		oYdat_TS = cursor + (dataHeight / 2.0);
+		cursor += dataHeight;
 		cursor += gap;
-		oYlbl_TS = cursor + (packXt0 / 2.0);
-		cursor += packXt0;
+		oYlbl_TS = cursor + (labelHeight / 2.0);
+		cursor += labelHeight;
 		cursor += gap;
 		oY_____3 = cursor;
 		cursor += gap;
-		oYdat_BT = cursor + (packXt0 / 2.0);
+		oYdat_BT = cursor + (labelHeight / 2.0);
+		return true;
 	}
 	// -------------------------------------------------------------------------------------------------------------------
 	function getModelIdentifier() {
@@ -562,17 +606,17 @@ class ORunView extends Ui.DataField {
         if (notMonochrome) {
 			dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
 		}
-		dcdrawText( dc, slbX2, yBearingData, Gfx.FONT_NUMBER_MEDIUM, getBearing(), topAlign2 );
+		dcdrawText( dc, slbX2, yBearingData, topDataFont, getBearing(), topAlign2 );
         
 		// mike note: top right - SLD straight-line distance in ft or m (in med font)
 		dc.setColor( forecol, Gfx.COLOR_TRANSPARENT );
 		dcdrawText( dc, sldX1, yBearingLabel, Gfx.FONT_XTINY, sldLabel, topAlign3 );
-		dcdrawText( dc, sldX2, yBearingData, Gfx.FONT_NUMBER_MEDIUM, getSld(), topAlign4 );
+		dcdrawText( dc, sldX2, yBearingData, topDataFont, getSld(), topAlign4 );
         
         // ------------- ////////////////////////////////////
         // MIDDLE fields ////////////////////////////////////
         // ------------- ////////////////////////////////////
-		var midfont = Gfx.FONT_LARGE;
+		var midfont = lowerDataFont;
 
 		// mike note: middle left - heart rate in bpm
 		var hrString = (core.heart != null ? core.heart.toString() : "");
@@ -582,12 +626,7 @@ class ORunView extends Ui.DataField {
 		// mike note: middle center - altitude with unit conversion
 		dcdrawText( dc, altX, yMiddleLabel, Gfx.FONT_XTINY, altLabel, Gfx.TEXT_JUSTIFY_CENTER );
         var altNum = getAlt();
-        if (altNum > 9999) { // mike note: if elevation over 9999 (10k ft or m?), use smaller font (med instead of large)
-        	dcdrawText( dc, altX, 100, Gfx.FONT_MEDIUM, altNum.toString(), Gfx.TEXT_JUSTIFY_CENTER );
-        }
-        else {
-			dcdrawText( dc, altX, yMiddleData, midfont, altNum.toString(), Gfx.TEXT_JUSTIFY_CENTER );
-        }
+		dcdrawText( dc, altX, yMiddleData, midfont, altNum.toString(), Gfx.TEXT_JUSTIFY_CENTER );
         
 		// mike note: middle right - pace with unit conversion
 		dcdrawText( dc, paceX, yMiddleLabel, Gfx.FONT_XTINY, paceLabel, Gfx.TEXT_JUSTIFY_CENTER );
@@ -678,6 +717,10 @@ class ORunView extends Ui.DataField {
 		var yT = 0; // undo MID by subtracting it; use yT throughout the rest of this function
 		if (font == Gfx.FONT_XTINY) {
 			yT = y - xt0Mid;
+		} else if (font == Gfx.FONT_SMALL) {
+			yT = y - sm2Mid;
+		} else if (font == Gfx.FONT_MEDIUM) {
+			yT = y - md3Mid;
 		} else if (font == Gfx.FONT_LARGE) {
 			yT = y - lg4Mid;
 		} else if (font == Gfx.FONT_NUMBER_MEDIUM) {
@@ -740,14 +783,9 @@ class ORunView extends Ui.DataField {
 			if (font == Gfx.FONT_NUMBER_MEDIUM) {
 				// mirror the ascent-only, pad-trimmed box that computeDynamicVerticalLayout budgets for;
 				// top/bottom pads are independent, so offset each edge directly instead of re-centering
-				var md6PadTop = Ui.loadResource(Rez.Strings.md6PadTop).toFloat();
-				var md6PadBot = Ui.loadResource(Rez.Strings.md6PadBot).toFloat();
 				var unadjustedTop = yT + (rawHeight - ascent.toFloat()) / 2.0;
-				accurateHeight = ascent.toFloat() - md6PadTop - md6PadBot;
-				if (accurateHeight < 0) {
-					accurateHeight = 0;
-				}
-				visualY = unadjustedTop + md6PadTop;
+				accurateHeight = md6VisualHeight;
+				visualY = unadjustedTop + md6TrimTop;
 			}
 
 			// 4. use 'justifiedX' and 'rawWidth' for horizontal data, and the adjusted 'visualY' and 'accurateHeight' for vertical data.
