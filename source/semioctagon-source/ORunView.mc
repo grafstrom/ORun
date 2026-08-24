@@ -30,6 +30,7 @@ class ORunView extends ORunViewBase {
     var md6TrimBottom;
     var xt0VisualCenterOffset;
     var md6VisualCenterOffset;
+    var bearingDataFont = Gfx.FONT_NUMBER_MEDIUM;
     var topDataFont = Gfx.FONT_NUMBER_MEDIUM;
     var lowerDataFont = Gfx.FONT_LARGE;
 
@@ -57,6 +58,12 @@ class ORunView extends ORunViewBase {
     const LAYOUT_MIN_GAP = 0.0;
     const TOP_BEARING_CAPACITY = 3.5;
     const TOP_DISTANCE_CAPACITY = 4.0;
+    const TOP_DIVIDER_HEIGHT_RATIO = 0.43;
+    const TOP_CENTER_RATIO = 0.30;
+    const TOP_INDENT_REDUCTION_RATIO = 0.05;
+    const TOP_LABEL_GAP_RATIO = 0.03;
+    const BOTTOM_CENTER_LEFT_SHIFT_RATIO = 0.06;
+    const BOTTOM_TEXT_GAP_RATIO = 0.01;
 
     //! Initialize shared view state before configuring the semioctagon layout.
     function initialize() {
@@ -102,8 +109,16 @@ class ORunView extends ORunViewBase {
         md3VisualHeight = md3Acc;
         lg4VisualHeight = lg4Acc;
 
-        oY_____1 = 0.30 * dcHeight;
+        // Semioctagon screens give the top fields more height than rectangle layouts.
+        oY_____1 = TOP_DIVIDER_HEIGHT_RATIO * dcHeight;
         computeDynamicLayout(dcHeight, dcWidth);
+        Sys.println("SEMIO_BASELINE " + dcWidth + "x" + dcHeight +
+            " bottom=" + (bottomCenter / dcWidth) +
+            " topXGap=" + ((sldX2 - topCenter) / dcWidth) +
+            " topYGap=" + ((oY_____1 - (oYdat_GF + md6VisualCenterOffset + (md6VisualHeight / 2.0))) / dcHeight) +
+            " lower=" + (oYlbl_PHT / dcHeight) + "," + (oYdat_PHT / dcHeight) + "," +
+            (oY_____2 / dcHeight) + "," + (oYdat_TS / dcHeight) + "," +
+            (oYlbl_TS / dcHeight) + "," + (oY_____3 / dcHeight) + "," + (oYdat_BT / dcHeight));
         slbY1 = oYlbl_GF;
         slbY2 = oYdat_GF;
         sldY1 = oYlbl_GF;
@@ -122,25 +137,20 @@ class ORunView extends ORunViewBase {
     //! Select fonts and derive field positions from the available screen dimensions.
     function computeDynamicLayout(dcHeight, dcWidth) {
         tooSmall = false;
+        bearingDataFont = Gfx.FONT_NUMBER_MEDIUM;
         topDataFont = Gfx.FONT_NUMBER_MEDIUM;
         var topDataVisualHeight = md6VisualHeight;
         var topDataVisualCenterOffset = md6VisualCenterOffset;
         if (topDataVisualHeight > oY_____1) {
+            bearingDataFont = Gfx.FONT_MEDIUM;
             topDataFont = Gfx.FONT_MEDIUM;
             topDataVisualHeight = md3VisualHeight;
             topDataVisualCenterOffset = 0;
         }
-        if (topDataVisualHeight > oY_____1) {
-            topDataFont = Gfx.FONT_SMALL;
-            topDataVisualHeight = sm2VisualHeight;
-        }
-        if (topDataVisualHeight > oY_____1) {
-            topDataFont = Gfx.FONT_XTINY;
-            topDataVisualHeight = xt0VisualHeight;
-            topDataVisualCenterOffset = xt0VisualCenterOffset;
-        }
 
         var topDataClearance = topDataVisualHeight * Ui.loadResource(Rez.Strings.topDataClearanceRatio).toFloat();
+        // Tighten both the center indentation and clearance above the top divider.
+        topDataClearance -= dcWidth * TOP_INDENT_REDUCTION_RATIO;
         if (topDataClearance < 0) {
             topDataClearance = 0;
         }
@@ -162,14 +172,20 @@ class ORunView extends ORunViewBase {
         halfWidth = dcWidth / 2;
         thirdWidth = dcWidth / 3;
         halfThirdWidth = thirdWidth / 2;
-        topCenter = edgeInset + (topDataWidth * (TOP_BEARING_CAPACITY / (TOP_BEARING_CAPACITY + TOP_DISTANCE_CAPACITY))) + centerGap;
-        bottomCenter = topCenter;
-        slbX1 = edgeInset;
-        sldX1 = dcWidth - edgeInset;
+        var automaticCenter = edgeInset + (topDataWidth * (TOP_BEARING_CAPACITY / (TOP_BEARING_CAPACITY + TOP_DISTANCE_CAPACITY))) + centerGap;
+        // Keep the bottom split near its automatic position, shifted left by only 6%.
+        bottomCenter = automaticCenter - (dcWidth * BOTTOM_CENTER_LEFT_SHIFT_RATIO);
+        // Semioctagon top fields use a fixed split 30% across the display.
+        topCenter = dcWidth * TOP_CENTER_RATIO;
+        // Keep both inward-facing labels clear of the top divider.
+        var topLabelGap = dcWidth * TOP_LABEL_GAP_RATIO;
+        slbX1 = topCenter - topLabelGap;
+        sldX1 = topCenter + topLabelGap;
         slbX2 = topCenter - centerGap;
         sldX2 = topCenter + centerGap;
-        battX = edgeInset;
-        todX = dcWidth - edgeInset;
+        // Leave a small gap around the bottom divider while keeping inward justification.
+        battX = bottomCenter - (dcWidth * BOTTOM_TEXT_GAP_RATIO);
+        todX = bottomCenter + (dcWidth * BOTTOM_TEXT_GAP_RATIO);
         altX = thirdWidth + halfThirdWidth;
         tidX = halfWidth / 2;
         distX = 3 * halfWidth / 2;
@@ -247,7 +263,7 @@ class ORunView extends ORunViewBase {
         if (notMonochrome) {
             dc.setColor(Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT);
         }
-        dcdrawText(dc, slbX2, slbY2, topDataFont, getBearing(), Gfx.TEXT_JUSTIFY_RIGHT);
+        dcdrawText(dc, slbX2, slbY2, bearingDataFont, getBearing(), Gfx.TEXT_JUSTIFY_RIGHT);
         dc.setColor(forecol, Gfx.COLOR_TRANSPARENT);
         dcdrawText(dc, sldX1, sldY1, Gfx.FONT_XTINY, sldLabel, Gfx.TEXT_JUSTIFY_LEFT);
         dcdrawText(dc, sldX2, sldY2, topDataFont, getSld(), Gfx.TEXT_JUSTIFY_LEFT);
