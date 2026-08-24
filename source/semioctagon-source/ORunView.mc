@@ -4,54 +4,67 @@ using Toybox.Graphics as Gfx;
 
 class ORunView extends ORunViewBase {
 
-    var oY_____1;
-    var oYlbl_GF;
-    var oYdat_GF;
-    var oYlbl_PHT;
-    var oYdat_PHT;
-    var oY_____2;
-    var oYdat_TS;
-    var oYlbl_TS;
-    var oY_____3;
-    var oYdat_BT;
-    var changeLayout = false;
-    var compactSldThreshold = 0;
+    // Unlike the legacy view, which selects hard-coded pixel coordinates for a
+    // short list of named devices, this semioctagon layout scales shared width
+    // and height ratios to a matching full-screen device profile. Unsupported
+    // viewport dimensions are rejected instead of being given a partial layout.
+    // The clipped upper-right edge also requires value-dependent handling: the
+    // straight-line-distance value switches from NUMBER_MEDIUM to MEDIUM at the
+    // device resource threshold, and selected digit ranges shift its X anchor
+    // left so the value remains inside the available top region.
 
-    var xt0Mid;
-    var md3Mid;
-    var md6Mid;
-    var md6VisualHeight;
-    var md6VisualCenterOffset;
+    // TODO: Reduce the activity-distance font size when mileage no longer fits inside its grid cell.
+    // TODO: Reduce the top-distance font size when it no longer fits.
+    // (Mike can work on this after a week or so, but will require extra time to check each device)
 
-    var rezWidth;
-    var halfWidth;
-    var thirdWidth;
-    var halfThirdWidth;
-    var topCenter;
-    var bottomCenter;
-    var slbX1;
-    var slbX2;
-    var slbY1;
-    var slbY2;
-    var sldX1;
-    var sldX2;
-    var sldY1;
-    var sldY2;
-    var altX;
-    var tidX;
-    var distX;
-    var paceX;
-    var todX;
-    var battX;
+    var Y_____1; // Y coordinate of the divider below the bearing and straight-line-distance region.
+    var Ylbl_GF; // Y center shared by the top bearing and straight-line-distance labels.
+    var Ydat_GF; // Y center shared by the top bearing and straight-line-distance values.
+    var Ylbl_PHT; // Y center shared by the heart-rate, altitude, and pace labels.
+    var Ydat_PHT; // Y center shared by the heart-rate, altitude, and pace values.
+    var Y_____2; // Y coordinate of the divider below the heart-rate, altitude, and pace region.
+    var Ydat_TS; // Y center shared by the timer and activity-distance values.
+    var Ylbl_TS; // Y center shared by the timer and activity-distance labels.
+    var Y_____3; // Y coordinate of the divider above the battery and clock region.
+    var Ydat_BT; // Y center shared by the battery percentage and clock text.
+    var changeLayout = false; // Whether the assigned viewport differs from the supported full-screen profile.
+    var compactSldThreshold = 0; // Distance at which the top-right value switches to a more compact layout.
+
+    var xt0Mid; // Baseline offset that visually centers the extra-tiny font on a Y coordinate.
+    var md3Mid; // Baseline offset that visually centers the medium font on a Y coordinate.
+    var md6Mid; // Baseline offset that visually centers the number-medium font on a Y coordinate.
+    var md6VisualHeight; // Visible number-medium height after profile-specific trimming.
+    var md6VisualCenterOffset; // Profile correction from the number-medium font-box center to its visual center.
+
+    var rezWidth; // Active viewport width used when drawing horizontal dividers.
+    var halfWidth; // Half of the active viewport width.
+    var thirdWidth; // Width of one column in the three-column middle region.
+    var halfThirdWidth; // Horizontal center of the first middle-region column.
+    var topCenter; // X coordinate of the divider between the two top fields.
+    var bottomCenter; // X coordinate of the divider between battery and clock text.
+    var slbX1; // X anchor for the straight-line-bearing label.
+    var slbX2; // X anchor for the straight-line-bearing value.
+    var slbY1; // Y center for the straight-line-bearing label.
+    var slbY2; // Y center for the straight-line-bearing value.
+    var sldX1; // X anchor for the straight-line-distance label.
+    var sldX2; // X anchor for the straight-line-distance value.
+    var sldY1; // Y center for the straight-line-distance label.
+    var sldY2; // Y center for the straight-line-distance value.
+    var altX; // X center of the altitude column.
+    var tidX; // X center of the elapsed-time field.
+    var distX; // X center of the activity-distance field.
+    var paceX; // X center of the pace column.
+    var todX; // X anchor for the time-of-day text.
+    var battX; // X anchor for the battery-percentage text.
 
     // Top-region geometry is width/height proportional; profile resources can
     // reduce both data gaps without changing the shared centerline or labels.
     const TOP_DIVIDER_HEIGHT_RATIO = 0.43;
     const TOP_CENTER_RATIO = 0.30;
-    const TOP_DATA_HORIZONTAL_GAP_RATIO = 0.042273; // 0.052273;
+    const TOP_DATA_HORIZONTAL_GAP_RATIO = 0.042273;
     const TOP_DATA_HORIZONTAL_ADJUSTMENT_RATIO = 0.01;
-    const TOP_DATA_VERTICAL_GAP_RATIO = 0.042273; // 0.052273;
-    const TOP_LABEL_GAP_RATIO = 0.042273; // 0.03;
+    const TOP_DATA_VERTICAL_GAP_RATIO = 0.042273;
+    const TOP_LABEL_GAP_RATIO = 0.042273;
     const TOP_LABEL_DOWN_SHIFT_RATIO = 0.03;
     // Four-digit SLD values need extra room against the clipped upper-right edge.
     const FOUR_DIGIT_SLD_LEFT_SHIFT_RATIO = 0.02;
@@ -62,13 +75,13 @@ class ORunView extends ORunViewBase {
     const LOWER_DATA_PHT_RATIO = 0.597983;
     const LOWER_DIVIDER_RATIO = 0.660923;
     const LOWER_DATA_TS_RATIO = 0.723864;
-    const LOWER_LABEL_TS_RATIO = 0.831770; // 0.837770
+    const LOWER_LABEL_TS_RATIO = 0.831770;
     const BOTTOM_DIVIDER_RATIO = 0.891847;
     const BOTTOM_DATA_RATIO = 0.945923;
 
     // Bottom battery/time anchors face inward around a dedicated vertical split.
-    const BOTTOM_CENTER_RATIO = 0.399818; // 0.409818
-    const BOTTOM_TEXT_GAP_RATIO = 0.03; // 0.04
+    const BOTTOM_CENTER_RATIO = 0.399818;
+    const BOTTOM_TEXT_GAP_RATIO = 0.03;
 
     //! Initialize shared view state before configuring the semioctagon layout.
     function initialize() {
@@ -121,14 +134,14 @@ class ORunView extends ORunViewBase {
 
         // The upper divider owns the top region; all remaining anchors are derived
         // from the same live dimensions after the profile-size check succeeds.
-        oY_____1 = TOP_DIVIDER_HEIGHT_RATIO * dcHeight;
+        Y_____1 = TOP_DIVIDER_HEIGHT_RATIO * dcHeight;
         computeLayout(dcHeight, dcWidth);
 
         // Preserve the common label/data coordinate names used by other shapes.
-        slbY1 = oYlbl_GF;
-        slbY2 = oYdat_GF;
-        sldY1 = oYlbl_GF;
-        sldY2 = oYdat_GF;
+        slbY1 = Ylbl_GF;
+        slbY2 = Ydat_GF;
+        sldY1 = Ylbl_GF;
+        sldY2 = Ydat_GF;
     }
 
     //! Estimate visible glyph height while excluding excess font-box padding.
@@ -173,23 +186,23 @@ class ORunView extends ORunViewBase {
         // Anchor the visible bottom of both top values above the divider, then
         // compensate for asymmetric NUMBER_MEDIUM padding around its glyphs.
         var topDataVerticalGap = dcHeight * (TOP_DATA_VERTICAL_GAP_RATIO - topDataVerticalAdjustment);
-        var dataVisualCenter = oY_____1 - topDataVerticalGap - (md6VisualHeight / 2.0);
-        oYdat_GF = dataVisualCenter - md6VisualCenterOffset;
+        var dataVisualCenter = Y_____1 - topDataVerticalGap - (md6VisualHeight / 2.0);
+        Ydat_GF = dataVisualCenter - md6VisualCenterOffset;
 
         // Center both tiny labels in the remaining upper space, with a deliberate
         // downward correction that keeps them visually associated with their data.
         var labelRegionBottom = dataVisualCenter - (md6VisualHeight / 2.0);
-        oYlbl_GF = (labelRegionBottom / 2.0) + (dcHeight * TOP_LABEL_DOWN_SHIFT_RATIO);
+        Ylbl_GF = (labelRegionBottom / 2.0) + (dcHeight * TOP_LABEL_DOWN_SHIFT_RATIO);
 
         // Fixed height ratios replace font-fit retries; every supported profile
         // uses FONT_MEDIUM data and the same proportional band structure.
-        oYlbl_PHT = dcHeight * LOWER_LABEL_PHT_RATIO;
-        oYdat_PHT = dcHeight * LOWER_DATA_PHT_RATIO;
-        oY_____2 = dcHeight * LOWER_DIVIDER_RATIO;
-        oYdat_TS = dcHeight * LOWER_DATA_TS_RATIO;
-        oYlbl_TS = dcHeight * LOWER_LABEL_TS_RATIO;
-        oY_____3 = dcHeight * BOTTOM_DIVIDER_RATIO;
-        oYdat_BT = dcHeight * BOTTOM_DATA_RATIO;
+        Ylbl_PHT = dcHeight * LOWER_LABEL_PHT_RATIO;
+        Ydat_PHT = dcHeight * LOWER_DATA_PHT_RATIO;
+        Y_____2 = dcHeight * LOWER_DIVIDER_RATIO;
+        Ydat_TS = dcHeight * LOWER_DATA_TS_RATIO;
+        Ylbl_TS = dcHeight * LOWER_LABEL_TS_RATIO;
+        Y_____3 = dcHeight * BOTTOM_DIVIDER_RATIO;
+        Ydat_BT = dcHeight * BOTTOM_DATA_RATIO;
     }
 
     //! Clear and redraw the complete semioctagon data-field display.
@@ -207,18 +220,18 @@ class ORunView extends ORunViewBase {
         // Thick lines bound the major top and bottom regions.
         dc.setColor(linecol, Gfx.COLOR_TRANSPARENT);
         dc.setPenWidth(3);
-        dc.drawLine(0, oY_____1, rezWidth, oY_____1);
-        dc.drawLine(0, oY_____3, rezWidth, oY_____3);
+        dc.drawLine(0, Y_____1, rezWidth, Y_____1);
+        dc.drawLine(0, Y_____3, rezWidth, Y_____3);
 
         // Thin lines subdivide the five middle data fields.
         dc.setPenWidth(1);
-        dc.drawLine(topCenter, oY_____1, topCenter, 0); // top center line make thin here
+        dc.drawLine(topCenter, Y_____1, topCenter, 0); // top center line make thin here
 
-        dc.drawLine(0, oY_____2, rezWidth, oY_____2);
-        dc.drawLine(thirdWidth, oY_____1, thirdWidth, oY_____2);
-        dc.drawLine(2 * thirdWidth, oY_____1, 2 * thirdWidth, oY_____2);
-        dc.drawLine(halfWidth, oY_____2, halfWidth, oY_____3);
-        dc.drawLine(bottomCenter, oY_____3, bottomCenter, dc.getHeight());
+        dc.drawLine(0, Y_____2, rezWidth, Y_____2);
+        dc.drawLine(thirdWidth, Y_____1, thirdWidth, Y_____2);
+        dc.drawLine(2 * thirdWidth, Y_____1, 2 * thirdWidth, Y_____2);
+        dc.drawLine(halfWidth, Y_____2, halfWidth, Y_____3);
+        dc.drawLine(bottomCenter, Y_____3, bottomCenter, dc.getHeight());
         dc.setColor(forecol, Gfx.COLOR_TRANSPARENT);
 
         dcdrawText(dc, slbX1, slbY1, Gfx.FONT_XTINY, slbLabel, Gfx.TEXT_JUSTIFY_RIGHT);
@@ -253,23 +266,23 @@ class ORunView extends ORunViewBase {
         dcdrawText(dc, sldDataX, sldY2, sldDataFont, sldString, Gfx.TEXT_JUSTIFY_LEFT);
 
         var heartString = core.heart != null ? core.heart.toString() : "";
-        dcdrawText(dc, halfThirdWidth, oYlbl_PHT, Gfx.FONT_XTINY, hbtLabel, Gfx.TEXT_JUSTIFY_CENTER);
-        dcdrawText(dc, halfThirdWidth, oYdat_PHT, Gfx.FONT_MEDIUM, heartString, Gfx.TEXT_JUSTIFY_CENTER);
-        dcdrawText(dc, altX, oYlbl_PHT, Gfx.FONT_XTINY, altLabel, Gfx.TEXT_JUSTIFY_CENTER);
-        dcdrawText(dc, altX, oYdat_PHT, Gfx.FONT_MEDIUM, getAlt().toString(), Gfx.TEXT_JUSTIFY_CENTER);
-        dcdrawText(dc, paceX, oYlbl_PHT, Gfx.FONT_XTINY, paceLabel, Gfx.TEXT_JUSTIFY_CENTER);
-        dcdrawText(dc, paceX, oYdat_PHT, Gfx.FONT_MEDIUM, getPace(), Gfx.TEXT_JUSTIFY_CENTER);
-        dcdrawText(dc, tidX, oYdat_TS, Gfx.FONT_MEDIUM, getTid(), Gfx.TEXT_JUSTIFY_CENTER);
-        dcdrawText(dc, tidX, oYlbl_TS, Gfx.FONT_XTINY, tmrLabel, Gfx.TEXT_JUSTIFY_CENTER);
-        dcdrawText(dc, distX, oYdat_TS, Gfx.FONT_MEDIUM, getDist(), Gfx.TEXT_JUSTIFY_CENTER);
-        dcdrawText(dc, distX, oYlbl_TS, Gfx.FONT_XTINY, distLabel, Gfx.TEXT_JUSTIFY_CENTER);
-        dcdrawText(dc, todX, oYdat_BT, Gfx.FONT_XTINY, getTod(), Gfx.TEXT_JUSTIFY_LEFT);
+        dcdrawText(dc, halfThirdWidth, Ylbl_PHT, Gfx.FONT_XTINY, hbtLabel, Gfx.TEXT_JUSTIFY_CENTER);
+        dcdrawText(dc, halfThirdWidth, Ydat_PHT, Gfx.FONT_MEDIUM, heartString, Gfx.TEXT_JUSTIFY_CENTER);
+        dcdrawText(dc, altX, Ylbl_PHT, Gfx.FONT_XTINY, altLabel, Gfx.TEXT_JUSTIFY_CENTER);
+        dcdrawText(dc, altX, Ydat_PHT, Gfx.FONT_MEDIUM, getAlt().toString(), Gfx.TEXT_JUSTIFY_CENTER);
+        dcdrawText(dc, paceX, Ylbl_PHT, Gfx.FONT_XTINY, paceLabel, Gfx.TEXT_JUSTIFY_CENTER);
+        dcdrawText(dc, paceX, Ydat_PHT, Gfx.FONT_MEDIUM, getPace(), Gfx.TEXT_JUSTIFY_CENTER);
+        dcdrawText(dc, tidX, Ydat_TS, Gfx.FONT_MEDIUM, getTid(), Gfx.TEXT_JUSTIFY_CENTER);
+        dcdrawText(dc, tidX, Ylbl_TS, Gfx.FONT_XTINY, tmrLabel, Gfx.TEXT_JUSTIFY_CENTER);
+        dcdrawText(dc, distX, Ydat_TS, Gfx.FONT_MEDIUM, getDist(), Gfx.TEXT_JUSTIFY_CENTER);
+        dcdrawText(dc, distX, Ylbl_TS, Gfx.FONT_XTINY, distLabel, Gfx.TEXT_JUSTIFY_CENTER);
+        dcdrawText(dc, todX, Ydat_BT, Gfx.FONT_XTINY, getTod(), Gfx.TEXT_JUSTIFY_LEFT);
 
         var battery = Sys.getSystemStats().battery.toNumber();
         if (notMonochrome) {
             setBatteryColor(dc, battery);
         }
-        dcdrawText(dc, battX, oYdat_BT, Gfx.FONT_XTINY, battery + "%", Gfx.TEXT_JUSTIFY_RIGHT);
+        dcdrawText(dc, battX, Ydat_BT, Gfx.FONT_XTINY, battery + "%", Gfx.TEXT_JUSTIFY_RIGHT);
     
         Sys.println(memstr()); // checked on instinct2, edge_1000, approachs60 all >40% ok
     }

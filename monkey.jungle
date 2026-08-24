@@ -38,8 +38,13 @@ vivoactive_hr.resourcePath =    $(base.resourcePath);layouts/legacy-layouts/reso
 
 # Modern resource profiles, should allow for "automatic-compatibility" with new models, some of the time
 
+# instinctcrossover is actually a semi-octagonal watch, but has more similarities to round watch, so is handled here
+instinctcrossover.sourcePath =          source/common;source/round-source
+instinctcrossover.resourcePath =        $(base.resourcePath);layouts/modern-layouts/resources-round-176x176-crossover
+
 # round-208x208 // g2g
 fr55.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-208x208
+
 # round-218x218 // g2g
 fr255s.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-218x218
 fr255sm.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-218x218
@@ -137,6 +142,9 @@ venu.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resource
 venud.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-round-390x390-d2air
 venu3s.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-round-390x390-d2air
 vivoactive5.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-round-390x390-d2air
+instinct3amoled45mm.resourcePath =	    $(base.resourcePath);layouts/modern-layouts/resources-round-390x390-d2air 
+instinctcrossoveramoled.resourcePath =	$(base.resourcePath);layouts/modern-layouts/resources-round-390x390-d2air 
+
 # round-390x390 fr165 // g2g
 fr165.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-round-390x390-fr165
 fr165m.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-round-390x390-fr165
@@ -186,18 +194,18 @@ fenix847mm.resourcePath =			    $(base.resourcePath);layouts/modern-layouts/reso
 #####################################################################################################################
 
 
-# semioctagon devices use their dedicated automatic layout source
+# semioctagon devices use their dedicated automatic layout source ==========================
 
 # semioctagon-176x176 
-descentg1.sourcePath =                  source/common;source/semioctagon-source
+descentg1.sourcePath =            source/common;source/semioctagon-source
+instinct2.sourcePath =            source/common;source/semioctagon-source
+instinct2x.sourcePath =           source/common;source/semioctagon-source
+instinct3solar45mm.sourcePath =   source/common;source/semioctagon-source
+instincte45mm.sourcePath =        source/common;source/semioctagon-source
 descentg1.resourcePath =                $(base.resourcePath);layouts/modern-layouts/resources-semioctagon-176x176
-instinct2.sourcePath =                  source/common;source/semioctagon-source
 instinct2.resourcePath =                $(base.resourcePath);layouts/modern-layouts/resources-semioctagon-176x176
-instinct2x.sourcePath =                 source/common;source/semioctagon-source
 instinct2x.resourcePath =               $(base.resourcePath);layouts/modern-layouts/resources-semioctagon-176x176
-instinct3solar45mm.sourcePath =         source/common;source/semioctagon-source
 instinct3solar45mm.resourcePath =       $(base.resourcePath);layouts/modern-layouts/resources-semioctagon-176x176
-instincte45mm.sourcePath =              source/common;source/semioctagon-source
 instincte45mm.resourcePath =            $(base.resourcePath);layouts/modern-layouts/resources-semioctagon-176x176
 
 # semioctagon-163x156
@@ -208,12 +216,15 @@ instincte40mm.sourcePath =              source/common;source/semioctagon-source
 instincte40mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-semioctagon-166x166
 
 
+# rectangular devices use calculated metrics ===========================================
 
 # rectangle-200x265
 edge520plus.sourcePath =  		source/common;source/rectangle-source
 edge820.sourcePath =      		source/common;source/rectangle-source
+edge_520.sourcePath =      		source/common;source/rectangle-source
 edge520plus.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-200x265
 edge820.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-200x265
+edge_520.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-200x265
 
 edge130.sourcePath =      		source/common;source/rectangle-source
 edge130plus.sourcePath =  		source/common;source/rectangle-source
@@ -258,7 +269,11 @@ edge1030.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resource
 edge1030bontrager.resourcePath = 		$(base.resourcePath);layouts/modern-layouts/resources-rectangle-282x470
 edge1030plus.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-rectangle-282x470
 edge1040.sourcePath =          source/common;source/rectangle-source
-edge1040.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-282x470_edge1040
+edge1040.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-282x470-edge1040
+# # gpsmaph1 seems to not allow single-fields, and currently is too tight on other layouts to support any working display
+# # it needs more work before implementation... tried with 282x470, and 280x800... no luck
+# gpsmaph1.sourcePath =     		source/common;source/rectangle-source
+# gpsmaph1.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-282x470-edge1040
 
 venusq2.sourcePath =      		source/common;source/rectangle-source
 venusq2m.sourcePath =     		source/common;source/rectangle-source
@@ -269,5 +284,12 @@ edge1050.sourcePath =     		source/common;source/rectangle-source
 edge1050.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-480x800
 montana7xx.sourcePath =   		source/common;source/rectangle-source
 montana7xx.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-480x800-montana7
+
+# # added edge550 and edge850 late, although layout shows unlike gpsmaph1, the layout is not scaled properly...
+# # needs more work before implementation
+# edge550.sourcePath =     		source/common;source/rectangle-source
+# edge850.sourcePath =     		source/common;source/rectangle-source
+# edge550.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-420x600
+# edge850.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-420x600
 
 

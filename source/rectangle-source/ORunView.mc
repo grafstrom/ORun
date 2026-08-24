@@ -4,62 +4,75 @@ using Toybox.Graphics as Gfx;
 
 class ORunView extends ORunViewBase {
 
-    var oY_____1;
-    var oYlbl_GF;
-    var oYdat_GF;
-    var oYlbl_PHT;
-    var oYdat_PHT;
-    var oY_____2;
-    var oYdat_TS;
-    var oYlbl_TS;
-    var oY_____3;
-    var oYdat_BT;
-    var tooSmall = false;
+    // Unlike the legacy view, which selects hard-coded pixel coordinates for a
+    // short list of named devices, this rectangle layout is calculated from the
+    // live viewport dimensions and measured visual font heights. It starts with
+    // the preferred fonts, falls back through smaller fonts when necessary, and
+    // derives the row centers, divider positions, and column anchors from the
+    // available space. This lets one implementation support multiple rectangle
+    // sizes, provided the calculated content satisfies the fit checks; otherwise
+    // the view reports that the assigned layout is too small.
 
-    var xt0Mid;
-    var sm2Mid;
-    var md3Mid;
-    var lg4Mid;
-    var md6Mid;
-    var xt0VisualHeight;
-    var sm2VisualHeight;
-    var md3VisualHeight;
-    var lg4VisualHeight;
-    var md6VisualHeight;
-    var md6TrimTop;
-    var md6TrimBottom;
-    var xt0VisualCenterOffset;
-    var md6VisualCenterOffset;
-    var topDataFont = Gfx.FONT_NUMBER_MEDIUM;
-    var lowerDataFont = Gfx.FONT_LARGE;
+    // TODO: Reduce the activity-distance font size when mileage no longer fits inside its grid cell.
+    // TODO: Reduce the top-distance font size when it no longer fits. 
+    // (Mike can work on this after a week or so, but will require extra time to check each device)
 
-    var rezWidth;
-    var halfWitt;
-    var middlew;
-    var halfMiddleWidth;
-    var topCenter;
-    var bottomCenter;
-    var slbX1;
-    var slbX2;
-    var slbY1;
-    var slbY2;
-    var sldX1;
-    var sldX2;
-    var sldY1;
-    var sldY2;
-    var altX;
-    var tidX;
-    var distX;
-    var paceX;
-    var todX;
-    var battX;
+    var Y_____1; // Y coordinate of the divider below the bearing and straight-line-distance region.
+    var Ylbl_GF; // Y center shared by the top bearing and straight-line-distance labels.
+    var Ydat_GF; // Y center shared by the top bearing and straight-line-distance values.
+    var Ylbl_PHT; // Y center shared by the heart-rate, altitude, and pace labels.
+    var Ydat_PHT; // Y center shared by the heart-rate, altitude, and pace values.
+    var Y_____2; // Y coordinate of the divider below the heart-rate, altitude, and pace region.
+    var Ydat_TS; // Y center shared by the timer and activity-distance values.
+    var Ylbl_TS; // Y center shared by the timer and activity-distance labels.
+    var Y_____3; // Y coordinate of the divider above the battery and clock region.
+    var Ydat_BT; // Y center shared by the battery percentage and clock text.
+    var tooSmall = false; // Whether the viewport cannot fit even the smallest lower-region font.
+
+    var xt0Mid; // Baseline offset that visually centers the extra-tiny font on a Y coordinate.
+    var sm2Mid; // Baseline offset that visually centers the small font on a Y coordinate.
+    var md3Mid; // Baseline offset that visually centers the medium font on a Y coordinate.
+    var lg4Mid; // Baseline offset that visually centers the large font on a Y coordinate.
+    var md6Mid; // Baseline offset that visually centers the number-medium font on a Y coordinate.
+    var xt0VisualHeight; // Measured visible height of the extra-tiny font.
+    var sm2VisualHeight; // Measured visible height of the small font.
+    var md3VisualHeight; // Measured visible height of the medium font.
+    var lg4VisualHeight; // Measured visible height of the large font.
+    var md6VisualHeight; // Visible number-medium height after profile-specific trimming.
+    var md6TrimTop; // Profile-specific invisible top padding removed from number-medium text.
+    var md6TrimBottom; // Profile-specific invisible bottom padding removed from number-medium text.
+    var xt0VisualCenterOffset; // Profile correction from the extra-tiny font-box center to its visual center.
+    var md6VisualCenterOffset; // Profile correction from the number-medium font-box center to its visual center.
+    var topDataFont = Gfx.FONT_NUMBER_MEDIUM; // Largest font that fits the top data region.
+    var lowerDataFont = Gfx.FONT_LARGE; // Largest font that fits the middle and timer-distance regions.
+
+    var rezWidth; // Active viewport width used when drawing horizontal dividers.
+    var halfWitt; // Half of the active viewport width.
+    var middlew; // Width of one column in the three-column middle region.
+    var halfMiddleWidth; // Horizontal center of the first middle-region column.
+    var topCenter; // X coordinate of the divider between the two top fields.
+    var bottomCenter; // X coordinate of the divider between battery and clock text.
+    var slbX1; // X anchor for the straight-line-bearing label.
+    var slbX2; // X anchor for the straight-line-bearing value.
+    var slbY1; // Y center for the straight-line-bearing label.
+    var slbY2; // Y center for the straight-line-bearing value.
+    var sldX1; // X anchor for the straight-line-distance label.
+    var sldX2; // X anchor for the straight-line-distance value.
+    var sldY1; // Y center for the straight-line-distance label.
+    var sldY2; // Y center for the straight-line-distance value.
+    var altX; // X center of the altitude column.
+    var tidX; // X center of the elapsed-time field.
+    var distX; // X center of the activity-distance field.
+    var paceX; // X center of the pace column.
+    var todX; // X anchor for the time-of-day text.
+    var battX; // X anchor for the battery-percentage text.
 
     // Draw measured text bounds and anchor lines when calibrating font placement.
-    var debugPrintTextboxes = false;
+    var debugPrintTextboxes = false; // Whether to draw measured text bounds and anchor lines.
     // Select one of the seven display rows for isolated midpoint debugging.
-    var selectedDebugY = 0;
+    var selectedDebugY = 0; // Index of the display row selected for isolated midpoint debugging.
     // Per-row vertical adjustments: top label/data, middle label/data, timer data/label, bottom.
-    var debugYOffset = [0, 0, 0, 0, 0, 0, 0];
+    var debugYOffset = [0, 0, 0, 0, 0, 0, 0]; // Per-row Y corrections used while calibrating text placement.
 
     // Draw horizontal guides through calculated text midpoints.
     const DEBUG_PRINT_MIDLINES = false;
@@ -116,12 +129,12 @@ class ORunView extends ORunViewBase {
         md3VisualHeight = md3Acc;
         lg4VisualHeight = lg4Acc;
 
-        oY_____1 = 0.30 * dcHeight;
+        Y_____1 = 0.30 * dcHeight;
         computeDynamicLayout(dcHeight, dcWidth);
-        slbY1 = oYlbl_GF;
-        slbY2 = oYdat_GF;
-        sldY1 = oYlbl_GF;
-        sldY2 = oYdat_GF;
+        slbY1 = Ylbl_GF;
+        slbY2 = Ydat_GF;
+        sldY1 = Ylbl_GF;
+        sldY2 = Ydat_GF;
     }
 
     //! Estimate the visible glyph height, excluding excess font-box padding.
@@ -139,16 +152,16 @@ class ORunView extends ORunViewBase {
         topDataFont = Gfx.FONT_NUMBER_MEDIUM;
         var topDataVisualHeight = md6VisualHeight;
         var topDataVisualCenterOffset = md6VisualCenterOffset;
-        if (topDataVisualHeight > oY_____1) {
+        if (topDataVisualHeight > Y_____1) {
             topDataFont = Gfx.FONT_MEDIUM;
             topDataVisualHeight = md3VisualHeight;
             topDataVisualCenterOffset = 0;
         }
-        if (topDataVisualHeight > oY_____1) {
+        if (topDataVisualHeight > Y_____1) {
             topDataFont = Gfx.FONT_SMALL;
             topDataVisualHeight = sm2VisualHeight;
         }
-        if (topDataVisualHeight > oY_____1) {
+        if (topDataVisualHeight > Y_____1) {
             topDataFont = Gfx.FONT_XTINY;
             topDataVisualHeight = xt0VisualHeight;
             topDataVisualCenterOffset = xt0VisualCenterOffset;
@@ -158,7 +171,7 @@ class ORunView extends ORunViewBase {
         if (topDataClearance < 0) {
             topDataClearance = 0;
         }
-        var maxTopDataClearance = (oY_____1 - topDataVisualHeight) / 2.0;
+        var maxTopDataClearance = (Y_____1 - topDataVisualHeight) / 2.0;
         if (maxTopDataClearance < 0) {
             maxTopDataClearance = 0;
         }
@@ -189,11 +202,11 @@ class ORunView extends ORunViewBase {
         distX = 3 * halfWitt / 2;
         paceX = 2 * middlew + halfMiddleWidth;
 
-        var dataVisualBottom = oY_____1 - topDataClearance;
+        var dataVisualBottom = Y_____1 - topDataClearance;
         var dataVisualCenter = dataVisualBottom - (topDataVisualHeight / 2.0);
-        oYdat_GF = dataVisualCenter - topDataVisualCenterOffset;
+        Ydat_GF = dataVisualCenter - topDataVisualCenterOffset;
         var labelRegionBottom = dataVisualCenter - (topDataVisualHeight / 2.0);
-        oYlbl_GF = labelRegionBottom / 2.0;
+        Ylbl_GF = labelRegionBottom / 2.0;
 
         lowerDataFont = Gfx.FONT_LARGE;
         if (!computeLowerLayout(dcHeight, xt0VisualHeight, lg4VisualHeight)) {
@@ -210,25 +223,25 @@ class ORunView extends ORunViewBase {
     //! Fit and evenly space the lower labels, data rows, and divider lines.
     function computeLowerLayout(dcHeight, labelHeight, dataHeight) {
         var minContent = (3 * labelHeight) + (2 * dataHeight);
-        var leftover = (dcHeight - oY_____1) - minContent - (8 * LAYOUT_MIN_GAP);
+        var leftover = (dcHeight - Y_____1) - minContent - (8 * LAYOUT_MIN_GAP);
         if (leftover < 0) {
             return false;
         }
         var gap = LAYOUT_MIN_GAP + (leftover / 8.0);
-        var cursor = oY_____1 + gap;
-        oYlbl_PHT = cursor + (labelHeight / 2.0);
+        var cursor = Y_____1 + gap;
+        Ylbl_PHT = cursor + (labelHeight / 2.0);
         cursor += labelHeight + gap;
-        oYdat_PHT = cursor + (dataHeight / 2.0);
+        Ydat_PHT = cursor + (dataHeight / 2.0);
         cursor += dataHeight + gap;
-        oY_____2 = cursor;
+        Y_____2 = cursor;
         cursor += gap;
-        oYdat_TS = cursor + (dataHeight / 2.0);
+        Ydat_TS = cursor + (dataHeight / 2.0);
         cursor += dataHeight + gap;
-        oYlbl_TS = cursor + (labelHeight / 2.0);
+        Ylbl_TS = cursor + (labelHeight / 2.0);
         cursor += labelHeight + gap;
-        oY_____3 = cursor;
+        Y_____3 = cursor;
         cursor += gap;
-        oYdat_BT = cursor + (labelHeight / 2.0);
+        Ydat_BT = cursor + (labelHeight / 2.0);
         return true;
     }
 
@@ -260,11 +273,11 @@ class ORunView extends ORunViewBase {
         // Indices correspond to debugYOffset and getSelectedDebugY() in display order.
         var yBearingLabel = debugAdjustedY(slbY1, 0);
         var yBearingData = debugAdjustedY(slbY2, 1);
-        var yMiddleLabel = debugAdjustedY(oYlbl_PHT, 2);
-        var yMiddleData = debugAdjustedY(oYdat_PHT, 3);
-        var yTimerDistanceData = debugAdjustedY(oYdat_TS, 4);
-        var yTimerDistanceLabel = debugAdjustedY(oYlbl_TS, 5);
-        var yBatteryTime = debugAdjustedY(oYdat_BT, 6);
+        var yMiddleLabel = debugAdjustedY(Ylbl_PHT, 2);
+        var yMiddleData = debugAdjustedY(Ydat_PHT, 3);
+        var yTimerDistanceData = debugAdjustedY(Ydat_TS, 4);
+        var yTimerDistanceLabel = debugAdjustedY(Ylbl_TS, 5);
+        var yBatteryTime = debugAdjustedY(Ydat_BT, 6);
 
         // --------------------
         // BACKGROUND AND GRID
@@ -273,15 +286,15 @@ class ORunView extends ORunViewBase {
         dc.clear();
         dc.setColor(linecol, Gfx.COLOR_TRANSPARENT);
         dc.setPenWidth(3);
-        dc.drawLine(0, oY_____1, rezWidth, oY_____1);
-        dc.drawLine(topCenter, oY_____1, topCenter, 0);
-        dc.drawLine(0, oY_____3, rezWidth, oY_____3);
+        dc.drawLine(0, Y_____1, rezWidth, Y_____1);
+        dc.drawLine(topCenter, Y_____1, topCenter, 0);
+        dc.drawLine(0, Y_____3, rezWidth, Y_____3);
         dc.setPenWidth(1);
-        dc.drawLine(0, oY_____2, rezWidth, oY_____2);
-        dc.drawLine(middlew, oY_____1, middlew, oY_____2);
-        dc.drawLine(2 * middlew, oY_____1, 2 * middlew, oY_____2);
-        dc.drawLine(halfWitt, oY_____2, halfWitt, oY_____3);
-        dc.drawLine(bottomCenter, oY_____3, bottomCenter, dc.getHeight());
+        dc.drawLine(0, Y_____2, rezWidth, Y_____2);
+        dc.drawLine(middlew, Y_____1, middlew, Y_____2);
+        dc.drawLine(2 * middlew, Y_____1, 2 * middlew, Y_____2);
+        dc.drawLine(halfWitt, Y_____2, halfWitt, Y_____3);
+        dc.drawLine(bottomCenter, Y_____3, bottomCenter, dc.getHeight());
         dc.setColor(forecol, Gfx.COLOR_TRANSPARENT);
 
         // ----------
@@ -358,15 +371,15 @@ class ORunView extends ORunViewBase {
         } else if (selectedDebugY == 1) {
             return debugAdjustedY(slbY2, 1);
         } else if (selectedDebugY == 2) {
-            return debugAdjustedY(oYlbl_PHT, 2);
+            return debugAdjustedY(Ylbl_PHT, 2);
         } else if (selectedDebugY == 3) {
-            return debugAdjustedY(oYdat_PHT, 3);
+            return debugAdjustedY(Ydat_PHT, 3);
         } else if (selectedDebugY == 4) {
-            return debugAdjustedY(oYdat_TS, 4);
+            return debugAdjustedY(Ydat_TS, 4);
         } else if (selectedDebugY == 5) {
-            return debugAdjustedY(oYlbl_TS, 5);
+            return debugAdjustedY(Ylbl_TS, 5);
         }
-        return debugAdjustedY(oYdat_BT, 6);
+        return debugAdjustedY(Ydat_BT, 6);
     }
 
     //! Draw a horizontal guide through a calculated text midpoint.

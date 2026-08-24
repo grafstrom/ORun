@@ -1,0 +1,56 @@
+
+<!-- ============================================================               -->
+<!-- Device:rectangle-420x600       (dcHeight:800 dcWidth:480)   -->
+<!-- Tested On:
+
+edge550.sourcePath =     		source/common;source/rectangle-source
+edge550.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-420x600
+edge850.sourcePath =     		source/common;source/rectangle-source
+edge850.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-420x600
+
+-->
+
+<resources>
+    <string id="RunFromRatios">true</string> <!-- always output true for formatting upgrade -->
+    <string id="device">rectangle-480x800</string>
+    <string id="shape">rectangle</string>
+    <string id="width">480</string>
+
+    
+    <string id="lg4MidShiftRatio">-0.336276</string> <!-- similar to edge1050? -->
+    <string id="md6PadTop">2</string>           <!-- SLB/D texttop to box -->
+    <string id="md6PadBot">3</string>            <!-- SLB/D texttop to box -->
+
+    <string id="md6MidShift">-2</string>            <!-- SLB/D texttop to box -->
+
+    <!--  KEEP HIGH PRECISION:  1 pixel / 480 (screen width) = 0.002083 portion of screen ; similar to edge1050? -->
+
+
+
+    <!--
+    <string id="oXtopCenter">-0.041667</string>  <!- -   Center Line Top     ->   (pixels_-20.0)                        / w_480 = -0.041667 - ->
+    <string id="oXtopOffsets">0.054167</string>  <!- -  Margin to Center**   ->   (pixels_26.0)                         / w_480 = 0.054167  - ->
+
+    <string id="oYlbl_GF">0.063750</string>      <!- -   Labels Deg & SLD    ->   (pixels_40.5 + xt0Mid_10.5 )_51.0    / h_800 = 0.063750  - ->
+    <string id="oYdat_GF">0.173750</string>      <!- -    Data Deg & SLD     ->   (pixels_98.0 + md6Mid_41.0 )_139.0   / h_800 = 0.173750  - ->
+
+    <string id="oY_____1">0.300000</string>      <!- -       Top Line        ->   (pixels_240.0)                       / h_800 = 0.300000  - ->
+    <string id="oYlbl_PHT">0.363750</string>     <!- -  Labels HR Alt Pace   ->   (pixels_280.5 + xt0Mid_10.5  )_291.0 / h_800 = 0.363750  - ->
+    <string id="oYdat_PHT">0.497500</string>     <!- -   Data HR Alt Pace    ->   (pixels_367.5 + lg4Mid_30.5 )_398.0  / h_800 = 0.497500  - ->
+
+    <string id="oY_____2">0.600000</string>      <!- -   Mid Line (thin)     ->   (pixels_480.0)                       / h_800 = 0.600000  - ->
+    <string id="oYdat_TS">0.722500</string>      <!- -  Data Timer & Dist    ->   (pixels_547.5 + lg4Mid_30.5 )_578.0  / h_800 = 0.722500  - ->
+    <string id="oYlbl_TS">0.845000</string>      <!- - Labels Timer & Dist   ->   (pixels_665.5 + xt0Mid_10.5  )_676.0 / h_800 = 0.845000  - ->
+
+    <string id="oY_____3">0.890000</string>      <!- -     Bottom Line       ->   (pixels_712.0)                       / h_800 = 0.890000  - ->
+    <string id="oYdat_BT">0.952500</string>      <!- -   Data Batt & Tod     ->   (pixels_751.5 + xt0Mid_10.5  )_762.0 / h_800 = 0.952500  - ->
+
+    <string id="oXbtmCenter">-0.062500</string>  <!- -    Center Line Btm    ->   (pixels_-30.0)                       / w_480 = -0.062500 - ->
+    <string id="oXbtmOffsets">0.054167</string>  <!- -  Margin to Ctr/Edge** ->   (pixels_26.0)                         / w_480 = 0.054167  - ->
+    <!- - ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' - ->
+    -->
+
+
+</resources>
+<!-- ============================================================   device tested: edge850  -->
+

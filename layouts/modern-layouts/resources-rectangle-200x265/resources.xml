@@ -4,6 +4,7 @@
 edge520plus.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-200x265
 edge820.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-200x265
 
+edge_520 - tested...
 -->
 <resources>
     <string id="RunFromRatios">true</string> <!-- always output true for formatting upgrade -->
