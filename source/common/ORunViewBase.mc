@@ -66,7 +66,6 @@ class ORunViewBase extends Ui.DataField {
     function onTimerLap() {
         core.onTimerLap();
         Ui.requestUpdate();
-        notMonochrome = !notMonochrome;
     }
 
     //! Format the current speed as the configured pace value.

@@ -1,35 +1,20 @@
 <resources>
     <!-- dimensions & type of device + reference device -->
-    <string id="deviceTypeHelper">semioctagon-176x176</string>
+    <string id="device">semioctagon-166x166</string>
     <!-- values are checked with system during run -->
     <string id="shape">semioctagon</string>
     <string id="width">166</string>
     <string id="height">166</string>
-    <string id="notMonochrome">0</string> <!-- black and white -->
 
-    <!-- tested on 
-    instinct2s
+    <string id="notMonochrome">0</string>
+    <string id="topDataVerticalAdjustmentRatio">0.02</string>
+    <string id="compactSldThreshold">10000</string>
+
+    <!-- tested on
+
+    # semioctagon-166x166
+    instincte40mm.sourcePath =              source/common;source/semioctagon-source
+    instincte40mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-semioctagon-166x166
+
     -->
-
-
-
-
-
-    <!-- NEED TO UPDATE -->
-
-
-    <string id="XtopCenter">-12</string> <!-- Center Line Top -->
-    <string id="XtopOffsets">10</string> <!-- Margin to Line Top -->
-    <string id="Ylbl_GF">4</string> <!-- Labels Deg & SLD -->
-    <string id="Ydat_GF">37</string> <!-- Data Deg & SLD -->
-    <string id="Y_____1">80</string> <!-- Top Line -->
-    <string id="Ylbl_PHT">81</string> <!-- Labels HR Alt Pace -->
-    <string id="Ydat_PHT">104</string> <!-- Data HR Alt Pace -->
-    <string id="Y_____2">140</string> <!-- Mid Line (thin) -->
-    <string id="Ydat_TS">142</string> <!-- Data Timer & Dist -->
-    <string id="Ylbl_TS">172</string> <!-- Labels Timer & Dist -->
-    <string id="Y_____3">200</string> <!-- Bottom Line -->
-    <string id="Ydat_BT">202</string> <!-- Data Batt & Tod -->
-    <string id="XbtmCenter">-20</string> <!-- Center Line Btm -->
-    <string id="XbtmOffsets">5</string>  <!--  Margin to Line Btm -->
 </resources>
