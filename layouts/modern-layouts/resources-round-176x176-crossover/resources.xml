@@ -1,6 +1,12 @@
 <!-- ============================================================ 006-B4155-00 -->
+
 <!-- Device: Instinct Crossover (176x176 semi-octagon display) -->
-<!-- Initial round-source profile converted from the crossover semioctagon metrics. -->
+<!-- Initial round-source profile converted from the crossover semioctagon metrics. 
+
+
+instinctcrossover
+
+-->
 <resources>
     <string id="RunFromRatios">true</string>
     <string id="device">round-176x176-crossover</string>

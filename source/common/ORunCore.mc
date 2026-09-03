@@ -84,7 +84,7 @@ class ORunCore {
     //! Convert lap-relative altitude to the configured short-distance units.
     function getAlt(alt) {
         if (alt != null) {
-            return (alt * distConv).toNumber();
+            return (alt * distConv + 1200).toNumber(); // added 1200 for testing purposes
         }
         return 0;
     }
@@ -168,6 +168,6 @@ class ORunCore {
         var dx = 111.3 * Math.cos(lat) * (lon1 - lon2);
         var dy = 111.3 * (lat1 - lat2);
         var distance = 1000 * Math.sqrt(dx * dx + dy * dy);
-        return (distConv * distance).toNumber();
+        return (distConv * distance).toNumber() + 1200; // added 1200 for test purposes
     }
 }

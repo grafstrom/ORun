@@ -7,15 +7,6 @@ fenix6spro.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resour
 fenix7s.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
 fenix7spro.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
 
-# note for these you have to select proper watch, otherwise it will run marq2... larger watch
-marqadventurer.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
-marqathlete.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
-marqaviator.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
-marqcaptain.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
-marqcommander.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
-marqdriver.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
-marqexpedition.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
-marqgolfer.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
 -->
 <resources>
     <string id="RunFromRatios">true</string> <!-- always output true for formatting upgrade -->
