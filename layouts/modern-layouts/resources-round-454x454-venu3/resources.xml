@@ -1,0 +1,40 @@
+<!-- ============================================================ 006-B4260-00 -->
+<!-- Device:round-454x454-venu3   (part number 006-B4260-00)     (dcHeight:454 dcWidth:454)   -->
+<!-- Tested On:
+venu3.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-454x454-venu3
+-->
+<resources>
+    <string id="RunFromRatios">true</string> <!-- always output true for formatting upgrade -->
+    <string id="device">round-454x454-venu3</string>
+    <string id="shape">round</string>
+    <string id="width">454</string>
+
+    <!-- on this device, getFontHeight(Gfx.FONT_XTINY)         = 35 but actually pixelsTall_27.299999.  * 0.5 + padding_3.850000 = 17.500000_midpoint -->
+    <!-- on this device, getFontHeight(Gfx.FONT_LARGE)         = 67 but actually pixelsTall_52.259998.  * 0.5 + padding_7.370001 = 33.500000_midpoint -->
+    <!-- on this device, getFontHeight(Gfx.FONT_NUMBER_MEDIUM) = 116 but actually pixelsTall_90.479996.  * 0.5 + padding_12.760002 = 58.000000_midpoint -->
+
+    <!--  KEEP HIGH PRECISION:  1 pixel / 454 (screen width) = 0.002203 portion of screen  -->
+
+    <string id="oXtopCenter">-0.044053</string>  <!--   Center Line Top     ->   (pixels_-20.0)                       / w_454 = -0.044053 -->
+    <string id="oXtopOffsets">0.033040</string>  <!--  Margin to Center**   ->   (pixels_15.0)                        / w_454 = 0.033040  -->
+
+    <string id="oYlbl_GF">0.104626</string>      <!--   Labels Deg & SLD    ->   (pixels_30.0 + xt0Mid_17.5 )_47.5    / h_454 = 0.104626  -->
+    <string id="oYdat_GF">0.253304</string>      <!--    Data Deg & SLD     ->   (pixels_57.0 + md6Mid_58.0 )_115.0   / h_454 = 0.253304  -->
+
+    <string id="oY_____1">0.341410</string>      <!--       Top Line        ->   (pixels_155.0)                       / h_454 = 0.341410  -->
+    <string id="oYlbl_PHT">0.397577</string>     <!--  Labels HR Alt Pace   ->   (pixels_163.0 + xt0Mid_17.5  )_180.5 / h_454 = 0.397577  -->
+    <string id="oYdat_PHT">0.514317</string>     <!--   Data HR Alt Pace    ->   (pixels_200.0 + lg4Mid_33.5 )_233.5  / h_454 = 0.514317  -->
+
+    <string id="oY_____2">0.601322</string>      <!--   Mid Line (thin)     ->   (pixels_273.0)                       / h_454 = 0.601322  -->
+    <string id="oYdat_TS">0.692731</string>      <!--  Data Timer & Dist    ->   (pixels_281.0 + lg4Mid_33.5 )_314.5  / h_454 = 0.692731  -->
+    <string id="oYlbl_TS">0.805066</string>      <!-- Labels Timer & Dist   ->   (pixels_348.0 + xt0Mid_17.5  )_365.5 / h_454 = 0.805066  -->
+
+    <string id="oY_____3">0.854626</string>      <!--     Bottom Line       ->   (pixels_388.0)                       / h_454 = 0.854626  -->
+    <string id="oYdat_BT">0.908590</string>      <!--   Data Batt & Tod     ->   (pixels_395.0 + xt0Mid_17.5  )_412.5 / h_454 = 0.908590  -->
+
+    <string id="oXbtmCenter">-0.055066</string>  <!--    Center Line Btm    ->   (pixels_-25.0)                       / w_454 = -0.055066 -->
+    <string id="oXbtmOffsets">0.022026</string>  <!--  Margin to Ctr/Edge** ->   (pixels_10.0)                        / w_454 = 0.022026  -->
+    <!-- ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' -->
+
+</resources>
+<!-- ============================================================ 006-B4260-00  device tested: venu3  -->

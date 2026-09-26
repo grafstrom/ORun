@@ -1,3 +1,11 @@
+v 4.0.0
+  - Add support for many newer devices: round (fenix 7/8, epix, enduro, forerunner, venu, vivoactive, marq, ...),
+    rectangle (edge, gpsmap, montana, oregon, rino, venu sq) and semi-octagon (instinct, descent g1)
+  - New layouts that scale with each screen size
+  - Shared calculation code (ORunCore) for all modern layouts
+  - Fix bearing calculation: used log10 instead of natural log, which skewed non-cardinal bearings
+  - Remove per-second debug logging on semi-octagon devices
+
 v 3.0.0
   - Add support for fenix 5/5x, 6/6pro/6xpro and 7/7x/tactix7
   - Adapt to SDK 4.1.3

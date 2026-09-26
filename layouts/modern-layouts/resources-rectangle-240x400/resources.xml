@@ -1,0 +1,49 @@
+
+<!-- ============================================================ 006-B1836-00 -->
+<!-- Device:rectangle-240x400   (part number 006-B1836-00)     (dcHeight:400 dcWidth:240)   -->
+<!-- Tested On: 
+edge_1000.resourcePath = 			    $(base.resourcePath);devices/resources-rectangle-240x400
+edgeexplore.resourcePath = 			    $(base.resourcePath);devices/resources-rectangle-240x400
+oregon7xx.resourcePath = 				$(base.resourcePath);devices/resources-rectangle-240x400
+rino7xx.resourcePath = 				    $(base.resourcePath);devices/resources-rectangle-240x400
+
+-->
+<resources>
+    <string id="RunFromRatios">true</string> <!-- always output true for formatting upgrade -->
+    <string id="device">rectangle-240x400</string>
+    <string id="shape">rectangle</string>
+    <string id="width">240</string>
+
+    <!-- on this device, getFontHeight(Gfx.FONT_XTINY)         = 12 but actually pixelsTall_9.360000.  * 0.5 + padding_1.320000 = 6.000000_midpoint -->
+    <!-- on this device, getFontHeight(Gfx.FONT_LARGE)         = 36 but actually pixelsTall_28.079998.  * 0.5 + padding_3.960001 = 18.000000_midpoint -->
+    <!-- on this device, getFontHeight(Gfx.FONT_NUMBER_MEDIUM) = 42 but actually pixelsTall_32.759998.  * 0.5 + padding_4.620001 = 21.000000_midpoint -->
+
+    <!--  KEEP HIGH PRECISION:  1 pixel / 240 (screen width) = 0.004167 portion of screen  -->
+
+
+    <!--
+    <string id="oXtopCenter">-0.041667</string>  <!- -   Center Line Top     ->   (pixels_-10.0)                        / w_240 = -0.041667 - ->
+    <string id="oXtopOffsets">0.054167</string>  <!- -  Margin to Center**   ->   (pixels_13.0)                         / w_240 = 0.054167  - ->
+
+    <string id="oYlbl_GF">0.063750</string>      <!- -   Labels Deg & SLD    ->   (pixels_19.5 + xt0Mid_6.0 )_25.5    / h_400 = 0.063750  - ->
+    <string id="oYdat_GF">0.182500</string>      <!- -    Data Deg & SLD     ->   (pixels_52.0 + md6Mid_21.0 )_73.0   / h_400 = 0.182500  - ->
+
+    <string id="oY_____1">0.300000</string>      <!- -       Top Line        ->   (pixels_120.0)                       / h_400 = 0.300000  - ->
+    <string id="oYlbl_PHT">0.363750</string>     <!- -  Labels HR Alt Pace   ->   (pixels_139.5 + xt0Mid_6.0  )_145.5 / h_400 = 0.363750  - ->
+    <string id="oYdat_PHT">0.478750</string>     <!- -   Data HR Alt Pace    ->   (pixels_173.5 + lg4Mid_18.0 )_191.5  / h_400 = 0.478750  - ->
+
+    <string id="oY_____2">0.600000</string>      <!- -   Mid Line (thin)     ->   (pixels_240.0)                       / h_400 = 0.600000  - ->
+    <string id="oYdat_TS">0.698750</string>      <!- -  Data Timer & Dist    ->   (pixels_261.5 + lg4Mid_18.0 )_279.5  / h_400 = 0.698750  - ->
+    <string id="oYlbl_TS">0.833750</string>      <!- - Labels Timer & Dist   ->   (pixels_327.5 + xt0Mid_6.0  )_333.5 / h_400 = 0.833750  - ->
+
+    <string id="oY_____3">0.890000</string>      <!- -     Bottom Line       ->   (pixels_356.0)                       / h_400 = 0.890000  - ->
+    <string id="oYdat_BT">0.948750</string>      <!- -   Data Batt & Tod     ->   (pixels_373.5 + xt0Mid_6.0  )_379.5 / h_400 = 0.948750  - ->
+
+    <string id="oXbtmCenter">-0.062500</string>  <!- -    Center Line Btm    ->   (pixels_-15.0)                       / w_240 = -0.062500 - ->
+    <string id="oXbtmOffsets">0.054167</string>  <!- -  Margin to Ctr/Edge** ->   (pixels_13.0)                         / w_240 = 0.054167  - ->
+    <!- - ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' - ->
+
+    -->
+
+</resources>
+<!-- ============================================================ 006-B1836-00  device tested: edge_1000  -->

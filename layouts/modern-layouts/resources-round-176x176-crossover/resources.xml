@@ -1,0 +1,32 @@
+<!-- ============================================================ 006-B4155-00 -->
+<!-- Device: Instinct Crossover (176x176 semi-octagon display) -->
+<!-- Initial round-source profile converted from the crossover semioctagon metrics. -->
+<resources>
+    <string id="RunFromRatios">true</string>
+    <string id="device">round-176x176-crossover</string>
+    <string id="shape">round</string>
+    <string id="width">176</string>
+
+    <string id="notMonochrome">0</string>
+
+    <!-- Top divider at 45% of screen width; shared spacing approximates the previous separate label/data gaps. -->
+    <string id="oXtopCenter">-0.060000</string>
+    <string id="oXtopOffsets">0.057273</string>
+
+    <!-- Top midpoints fit XTINY labels and FONT_NUMBER_THAI_HOT data above the 38%-high divider. -->
+    <string id="oYlbl_GF">0.077955</string> 
+    <string id="oYdat_GF">0.230000</string> 
+
+    <!-- Lower midpoints and dividers preserve their proportional positions from Y_____1 to the screen bottom. -->
+    <string id="oY_____1">0.380000</string>
+    <string id="oYlbl_PHT">0.438821</string>
+    <string id="oYdat_PHT">0.562718</string>
+    <string id="oY_____2">0.631179</string>
+    <string id="oYdat_TS">0.699642</string>
+    <string id="oYlbl_TS">0.817013</string>
+    <string id="oY_____3">0.882360</string>
+    <string id="oYdat_BT">0.941179</string>
+
+    <string id="oXbtmCenter">-0.100182</string>
+    <string id="oXbtmOffsets">0.030000</string>
+</resources>

@@ -1,0 +1,50 @@
+<!-- ============================================================ 006-B2656-00 -->
+<!-- Device:round-240x240-approachs60   (part number 006-B2656-00)     (dcHeight:240 dcWidth:240)   -->
+<!-- Tested On:
+approachs60
+
+fr745
+fr945
+fr945lte
+vivoactive3
+vivoactive3d
+vivoactive3m
+vivoactive3mlte
+fr245
+fr245m
+-->
+<resources>
+    <string id="RunFromRatios">true</string> <!-- always output true for formatting upgrade -->
+    <string id="device">round-240x240-approachs60</string>
+    <string id="shape">round</string>
+    <string id="width">240</string>
+
+    <!-- on this device, getFontHeight(Gfx.FONT_XTINY)         = 22 but actually pixelsTall_17.160000.  * 0.5 + padding_2.420000 = 11.000000_midpoint -->
+    <!-- on this device, getFontHeight(Gfx.FONT_LARGE)         = 34 but actually pixelsTall_26.519999.  * 0.5 + padding_3.740001 = 17.000000_midpoint -->
+    <!-- on this device, getFontHeight(Gfx.FONT_NUMBER_MEDIUM) = 48 but actually pixelsTall_37.439999.  * 0.5 + padding_5.280001 = 24.000000_midpoint -->
+
+    <!--  KEEP HIGH PRECISION:  1 pixel / 240 (screen width) = 0.004167 portion of screen  -->
+
+    <string id="oXtopCenter">-0.033333</string>  <!--   Center Line Top     ->   (pixels_-8.0)                        / w_240 = -0.033333 -->
+    <string id="oXtopOffsets">0.037500</string>  <!--  Margin to Center**   ->   (pixels_9.0)                         / w_240 = 0.037500  -->
+
+    <string id="oYlbl_GF">0.104167</string>      <!--   Labels Deg & SLD    ->   (pixels_14.0 + xt0Mid_11.0 )_25.0    / h_240 = 0.104167  -->
+    <string id="oYdat_GF">0.233333</string>      <!--    Data Deg & SLD     ->   (pixels_32.0 + md6Mid_24.0 )_56.0    / h_240 = 0.233333  -->
+
+    <string id="oY_____1">0.345833</string>      <!--       Top Line        ->   (pixels_83.0)                        / h_240 = 0.345833  -->
+    <string id="oYlbl_PHT">0.400000</string>     <!--  Labels HR Alt Pace   ->   (pixels_85.0 + xt0Mid_11.0  )_96.0   / h_240 = 0.400000  -->
+    <string id="oYdat_PHT">0.516667</string>     <!--   Data HR Alt Pace    ->   (pixels_107.0 + lg4Mid_17.0 )_124.0  / h_240 = 0.516667  -->
+
+    <string id="oY_____2">0.604167</string>      <!--   Mid Line (thin)     ->   (pixels_145.0)                       / h_240 = 0.604167  -->
+    <string id="oYdat_TS">0.675000</string>      <!--  Data Timer & Dist    ->   (pixels_145.0 + lg4Mid_17.0 )_162.0  / h_240 = 0.675000  -->
+    <string id="oYlbl_TS">0.787500</string>      <!-- Labels Timer & Dist   ->   (pixels_178.0 + xt0Mid_11.0  )_189.0 / h_240 = 0.787500  -->
+
+    <string id="oY_____3">0.845833</string>      <!--     Bottom Line       ->   (pixels_203.0)                       / h_240 = 0.845833  -->
+    <string id="oYdat_BT">0.900000</string>      <!--   Data Batt & Tod     ->   (pixels_205.0 + xt0Mid_11.0  )_216.0 / h_240 = 0.900000  -->
+
+    <string id="oXbtmCenter">-0.066667</string>  <!--    Center Line Btm    ->   (pixels_-16.0)                       / w_240 = -0.066667 -->
+    <string id="oXbtmOffsets">0.020833</string>  <!--  Margin to Ctr/Edge** ->   (pixels_5.0)                         / w_240 = 0.020833  -->
+    <!-- ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' -->
+
+</resources>
+<!-- ============================================================ 006-B2656-00  device tested: approachs60  -->

@@ -1,0 +1,20 @@
+<resources>
+    <!-- dimensions & type of device + reference device -->
+    <string id="device">semioctagon-163x156</string>
+    <!-- values are checked with system during run -->
+    <string id="shape">semioctagon</string>
+    <string id="width">156</string> <!-- 156x156 is size of larger portion, must keep this or will say "change layout" -->
+    <string id="height">156</string>
+
+    <string id="notMonochrome">0</string>
+    <string id="topDataVerticalAdjustmentRatio">0.02</string>
+    <string id="compactSldThreshold">10000</string>
+
+    <!-- tested on
+
+    # semioctagon-163x156
+    instinct2s.sourcePath =                 source/common;source/semioctagon-source
+    instinct2s.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-semioctagon-163x156
+
+    -->
+</resources>

@@ -1,0 +1,20 @@
+<resources>
+    <!-- dimensions & type of device + reference device -->
+    <string id="device">semioctagon-166x166</string>
+    <!-- values are checked with system during run -->
+    <string id="shape">semioctagon</string>
+    <string id="width">166</string>
+    <string id="height">166</string>
+
+    <string id="notMonochrome">0</string>
+    <string id="topDataVerticalAdjustmentRatio">0.02</string>
+    <string id="compactSldThreshold">10000</string>
+
+    <!-- tested on
+
+    # semioctagon-166x166
+    instincte40mm.sourcePath =              source/common;source/semioctagon-source
+    instincte40mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-semioctagon-166x166
+
+    -->
+</resources>

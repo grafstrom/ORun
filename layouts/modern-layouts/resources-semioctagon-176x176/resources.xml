@@ -1,0 +1,27 @@
+<resources>
+    <!-- dimensions & type of device + reference device -->
+    <string id="device">semioctagon-176x176</string>
+    <!-- values are checked with system during run -->
+    <string id="shape">semioctagon</string>
+    <string id="width">176</string>
+    <string id="height">176</string>
+
+    <string id="notMonochrome">0</string>
+    <string id="topDataVerticalAdjustmentRatio">0.01</string>
+    <string id="compactSldThreshold">1000</string>
+
+    <!-- tested on
+
+    descentg1.sourcePath =                  source/common;source/semioctagon-source
+    descentg1.resourcePath =                $(base.resourcePath);layouts/modern-layouts/resources-semioctagon-176x176
+    instinct2.sourcePath =                  source/common;source/semioctagon-source
+    instinct2.resourcePath =                $(base.resourcePath);layouts/modern-layouts/resources-semioctagon-176x176
+    instinct2x.sourcePath =                 source/common;source/semioctagon-source
+    instinct2x.resourcePath =               $(base.resourcePath);layouts/modern-layouts/resources-semioctagon-176x176
+    instinct3solar45mm.sourcePath =         source/common;source/semioctagon-source
+    instinct3solar45mm.resourcePath =       $(base.resourcePath);layouts/modern-layouts/resources-semioctagon-176x176
+    instincte45mm.sourcePath =              source/common;source/semioctagon-source
+    instincte45mm.resourcePath =            $(base.resourcePath);layouts/modern-layouts/resources-semioctagon-176x176
+
+    -->
+</resources>

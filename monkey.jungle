@@ -1,1 +1,295 @@
 project.manifest = manifest.xml
+
+##############################################################################################################################
+# source #####################################################################################################################
+
+# default sourcePath is common + round for all newer non-rectangle watches
+base.sourcePath = source/common;source/round-source
+
+# sourcePath for below legacy devices is source/legacy-source
+d2bravo.sourcePath          = source/legacy-source
+d2bravo_titanium.sourcePath = source/legacy-source
+fenix3.sourcePath           = source/legacy-source
+fenix3_hr.sourcePath        = source/legacy-source
+fr230.sourcePath            = source/legacy-source
+fr235.sourcePath            = source/legacy-source
+fr630.sourcePath            = source/legacy-source
+fr735xt.sourcePath          = source/legacy-source
+fr920xt.sourcePath          = source/legacy-source
+vivoactive.sourcePath       = source/legacy-source
+vivoactive_hr.sourcePath    = source/legacy-source
+
+
+##############################################################################################################################
+# resources ##################################################################################################################
+
+# default resourcePath has image, good for all devices
+base.resourcePath = resources
+
+fr230.resourcePath =            $(base.resourcePath);layouts/legacy-layouts/resources-fr230
+fr235.resourcePath =            $(base.resourcePath);layouts/legacy-layouts/resources-fr235
+fr630.resourcePath =            $(base.resourcePath);layouts/legacy-layouts/resources-fr630
+fr735xt.resourcePath =          $(base.resourcePath);layouts/legacy-layouts/resources-fr735xt
+fr920xt.resourcePath =          $(base.resourcePath);layouts/legacy-layouts/resources-fr920xt
+vivoactive.resourcePath =       $(base.resourcePath);layouts/legacy-layouts/resources-vivoactive
+vivoactive_hr.resourcePath =    $(base.resourcePath);layouts/legacy-layouts/resources-vivoactive_hr
+
+
+
+# Modern resource profiles, should allow for "automatic-compatibility" with new models, some of the time
+
+# instinctcrossover is actually a semi-octagonal watch, but has more similarities to round watch, so is handled here
+instinctcrossover.sourcePath =          source/common;source/round-source
+instinctcrossover.resourcePath =        $(base.resourcePath);layouts/modern-layouts/resources-round-176x176-crossover
+
+# round-208x208 // g2g
+fr55.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-208x208
+
+# round-218x218 // g2g
+fr255s.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-218x218
+fr255sm.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-218x218
+legacyherocaptainmarvel.resourcePath = 	$(base.resourcePath);layouts/modern-layouts/resources-round-218x218
+legacysagarey.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-218x218
+vivoactive4s.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-218x218
+# round-218x218-fenix5s // g2g
+fenix5s.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-218x218-fenix5s
+fenixchronos.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-218x218-fenix5s
+
+# round-240x240-fenix5 // g2g
+d2charlie.resourcePath = 		    	$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-fenix5
+d2delta.resourcePath = 			    	$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-fenix5
+d2deltapx.resourcePath = 		    	$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-fenix5
+d2deltas.resourcePath = 		    	$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-fenix5
+descentmk1.resourcePath = 		    	$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-fenix5
+fenix5.resourcePath =                   $(base.resourcePath);layouts/modern-layouts/resources-round-240x240-fenix5
+fenix5plus.resourcePath = 		    	$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-fenix5
+fenix5splus.resourcePath = 		    	$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-fenix5
+fenix5x.resourcePath = 			    	$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-fenix5
+fenix5xplus.resourcePath = 		    	$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-fenix5
+fr645.resourcePath = 			    	$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-fenix5
+fr645m.resourcePath = 			    	$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-fenix5
+fr935.resourcePath = 			    	$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-fenix5
+# round-240x240-approachs60 // g2g
+approachs60.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-round-240x240-approachs60
+fr745.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-approachs60
+fr945.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-approachs60
+fr945lte.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-approachs60
+vivoactive3.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-approachs60
+vivoactive3d.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-approachs60
+vivoactive3m.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-approachs60
+vivoactive3mlte.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-approachs60
+fr245.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-approachs60
+fr245m.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-240x240-approachs60
+# round-240x240 // g2g
+descentmk2s.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+fenix6s.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+fenix6spro.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+fenix7s.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+fenix7spro.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+# note for these you have to select proper watch, otherwise it will run marq2... larger watch
+marqadventurer.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+marqathlete.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+marqaviator.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+marqcaptain.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+marqcommander.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+marqdriver.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+marqexpedition.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+marqgolfer.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-240x240
+
+# round-260x260-vivoactive4 // g2g
+approachs62.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-260x260-vivoactive4
+legacyherofirstavenger.resourcePath = 	$(base.resourcePath);layouts/modern-layouts/resources-round-260x260-vivoactive4
+legacysagadarthvader.resourcePath = 	$(base.resourcePath);layouts/modern-layouts/resources-round-260x260-vivoactive4
+vivoactive4.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-260x260-vivoactive4
+# round-260x260-fr255 // g2g
+fr255.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-260x260-fr255
+fr255m.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-260x260-fr255
+fr955.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-260x260-fr255
+fenix8solar47mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-260x260-fr255
+# round-260x260-fenix6 // g2g
+fenix6.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-260x260
+fenix6pro.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-260x260
+fenix7.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-260x260
+fenix7pro.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-260x260
+fenix7pronowifi.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-260x260
+
+# round-280x280 // g2g
+descentmk2.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-280x280
+enduro.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-280x280
+fenix6xpro.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-280x280
+fenix7x.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-280x280
+fenix7xpro.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-280x280
+fenix7xpronowifi.resourcePath = 		$(base.resourcePath);layouts/modern-layouts/resources-round-280x280
+# round-280x280-enduro3 // g2g
+enduro3.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-280x280-enduro3
+fenix8solar51mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-280x280-enduro3
+
+# round-360x360 // g2g
+fr265s.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-360x360
+venu2s.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-360x360-venu2s
+
+
+# round-390x390 devices // g2g
+approachs50.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-round-390x390
+approachs7042mm.resourcePath =          $(base.resourcePath);layouts/modern-layouts/resources-round-390x390
+descentmk343mm.resourcePath = 		    $(base.resourcePath);layouts/modern-layouts/resources-round-390x390
+epix2pro42mm.resourcePath = 		    $(base.resourcePath);layouts/modern-layouts/resources-round-390x390
+marq2.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-round-390x390
+marq2aviator.resourcePath = 		    $(base.resourcePath);layouts/modern-layouts/resources-round-390x390
+# round-390x390 d2air // g2g
+d2air.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-round-390x390-d2air
+venu.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-round-390x390-d2air
+venud.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-round-390x390-d2air
+venu3s.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-round-390x390-d2air
+vivoactive5.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-round-390x390-d2air
+instinct3amoled45mm.resourcePath =	    $(base.resourcePath);layouts/modern-layouts/resources-round-390x390-d2air 
+instinctcrossoveramoled.resourcePath =	$(base.resourcePath);layouts/modern-layouts/resources-round-390x390-d2air 
+
+# round-390x390 fr165 // g2g
+fr165.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-round-390x390-fr165
+fr165m.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-round-390x390-fr165
+
+
+# round-416x416 // g2g
+d2mach1.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-416x416
+epix2.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-416x416
+epix2pro47mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-416x416
+# round-416x416-fenixe // g2g
+fenixe.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fenixe
+# the fenix843mm might not be a real device, it existed in previous SDK but not anymore?
+# fenix843mm.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fenixe
+# round-416x416-fr265 // g2g
+fr265.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fr265
+instinct3amoled50mm.resourcePath =      $(base.resourcePath);layouts/modern-layouts/resources-round-416x416-fr265
+# round-416x416-d2airx10 // g2g
+d2airx10.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-d2airx10
+venu2.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-d2airx10
+venu2plus.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-d2airx10
+
+# round-454x454 // g2g
+approachs7047mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-454x454
+descentmk351mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-454x454
+epix2pro51mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-round-454x454
+# round-454x454-venu3 // g2g
+venu3.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-454x454-venu3
+# round-454x454-fr965 // g2g
+fr965.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-454x454-fr965
+# round-454x454-fenix847mm // g2g
+fenix847mm.resourcePath =			    $(base.resourcePath);layouts/modern-layouts/resources-round-454x454-fenix847mm
+
+
+#####################################################################################################################
+# required api 5.2
+# descentg2.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-???
+# fenix8pro47mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-???
+# fr57042mm.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-???
+# fr57047mm.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-???
+# fr970.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-???
+# venu441mm.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-???
+# venu445mm.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-???
+# vivoactive6.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-???
+# venux1.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-???
+
+#####################################################################################################################
+#####################################################################################################################
+
+
+# semioctagon devices use their dedicated automatic layout source ==========================
+
+# semioctagon-176x176 
+descentg1.sourcePath =            source/common;source/semioctagon-source
+instinct2.sourcePath =            source/common;source/semioctagon-source
+instinct2x.sourcePath =           source/common;source/semioctagon-source
+instinct3solar45mm.sourcePath =   source/common;source/semioctagon-source
+instincte45mm.sourcePath =        source/common;source/semioctagon-source
+descentg1.resourcePath =                $(base.resourcePath);layouts/modern-layouts/resources-semioctagon-176x176
+instinct2.resourcePath =                $(base.resourcePath);layouts/modern-layouts/resources-semioctagon-176x176
+instinct2x.resourcePath =               $(base.resourcePath);layouts/modern-layouts/resources-semioctagon-176x176
+instinct3solar45mm.resourcePath =       $(base.resourcePath);layouts/modern-layouts/resources-semioctagon-176x176
+instincte45mm.resourcePath =            $(base.resourcePath);layouts/modern-layouts/resources-semioctagon-176x176
+
+# semioctagon-163x156
+instinct2s.sourcePath =                 source/common;source/semioctagon-source
+instinct2s.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-semioctagon-163x156
+# semioctagon-166x166 
+instincte40mm.sourcePath =              source/common;source/semioctagon-source
+instincte40mm.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-semioctagon-166x166
+
+
+# rectangular devices use calculated metrics ===========================================
+
+# rectangle-200x265
+edge520plus.sourcePath =  		source/common;source/rectangle-source
+edge820.sourcePath =      		source/common;source/rectangle-source
+edge_520.sourcePath =      		source/common;source/rectangle-source
+edge520plus.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-200x265
+edge820.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-200x265
+edge_520.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-200x265
+
+edge130.sourcePath =      		source/common;source/rectangle-source
+edge130plus.sourcePath =  		source/common;source/rectangle-source
+edge130.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-230x303
+edge130plus.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-230x303
+
+venusq.sourcePath =       		source/common;source/rectangle-source
+venusqm.sourcePath =      		source/common;source/rectangle-source
+venusq.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-220x240
+venusqm.resourcePath =                  $(base.resourcePath);layouts/modern-layouts/resources-rectangle-220x240
+
+edge_1000.sourcePath =    		source/common;source/rectangle-source
+edgeexplore.sourcePath =  		source/common;source/rectangle-source
+oregon7xx.sourcePath =    		source/common;source/rectangle-source
+rino7xx.sourcePath =      		source/common;source/rectangle-source
+edge_1000.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400
+edgeexplore.resourcePath = 			    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400
+oregon7xx.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400
+rino7xx.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400
+edgeexplore2.sourcePath = 		source/common;source/rectangle-source
+edgeexplore2.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400-explore2
+gpsmap66.sourcePath =     		source/common;source/rectangle-source
+gpsmap67.sourcePath =     		source/common;source/rectangle-source
+gpsmap86.sourcePath =     		source/common;source/rectangle-source
+gpsmap66.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400-gpsmap
+gpsmap67.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400-gpsmap
+gpsmap86.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-240x400-gpsmap
+
+edge530.sourcePath =      		source/common;source/rectangle-source
+edge830.sourcePath =      		source/common;source/rectangle-source
+edge530.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-246x322
+edge830.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-246x322
+edge540.sourcePath =      		source/common;source/rectangle-source
+edge840.sourcePath =      		source/common;source/rectangle-source
+edge540.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-246x322-edge540
+edge840.resourcePath = 				    $(base.resourcePath);layouts/modern-layouts/resources-rectangle-246x322-edge540
+
+edge1030.sourcePath =          source/common;source/rectangle-source
+edge1030bontrager.sourcePath = source/common;source/rectangle-source
+edge1030plus.sourcePath =      source/common;source/rectangle-source
+edge1030.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-282x470
+edge1030bontrager.resourcePath = 		$(base.resourcePath);layouts/modern-layouts/resources-rectangle-282x470
+edge1030plus.resourcePath = 			$(base.resourcePath);layouts/modern-layouts/resources-rectangle-282x470
+edge1040.sourcePath =          source/common;source/rectangle-source
+edge1040.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-282x470-edge1040
+# # gpsmaph1 seems to not allow single-fields, and currently is too tight on other layouts to support any working display
+# # it needs more work before implementation... tried with 282x470, and 280x800... no luck
+# gpsmaph1.sourcePath =     		source/common;source/rectangle-source
+# gpsmaph1.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-282x470-edge1040
+
+venusq2.sourcePath =      		source/common;source/rectangle-source
+venusq2m.sourcePath =     		source/common;source/rectangle-source
+venusq2.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-rectangle-320x360
+venusq2m.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-320x360
+
+edge1050.sourcePath =     		source/common;source/rectangle-source
+edge1050.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-480x800
+montana7xx.sourcePath =   		source/common;source/rectangle-source
+montana7xx.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-480x800-montana7
+
+# # added edge550 and edge850 late, although layout shows unlike gpsmaph1, the layout is not scaled properly...
+# # needs more work before implementation
+# edge550.sourcePath =     		source/common;source/rectangle-source
+# edge850.sourcePath =     		source/common;source/rectangle-source
+# edge550.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-420x600
+# edge850.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-rectangle-420x600
+
+

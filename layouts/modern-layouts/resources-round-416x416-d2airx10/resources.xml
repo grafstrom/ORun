@@ -1,0 +1,43 @@
+<!-- ============================================================ 006-B4125-00 -->
+<!-- Device:round-416x416-d2airx10   (part number 006-B4125-00)     (dcHeight:416 dcWidth:416)   -->
+<!-- Tested On:
+d2airx10.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-d2airx10
+venu2.resourcePath = 					$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-d2airx10
+venu2plus.resourcePath = 				$(base.resourcePath);layouts/modern-layouts/resources-round-416x416-d2airx10
+
+-->
+<resources>
+    <string id="RunFromRatios">true</string> <!-- always output true for formatting upgrade -->
+    <string id="device">round-416x416-d2airx10</string>
+    <string id="shape">round</string>
+    <string id="width">416</string>
+
+    <!-- on this device, getFontHeight(Gfx.FONT_XTINY)         = 32 but actually pixelsTall_24.959999.  * 0.5 + padding_3.520000 = 16.000000_midpoint -->
+    <!-- on this device, getFontHeight(Gfx.FONT_LARGE)         = 67 but actually pixelsTall_52.259998.  * 0.5 + padding_7.370001 = 33.500000_midpoint -->
+    <!-- on this device, getFontHeight(Gfx.FONT_NUMBER_MEDIUM) = 105 but actually pixelsTall_81.899994.  * 0.5 + padding_11.550003 = 52.500000_midpoint -->
+
+    <!--  KEEP HIGH PRECISION:  1 pixel / 416 (screen width) = 0.002404 portion of screen  -->
+
+    <string id="oXtopCenter">-0.036058</string>  <!--   Center Line Top     ->   (pixels_-15.0)                        / w_416 = -0.036058 -->
+    <string id="oXtopOffsets">0.036058</string>  <!--  Margin to Center**   ->   (pixels_15.0)                         / w_416 = 0.036058  -->
+
+    <string id="oYlbl_GF">0.117788</string>      <!--   Labels Deg & SLD    ->   (pixels_33.0 + xt0Mid_16.0 )_49.0    / h_416 = 0.117788  -->
+    <string id="oYdat_GF">0.277644</string>      <!--    Data Deg & SLD     ->   (pixels_63.0 + md6Mid_52.5 )_115.5    / h_416 = 0.277644  -->
+
+    <string id="oY_____1">0.367788</string>      <!--       Top Line        ->   (pixels_153.0)                        / h_416 = 0.367788  -->
+    <string id="oYlbl_PHT">0.420673</string>     <!--  Labels HR Alt Pace   ->   (pixels_159.0 + xt0Mid_16.0  )_175.0   / h_416 = 0.420673  -->
+    <string id="oYdat_PHT">0.532452</string>     <!--   Data HR Alt Pace    ->   (pixels_188.0 + lg4Mid_33.5 )_221.5  / h_416 = 0.532452  -->
+
+    <string id="oY_____2">0.615385</string>      <!--   Mid Line (thin)     ->   (pixels_256.0)                       / h_416 = 0.615385  -->
+    <string id="oYdat_TS">0.700721</string>      <!--  Data Timer & Dist    ->   (pixels_258.0 + lg4Mid_33.5 )_291.5  / h_416 = 0.700721  -->
+    <string id="oYlbl_TS">0.807692</string>      <!-- Labels Timer & Dist   ->   (pixels_320.0 + xt0Mid_16.0  )_336.0 / h_416 = 0.807692  -->
+
+    <string id="oY_____3">0.858173</string>      <!--     Bottom Line       ->   (pixels_357.0)                       / h_416 = 0.858173  -->
+    <string id="oYdat_BT">0.908654</string>      <!--   Data Batt & Tod     ->   (pixels_362.0 + xt0Mid_16.0  )_378.0 / h_416 = 0.908654  -->
+
+    <string id="oXbtmCenter">-0.055288</string>  <!--    Center Line Btm    ->   (pixels_-23.0)                       / w_416 = -0.055288  -->
+    <string id="oXbtmOffsets">0.024038</string>  <!--  Margin to Ctr/Edge** ->   (pixels_10.0)                         / w_416 = 0.024038  -->
+    <!-- ** on rect devices, Ylbl_GF & Ydat_BT are both edge-justified and use 'Margin to Ctr/Edge**'; on round, Ylbl_GF uses 'Margin to Center**' -->
+
+</resources>
+<!-- ============================================================ 006-B4125-00  device tested: d2airx10  -->
