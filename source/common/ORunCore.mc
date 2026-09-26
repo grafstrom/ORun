@@ -144,8 +144,8 @@ class ORunCore {
         var endLat = pos2.toRadians()[0].toFloat();
         var endLong = pos2.toRadians()[1].toFloat();
         var dLong = endLong - startLong;
-        var dPhi = Math.log(Math.tan(endLat / 2.0 + Math.PI / 4.0) /
-                             Math.tan(startLat / 2.0 + Math.PI / 4.0), 10);
+        var dPhi = Math.ln(Math.tan(endLat / 2.0 + Math.PI / 4.0) /
+                           Math.tan(startLat / 2.0 + Math.PI / 4.0));
 
         if (dLong > Math.PI) {
             dLong = -(2.0 * Math.PI - dLong);

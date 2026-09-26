@@ -283,8 +283,6 @@ class ORunView extends ORunViewBase {
             setBatteryColor(dc, battery);
         }
         dcdrawText(dc, battX, Ydat_BT, Gfx.FONT_XTINY, battery + "%", Gfx.TEXT_JUSTIFY_RIGHT);
-    
-        Sys.println(memstr()); // checked on instinct2, edge_1000, approachs60 all >40% ok
     }
 
     //! Draw text with the visible glyph midpoint aligned to the supplied anchor.
